@@ -1,0 +1,12 @@
+<ion-content> 
+  <ion-list lines="none" >
+    <ion-item><ion-icon name="person-circle-outline" slot="start"></ion-icon><ion-text slot="end"><p>{{usuario}}</p></ion-text></ion-item>
+    <ion-item button (click)="openListOrden()" ><ion-icon name="newspaper-outline" color="tertiary" slot="start"></ion-icon><ion-button slot="end"  color="tertiary" fill="clear">Lista Ordenes</ion-button></ion-item>
+    <ion-item *ngIf="enable_envio_iess" button (click)="openEnvioIess()" ><img src="assets/icon/iess_logo.png" alt="logo" height="35"><ion-button slot="end"  color="tertiary" fill="clear">IESS envio</ion-button></ion-item>
+    <ion-item *ngIf="envio_bloque" button (click)="openEnvioBloque()" ><ion-icon name="layers-outline" color="secondary" slot="start"></ion-icon><ion-button slot="end"  color="tertiary" fill="clear">Envio Resultados</ion-button></ion-item>
+    <ion-item *ngIf="ingreso_orden_c" button (click)="openNewOrdenCompleta()" ><ion-icon name="document-text-outline" color="tertiary" slot="start"></ion-icon><ion-button slot="end"  color="tertiary" fill="clear">Nueva Orden</ion-button></ion-item>
+    <ion-item button (click)="presentModalEntrega()" ><ion-icon name="checkbox-outline" slot="start" color="success"></ion-icon><ion-button slot="end" color="success" fill="clear">{{ 'Entrega Orden' | translate }}</ion-button></ion-item>
+    <ion-item *ngIf="presupuesto" button (click)="openCalcPresupuesto()" ><ion-icon color="secondary" name="cash-outline"></ion-icon><ion-button slot="end"  color="tertiary" fill="clear">Presupuesto</ion-button></ion-item>
+    <ion-item button (click)="cerrarSesion()" ><ion-icon name="exit-outline" slot="start" color="danger"></ion-icon><ion-button slot="end" color="danger" fill="clear">{{ 'complex.lista_cerrar_sesion' | translate }}</ion-button></ion-item>
+  </ion-list>
+</ion-content>

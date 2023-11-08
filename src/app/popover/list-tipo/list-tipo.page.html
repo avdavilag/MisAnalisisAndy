@@ -1,0 +1,82 @@
+
+  <ion-toolbar class="ion-text-center">
+    <ion-searchbar *ngIf="tipo && tipo!='plan' && tipo!='sts'" mode="ios" placeholder="Buscador" (ionChange)="searchData()" [value]="input_search" [(ngModel)]="input_search"></ion-searchbar>
+    <ion-searchbar *ngIf="tipo && tipo=='plan' && tipo!='sts'" mode="ios" placeholder="Buscador" (ionChange)="searchPlan()" [value]="input_search" [(ngModel)]="input_search"></ion-searchbar>
+    <ion-title *ngIf="tipo=='sts'">Estados</ion-title>
+  </ion-toolbar>
+  
+
+<ion-content>
+<ion-list *ngIf="list && this.tipo!='plan' && this.tipo!='sts'">
+  <ion-item (click)="selectItem(null)">
+    <ion-text class="text-custom" >
+      <ion-row >
+        <ion-col class="codigo" size="2">
+          
+        </ion-col>
+        <ion-col class="ion-text-end ion-text-wrap">
+          Todos
+        </ion-col>
+      </ion-row>
+    </ion-text>
+
+  </ion-item>
+  <ion-item  *ngFor="let item of list" (click)="selectItem(item)">
+    <ion-text class="text-custom" >
+      <ion-row >
+        <ion-col class="codigo" size="2">
+          {{(this.tipo=='ref')?item.cod_ref:(this.tipo=='med')?item.cod_med:(this.tipo=='uni')?item.cod_uni:''}}
+        </ion-col>
+        <ion-col class="ion-text-end ion-text-wrap">
+          {{(this.tipo=='ref')?item.des_ref:(this.tipo=='med')?item.nom_med:(this.tipo=='uni')?item.des_uni:''}}
+        </ion-col>
+      </ion-row>
+    </ion-text>
+
+  </ion-item>
+</ion-list>
+<ion-list *ngIf="list_plan_temp && this.tipo=='plan'">
+    <ion-item  (click)="selectItem(null)">
+    <ion-text class="ion-text-end">
+      todos
+    </ion-text>
+
+</ion-item>
+      <div *ngFor="let item of list_plan_temp ">
+        <ion-item disabled=true>
+             <ion-text  class="ion-text-start">
+              <small>{{item.des_seg}}</small>
+             </ion-text>
+          
+        </ion-item>
+        <ion-item  *ngFor="let item2 of item.Plan" (click)="selectItem(item2)">
+          <ion-text class="ion-text-start">
+            {{item2.id_plan}}
+          </ion-text>    
+          <ion-text class="ion-text-end">
+              {{item2.des_plan}}
+              </ion-text>
+              
+        </ion-item>
+      </div>
+ 
+</ion-list>
+
+<ion-list *ngIf="list && this.tipo=='sts'">
+  <ion-item *ngFor="let item of list">
+    <ion-checkbox labelPlacement="start" [checked]="item.checked"  (ionChange)="checkedEstatus(item)" >{{item.des_sts}}</ion-checkbox> 
+  </ion-item>
+</ion-list>
+
+
+<ion-item lines="none" *ngIf="list && list.length==0">
+  No se encuentran resultados
+
+</ion-item>
+
+<ion-row>
+  <ion-col class="ion-text-enc">
+    <ion-button fill="clear" (click)="selectItem(null)" >Aceptar</ion-button>
+  </ion-col>
+</ion-row>
+</ion-content>

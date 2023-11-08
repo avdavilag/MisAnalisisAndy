@@ -1,0 +1,68 @@
+<ion-toolbar class="ion-text-center toolbar-modal">
+  {{'tags.profiles'|translate}}
+  <ion-button color="danger" fill="clean" lines="none" (click)="dismiss()" slot="end">
+    <ion-icon name="close" color="danger"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+<ion-content>
+  <ion-list  >
+    <ion-item *ngFor="let item of listPerfiles; let i = index ">
+      <ion-label  class="labelnumber">
+        {{i+1}}.  
+      </ion-label>
+      <ion-label (click)="seleccionarPerfil(item)" >
+        {{item.nombre}}
+      </ion-label>
+      <ion-button (click)="seleccionarPerfil(item)"  color="success" fill="clear"> <ion-icon  name="checkmark-circle"></ion-icon>  <!--<ion-text *ngIf="!this.mobile"> Seleccionar</ion-text> --> </ion-button>
+      <ion-button (click)="presentModalActualizarPerfil(item.id_perfiles)"   color="secondary" fill="clear"> <ion-icon   name="eye-outline"></ion-icon>  </ion-button>
+      <ion-button  (click)="borrarPerfil(item)" borrarPerfil color="danger" fill="clear"> <ion-icon name="trash"> </ion-icon>  </ion-button>
+    </ion-item>
+    
+    
+  </ion-list>
+  <div class="divVacio" *ngIf="listPerfiles.length==0">
+    <ion-label>No tiene Perfiles registrados</ion-label>
+  </div>
+  <!--
+    <ion-item>
+      <ion-label>
+        General
+      </ion-label>
+      <ion-button size="small" color="success"><ion-icon slot="start"   name="send"></ion-icon>Escoger</ion-button>
+      <ion-button size="small" color="secondary"><ion-icon slot="start"  name="eye"></ion-icon>Editar</ion-button>
+      <ion-button size="small" color="danger"><ion-icon  slot="start" name="trash"> </ion-icon>Eliminar</ion-button>
+    </ion-item>
+  
+  <ion-grid class="rowPerfiles">
+    <ion-row>
+      <ion-col class="perfilTitle" size="4">General</ion-col>
+      <ion-col class="ion-text-end" size="8">
+       
+      </ion-col>
+     
+    </ion-row>
+    <ion-row>
+      <ion-col class="perfilTitle" size="4">Hemologico</ion-col>
+      <ion-col class="ion-text-end" size="8">
+        <ion-button size="small" color="success"><ion-icon  name="send"></ion-icon>Escoger</ion-button>
+        <ion-button size="small" color="secondary"><ion-icon  name="eye"></ion-icon>Editar</ion-button>
+        <ion-button size="small" color="danger"><ion-icon  name="trash"> </ion-icon>Eliminar</ion-button>
+      </ion-col>
+     
+    </ion-row> <ion-row>
+      <ion-col class="perfilTitle" size="4">Simple</ion-col>
+      <ion-col class="ion-text-end" size="8">
+        <ion-button size="small" color="success"><ion-icon  name="send"></ion-icon>Escoger</ion-button>
+        <ion-button size="small" color="secondary"><ion-icon  name="eye"></ion-icon>Editar</ion-button>
+        <ion-button size="small" color="danger"><ion-icon  name="trash"> </ion-icon>Eliminar</ion-button>
+      </ion-col>
+     
+    </ion-row>
+  </ion-grid>
+  -->
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button  color="success" (click)="presentModalNuevoPerfil()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+</ion-content>

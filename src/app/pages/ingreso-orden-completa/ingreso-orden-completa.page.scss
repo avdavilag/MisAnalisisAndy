@@ -1,0 +1,413 @@
+.grid_content{
+  height: 100%;
+  .ion-row_custom{
+    height: 100%;
+    ion-col
+    {
+    //  height: 100%;
+    }
+    .container_div{
+      background: white;
+      height: 100%;
+      width: 100%;
+      margin-left: 0.5px;
+      margin-right:0.5px;
+      border: solid 0.5px #e9e8e8;
+    border-radius: 10px;
+    }
+  }
+}
+
+.grid_peticiones{
+ // height: 70%;
+}
+
+.item-inner {
+
+}
+.toolbar_container{
+  --background:#3a6dcb;
+  color: white;
+  --min-height: 47px;
+    height: 47px;
+}
+.toolbar_custom{
+  --background: #35d2d0;
+  color: white;
+  --min-height: 35px;
+}
+.full_width{
+    width: 100%;
+    
+}
+.full_width1{
+  width: 200%;
+  margin: 0px -50px;
+}
+
+.full_height{
+  height: 100%;
+}
+.card_form{
+    height: 99%;
+    overflow: scroll;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+
+.margin_col{
+    margin: auto;
+}
+
+.segmente_custom ion-segment-button::part(indicator-background) {
+    background: #3a6dcb;
+  }
+  
+  /* Material Design styles */
+  .segmente_custom ion-segment-button.md::part(native) {
+    color: #000;
+  }
+  
+  .segment-button-checked.md::part(native) {
+    color: #3a6dcb;
+  }
+  
+  .segmente_custom ion-segment-button.md::part(indicator-background) {
+    height: 4px;
+  }
+  
+  /* iOS styles */
+  .segmente_custom ion-segment-button.ios::part(native) {
+    color: #3a6dcb;
+  }
+  
+  .segmente_custom .segment-button-checked.ios::part(native) {
+    color: #fff;
+  }
+  
+  .segmente_custom ion-segment-button.ios::part(indicator-background) {
+    border-radius: 5px;
+  }
+
+  .row-height-principal{
+height: 60%;
+overflow: scroll;
+  }
+
+  .row-height-secondary{
+    height: 39%;
+      }
+
+
+  .item_custom2{
+    --height: 19px !important;
+    --border-width: 0.5px;
+    --max-height: 19px !important;
+    --min-height: 19px !important;
+    margin: 5px 5px;
+    --border-radius: 7px;
+    --inner-padding-top:0px;
+    --inner-padding-bottom:0px;
+    --padding-bottom:0px;
+    --padding-top:0px;
+    ion-icon{
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+    ion-input{
+      --min-height: 40px !important;
+      min-height: 40px !important;
+    }
+  }
+  .centered-input {
+    text-align: center;
+    width: 100%;
+    color: #6d6d6d;
+    font-weight: 900;
+    font-size: x-large;
+  }
+  .label_custom
+{
+    color: #6d6d6d;
+    font-weight: 600;
+    font-size: small;
+    padding-left: 9px;
+}
+
+.label_cedula_tercer_usuario
+{
+    color: #6d6d6d;
+    font-weight: 600;
+    font-size: small;
+    padding-left: 2%;       
+}
+
+.listadesplegable{
+  position: absolute;
+  border: solid 0.5px #cecece;
+    overflow-y: scroll;
+   // width: 462px;
+    z-index: 999;
+    background: white;
+    height: 224px;
+    width: 500px;
+    font-weight: 700;
+    font-size: smaller;
+    border-radius: 4px;
+    margin-left: 15px;
+    color: #646464;
+    box-shadow: 2px 2px 5px #3776b5;
+  ion-col{margin: auto;}
+  ion-row{
+      border-bottom: solid 0.5px rgb(194, 194, 194);
+  }
+  ion-row:hover{
+      background-color: rgb(209, 209, 209);
+  }
+
+}
+
+.card_pac{
+  background: #ecf6ff;
+    border-right: solid 0.5px #c7b9b9;
+    border-bottom: solid 0.5px #c7b9b9;
+    ion-item{
+      --background:transparent;
+    }
+}
+
+.ion-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.grid_custom{
+  height: 100%;
+  .ion-row_c{
+    height: 100%;
+    
+  }
+
+  .vertical-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+  }
+  .ion-col_c{
+      height: 100%;
+    //  margin: auto;
+    }
+  }
+  
+  .centered-container {
+    display: flex;
+  flex-direction: column;
+  align-items: center; 
+  text-align: center; 
+  justify-content: center; 
+  }
+  
+  .small-input {
+    min-height: 18px;
+  }
+  .blue-background {
+    background-color: #20b2aa;
+    height: 45px;    
+  }  
+  .green-background {    
+    background-color: #0ec4ba;
+    height: 45px;
+}   
+  .button-container {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header_tbl{
+    background: #3db9b3;
+    color: white;
+    font-weight: 500;
+  }
+
+
+  .header_tbl_parte_desuentos{
+    background:  #ededed;
+    color: #a3a3a3;
+    font-weight: 500;
+    border-radius: 6px;
+  }
+  
+  .row_tbl{
+    color: black;
+      border-bottom: solid 0.5px #ede5e5;
+  }
+
+  .row_secondary_inside{
+    height: 97%;
+    .col_secondary_inside{
+height: 70%;
+    }
+    .col_secondary_inside2{
+      height: 30%;
+          }
+  }
+
+
+  .pac_flag{
+    width: 90%;
+    height: 30px;
+    background: #3b359d;
+    position: fixed;
+    z-index: 99999;
+    right: 0;
+    padding: 5px;
+    border-bottom-left-radius: 10px;
+    color: white;
+    box-shadow: -3px 2px 7px #969595;
+  }
+
+  .badge_notification{
+    position: absolute;
+    animation: expand 2s infinite, fade-in 1s ;
+  }
+
+
+  @keyframes expand { 
+    0% {transform: scale(.9);}
+    50%{transform: scale(1);}
+    100% {transform: scale(.9);}
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .horizontal-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .test{
+    --inner-padding-top: 0px;
+    --min-height: 40px;
+    --inner-padding-bottom: 0px;
+ion-input{
+  --padding-top: 0px;
+    --padding-bottom: 0px;
+}
+  }
+
+  .white-icon {
+    color: white !important; /* Usa !important si es necesario para anular otros estilos */
+  }
+
+.btn_opc{
+  height: 63px;
+  padding: 5px;
+  margin: 2px -5px;
+  border-radius: 00px;
+  text-align: center;
+  ion-icon{
+    font-size: 25px;
+    text-align: center;
+  }
+  ion-text{
+    text-align: center;
+  }
+}
+
+.btn_pago{
+  padding: 5px;
+  height: 80px;
+  width: 143px;
+  background: #51bfb1;
+  .price{
+    font-size: x-large;
+  }
+.description{
+position: absolute;
+margin-right: 0;
+right: 15px;
+}
+}
+
+.price_m_btn{
+  position: fixed;
+  z-index: 9999999;
+  bottom: 0;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  font-size: unset;
+}
+
+.div_container_tbl{
+  height: 276px;
+    overflow-y: scroll;
+    scrollbar-width: thin; /* Ancho del scrollbar */
+  scrollbar-color: #250000 #924242; /* 
+
+    /* Estilo personalizado para el scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* Ancho del scrollbar */
+  background-color: #5a0f0f; /* Color de fondo del scrollbar */
+}
+
+/* Estilo del pulgar (thumb) del scrollbar */
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color del pulgar del scrollbar */
+  border-radius: 4px; /* Radio de borde del pulgar del scrollbar */
+}
+
+/* Estilo del pulgar (thumb) del scrollbar cuando se está arrastrando */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color del pulgar del scrollbar al pasar el mouse */
+}
+
+/* Estilo de la pista (track) del scrollbar */
+::-webkit-scrollbar-track {
+  background-color: #520f0f; /* Color de fondo de la pista del scrollbar */
+}
+}
+
+.botoncaja{
+  // width: 227px;
+  background: #3b359d;
+  color:white;
+}
+#miDiv {
+  overflow-y: scroll; /* Hace visible el scrollbar vertical */
+  scrollbar-width: thin; /* Ancho del scrollbar */
+  scrollbar-color: #2d405c #f5f5f5; /* Color del pulgar y pista del scrollbar */
+}
+
+/* Estilo del pulgar (thumb) del scrollbar */
+#miDiv::-webkit-scrollbar-thumb {
+  background-color: #758caf; /* Color del pulgar del scrollbar */
+}
+
+/* Estilo del pulgar (thumb) del scrollbar cuando se está arrastrando */
+#miDiv::-webkit-scrollbar-thumb:hover {
+  background-color: #2d405c; /* Color del pulgar del scrollbar al pasar el mouse */
+}
+
+/* Estilo de la pista (track) del scrollbar */
+#miDiv::-webkit-scrollbar-track {
+  background-color: #f5f5f5; /* Color de fondo de la pista del scrollbar */
+}
+///Estilo de paddding de col Cambiar Pacientes//////////////////////////////////////
+ion-col.ion-text-center.ion-justify-content-center.ion-align-items-center {
+  padding: 0;
+}

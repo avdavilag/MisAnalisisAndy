@@ -1,0 +1,30 @@
+.invoice-item {
+    display: inline-block;
+    width: 50%;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+  }
+  .tabs-buttons{
+
+    width: 100%;
+    display: inline-flex;
+    place-content: end;
+}
+.btn-user{
+    color: #6eacaa;
+    font-weight: bold;
+    border-left: solid 0.5px #eeeeee;
+}
+.contenedor_img_toolbar{
+    padding-left: 12px;
+}
+.custom-total-label {
+    font-weight: bold; 
+    color: dimgrey; 
+  }
+  .total-amount {
+    font-style: italic;
+    font-weight: bold;
+    color: black; 
+  }

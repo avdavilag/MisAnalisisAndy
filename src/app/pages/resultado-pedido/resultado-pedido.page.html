@@ -1,0 +1,93 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>Usuarios Disponibles</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+
+<ion-content>
+  <div class="contenido">
+  <ion-card class="ion-text-center">
+    <ion-button  color="danger" expand="full" class="close" (click)="back()" shape='' size='small'><ion-icon name="close"></ion-icon></ion-button>
+  
+    <div >
+      <!--
+      <h2>{{ 'simple.Bienvenido' | translate }}</h2>
+      <p >sss</p>
+      -->
+      <div class="icono">
+        <!--PREVIENE EL CACHE-->
+        <img [src]="'assets/img/logo_intra.png?date='+fecha_actual"  width="284" height="81" alt="logo">
+      </div>
+      <h2>PEDIDO {{orden.id_pedidos}}</h2>
+    </div>
+   <ion-list lines="none">
+
+      <ion-item *ngIf="orden.Paciente.nombre_completo&&orden.Paciente.nombre_completo!=''">
+        <ion-icon name="person-outline" slot="start" size="large"></ion-icon>
+        <ion-text>
+          <!--    <small>{{ 'complex.result_ord_nombres_paciente' | translate |uppercase}}</small> -->
+          <p>{{orden.Paciente.nombre_completo}} </p>
+        </ion-text>
+      </ion-item>
+
+      <ion-item *ngIf="orden.Paciente.id_pac&&orden.Paciente.id_pac!=''">
+        <ion-icon  src="assets/icon/id-card.svg" slot="start" size="large"></ion-icon>
+        <ion-text>
+<!--           <small>{{ 'complex.result_ord_doc_paciente' | translate |uppercase}}</small>-->
+          <p>{{orden.Paciente.id_pac}}</p>
+        </ion-text>
+      </ion-item>
+
+      <ion-item *ngIf="orden.fec_examen&&orden.fec_examen!=''">
+        <ion-icon name="calendar-outline" slot="start" size="large"></ion-icon>
+        <ion-text>
+      <!--  <small>{{ 'simple.Fecha' | translate |uppercase}} {{ 'simple.Orden' | translate |uppercase}}</small>-->
+          <p>{{orden.fec_examen}}</p>
+        </ion-text>
+      </ion-item>
+      
+      <ion-item  *ngIf="orden.nom_med&&orden.nom_med!=''">
+        <ion-icon src="assets/icon/doctor3.svg"  slot="start" size="large"></ion-icon>
+        <ion-text>
+          <!--
+          <small>{{ 'simple.Doctor' | translate |uppercase }}</small>-->
+          <p>Dr(a) {{orden.nom_med}}</p>
+        </ion-text>
+      </ion-item>
+  <!--  
+      <ion-item *ngFor="let entidad of entidades" >
+        <ion-label>{{entidad.nombre}}</ion-label>
+        <ion-radio slot="end" [value]="entidad" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Anthony Patricio Valverde Quispe</ion-label>
+        <ion-radio slot="end" value="griff"></ion-radio>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Mario Castañeda Palacios</ion-label>
+        <ion-radio slot="end" value="buford"></ion-radio>
+      </ion-item>
+      -->
+      <div class="btns_end" *ngIf="pdf_saved">
+        <ion-button size="default" color="secondary" expand="block" (click)="imprimir()" class="btn_ver" >VER INFORME</ion-button>
+      
+       </div>
+   </ion-list>
+
+  
+   <ion-item lines="none">
+     
+  
+     <!--<ion-back-button defaultHref=""></ion-back-button> -->
+     <!-- 
+ <ion-button slot="start" size="default" color="secondary" fill="outline" (click)="validaEnvio()" class="btn_enviar" >{{ 'complex.result_ord_enviar_mail' | translate |uppercase }}</ion-button>
+    
+     -->
+   </ion-item>
+        </ion-card>
+      </div>
+  
+  </ion-content>
+  

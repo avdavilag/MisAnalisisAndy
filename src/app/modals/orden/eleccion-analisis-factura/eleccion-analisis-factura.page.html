@@ -1,0 +1,58 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    
+    <ion-title>Facturar</ion-title>
+ 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-toolbar>
+      <div class="contenedor_img_toolbar ion-text-center">
+        <img class="fondo_logo" [src]="'assets/img/logo.png'" alt="logo" height="50">
+        <ion-buttons slot="end">{{val_ord}}</ion-buttons>
+          </div>
+  </ion-toolbar>
+
+  <ion-row class="ion-margin">
+  <ion-col class="ion-text-start" size="12" size-sm="12" size-xm="12" size-md="12" size-lg="12" size-xl="12">
+  <ion-list>
+    <ion-item *ngFor="let analisis of array_analisis">
+      <ion-label class="invoice-item">{{ analisis.cod_ana }}</ion-label>
+      <ion-label class="invoice-item">{{ analisis.valor_pet | currency:'USD' }}</ion-label>
+      <ion-checkbox (ionChange)="toggleSelection(analisis)" [(ngModel)]="analisis.selected"></ion-checkbox>
+       </ion-item>
+  </ion-list>
+</ion-col>
+</ion-row>
+</ion-content>
+
+<ion-row class="ion-margin"> 
+  <ion-col class="ion-text-start" size="12" size-sm="12" size-xm="12" size-md="12" size-lg="12" size-xl="12">
+<ion-footer>
+  <ion-toolbar>
+    <!-- Total -->
+    <!-- <div class="total-section">
+      <ion-label class="total-label ion-text-center">Total:</ion-label>
+             <ion-label class="total-amount">{{ valor_total_json_factura | currency:'USD' }}</ion-label>
+   <ion-label class="total-amount ion-text-end">{{ 120 | currency:'USD' }}</ion-label>
+    </div> -->
+
+
+    <div class="total-section">
+      <ion-row>
+        <ion-col size="10" class="ion-text-center">
+          <ion-label class="custom-total-label">Total de la Factura:</ion-label>
+        </ion-col>
+        <ion-col size="2" class="ion-text-end">
+          <ion-label class="total-amount">{{ valor_total_json_factura | currency:'USD' }}</ion-label>
+        </ion-col>
+      </ion-row>
+    </div>
+
+       <!-- Botón "Realizar Factura" -->
+    <ion-button expand="block" (click)="envio_factura_backend()">Realizar Factura</ion-button>
+  </ion-toolbar>
+</ion-footer>
+</ion-col>
+</ion-row>

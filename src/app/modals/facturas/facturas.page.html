@@ -1,0 +1,53 @@
+
+  <ion-toolbar class="ion-text-center toolbar-modal">
+    Documentos Disponibles
+    <ion-button color="danger" fill="clean" lines="none" (click)="dismiss()" slot="end">
+      <ion-icon name="close" color="danger"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+
+
+<ion-content>
+  
+  <ion-item *ngFor="let item of facturas">
+     <ion-text class="width_complet">
+      <ion-row>
+        <ion-col size="8">
+          <ion-row>
+            <ion-col size="12">
+            <ion-text color="primary">
+              <ion-icon name="person-circle-outline"></ion-icon>
+              {{item.cliente}}
+            </ion-text>  
+             
+            </ion-col>
+            <ion-col size="12" class="text_footer">
+              <ion-text>
+                <ion-icon name="calendar-outline"></ion-icon> 
+              <small>{{modificaFecha(item.fecha) |date:"short"}}</small>
+              </ion-text>  
+            </ion-col>
+            <ion-col size="12">
+              <ion-badge color="tertiary">{{item.tipo_documento}}</ion-badge> 
+              &nbsp;
+              <ion-text class="colornro">
+                  {{item.numero}}
+              </ion-text>
+            </ion-col>
+            
+          </ion-row>
+        </ion-col>
+        <ion-col class="colIcon">
+          <ion-button fill="clear" (click)="descargarxml(item)">
+            <ion-icon slot="icon-only"src="assets/icon/xml_icon.svg" size="large"></ion-icon>
+          </ion-button>
+          
+          <ion-button fill="clear" (click)="creaPDF(item)" > 
+            <ion-icon src="assets/icon/download-pdf.svg" size="large"></ion-icon>
+          </ion-button>
+          
+        </ion-col>
+      </ion-row>
+     </ion-text>
+  </ion-item>
+</ion-content>

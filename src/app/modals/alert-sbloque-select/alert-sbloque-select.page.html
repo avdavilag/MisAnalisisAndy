@@ -1,0 +1,17 @@
+<ion-content>
+  <ion-toolbar>
+    <ion-title>Escoja un Filtro</ion-title>
+  </ion-toolbar>
+  <ion-card-subtitle>
+    Seleccione una opción
+  </ion-card-subtitle>
+  <ion-list>
+    <ion-item *ngFor="let item of list_tipo_select" button (click)="select(item)" class="ion-text-center">
+      <ion-text color="primary">{{item.des}}</ion-text>
+    </ion-item>
+  </ion-list>
+  <!--
+<ion-button color="success" fill="outline" (click)="aceptar()">Aceptar</ion-button>
+<ion-button fill="none" (click)="dismiss()">Cancelar</ion-button>
+-->
+</ion-content>

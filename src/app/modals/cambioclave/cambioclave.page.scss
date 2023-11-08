@@ -1,0 +1,83 @@
+.center_container{
+    position: absolute;
+    height: fit-content;
+    width: fit-content;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.label{
+    width: fit-content;
+    background: white;
+    z-index: 100;
+    margin-left: 10px;
+}
+
+
+.item_custom{
+    --min-height: 10px;
+    padding: 0;
+      border: solid 1.8px #cacaca;
+      border-bottom: solid 2px #929191;
+      border-right: solid 2px #929191;
+      margin: 5px 10px;
+      border-radius: 5px;
+      --background: #fbfbfb;
+      color: black;
+  }
+  
+  .item_custom ion-icon{
+    color: black;
+    font-size: unset;
+    margin: auto;
+    margin-right: 10px;
+  }
+  .item_custom ion-input{
+    text-transform: uppercase;
+    font-size: revert;
+    color: black;
+  }
+  
+  .item_custom:hover{
+    border-bottom: solid 2px #4268ec;
+ 
+      border-right: solid 2px #4268ec;
+    
+     ion-icon{
+      color: #4268ec !important;
+    }
+    
+  }
+  
+  .label_custom
+{
+    color: #6d6d6d;
+    font-weight: 600;
+    font-size: small;
+    padding-left: 9px;
+}
+
+.label_custom_correo{
+  text-transform: initial !important;
+}
+
+.label_text{
+    padding: 0px 18px;
+    color: #438be5;
+}
+
+.span_custom{
+    right: 0;
+    //position: absolute;
+    padding-right: 17px;
+}
+
+.col_form{
+  padding: initial;
+    margin: initial;
+    padding-bottom: 15px;
+    padding-left: 7px;
+}

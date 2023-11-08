@@ -1,0 +1,21 @@
+
+
+<ion-content class="ion-padding">
+  <div class="content">
+    <div class="content-html" [innerHTML]="htmlContent"></div>
+
+  </div>
+ 
+
+  <div class="checkbox">
+        <input type="checkbox" labelPlacement="end" [(ngModel)]="checkButton"> He leído y acepto la <a href="./docs/policy.html" target="_blank" >política de privacidad</a>
+  </div>
+  <ion-row class="btn-stack">
+    <ion-col>
+      <ion-button color="danger" fill="outline" (click)="cancel()">CANCELAR</ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button color="success" (click)="acept()">ENTRAR</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

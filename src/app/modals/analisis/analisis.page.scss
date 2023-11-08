@@ -1,0 +1,95 @@
+ion-content{
+    --background:white;
+  }
+  
+  .item_custom{
+    --min-height: 10px;
+    padding: 0;
+      border: solid 1.3px #dbdadf;
+      margin: 5px 5px;
+      border-radius: 5px;
+      --background: #fbfbfb;
+      color: black;
+  }
+  
+  .item_custom ion-icon{
+    color: black;
+    font-size: unset;
+    margin: auto;
+    margin-right: 10px;
+  }
+  .item_custom ion-input{
+  //  text-transform: uppercase;
+    font-size: revert;
+    color: black;
+      --min-height: 40px !important;
+      min-height: 40px !important;
+    
+  }
+
+  .item_custom:hover{
+    border-bottom: solid 2px #4268ec;
+    
+     ion-icon{
+      color: #4268ec !important;
+    }
+    
+  }
+  
+  
+    ion-col{
+        margin: auto;
+    }
+  
+    .tblstripped ion-row{
+      
+      // background-color: rgba(243, 72, 72, 0.247);
+      background-color:#ffffff;
+     }
+     .tblstripped ion-row:nth-child(even) {
+      // background-color: rgba(255, 0, 0, 0.466);
+      
+      background-color:#f0f0f0;
+     }
+  
+     .rowcustom{
+         ion-label{
+          //font-size: 17px;
+          small{
+              font-weight: bold;
+          }
+         }
+         ion-icon{
+          font-size: xx-large ;
+      
+         }
+     }
+  
+     ion-card-header{
+      background: #f5f1dc;
+      font-weight: bold;
+     }
+  
+     .toolbarcustom{
+      --background: rgb(244 240 240);
+      color: #7a7a7a;
+  
+     }
+  
+     ion-chip{
+       ion-icon{
+        font-size: x-large;
+       }
+     }
+
+     .grid_analisis{
+        height: 77%;
+        overflow: scroll;
+     }
+
+     .colmiddle{
+        min-height: 300px;
+        max-height: 536px;
+        overflow: scroll;
+        margin-top: 0;
+     }

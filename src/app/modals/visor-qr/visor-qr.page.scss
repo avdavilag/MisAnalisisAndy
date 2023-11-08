@@ -1,0 +1,21 @@
+ion-content{
+    align-items: center;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+}
+ion-card{
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    height: -moz-fill-available;
+    width: -moz-fill-available;
+    margin-top: 37px;
+   
+}
+.btn_cerrar{
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+}

@@ -1,0 +1,39 @@
+
+.alert-login{
+    //border-radius: 25px!important;
+    padding: 20px;
+    padding-top: 30px;
+    background: #ff4747;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+  
+    .alert-message{
+      align-items: center!important;
+      font-size: x-large;
+      color: white;
+      ion-icon{
+        font-size: 50px;
+        padding-bottom: 10px;
+      }
+      
+    }
+    .alert-button-group{
+      justify-content: center;
+      .alert-button{
+        color: white;
+        font-size: large;
+      }
+    }
+  }
+
+  .btn_cerrar{
+    //border: solid 1px #fff;
+   
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+}

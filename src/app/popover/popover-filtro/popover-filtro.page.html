@@ -1,0 +1,9 @@
+<ion-list lines="none">
+<ion-item button  (click)="selectOption('-1')" >{{ 'complex.popover_filtro_todos' | translate }}</ion-item>
+<ion-item button  (click)="selectOption('0')" >{{ 'complex.popover_filtro_hoy' | translate }}</ion-item>
+<ion-item button  (click)="selectOption('1')">{{ 'complex.popover_filtro_ayer' | translate }}</ion-item>
+<ion-item button  (click)="selectOption('30')"lines="full">{{ 'complex.popover_filtro_ultimos30' | translate }}</ion-item>
+<!-- 
+<ion-item button  (click)="selectOption('99')" >{{ 'simple.Personalizar' | translate }}</ion-item>
+-->
+</ion-list>

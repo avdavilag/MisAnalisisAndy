@@ -1,0 +1,29 @@
+<div class="popover">
+  <p>{{ 'simple.Criterio' | translate }}</p>
+  <ion-list lines="none">
+    <ion-radio-group [(ngModel)]="criterio" (click)="ordena()">
+      <ion-item>
+        <ion-label>{{ 'simple.Ascendente' | translate }}</ion-label>
+        <ion-radio slot="start" value="A"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'simple.Descendente' | translate }}</ion-label>
+        <ion-radio slot="start" value="D"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+  <p>{{ 'complex.popover_orden_titulo' | translate }}</p>
+  <ion-list lines="none" *ngIf="tipo!='pedido'">
+    <ion-item button (click)="selectOption('fecha')">{{ 'simple.Fecha' | translate }}</ion-item>
+    <ion-item button (click)="selectOption('paciente')">{{ 'simple.Paciente' | translate }}</ion-item>
+    <ion-item button (click)="selectOption('doctor')">{{ 'simple.Doctor' | translate }}</ion-item>
+    <ion-item button (click)="selectOption('orden')">{{ 'simple.Orden' | translate }}</ion-item>
+  </ion-list>
+  <ion-list lines="none" *ngIf="tipo=='pedido'">
+    <ion-item button (click)="selectOption('fecha')">{{ 'simple.Fecha' | translate }}</ion-item>
+    <ion-item button (click)="selectOption('paciente')">{{ 'simple.Paciente' | translate }}</ion-item>
+    <ion-item button (click)="selectOption('orden')">Id. {{ 'simple.Pedido' | translate }}</ion-item>
+  </ion-list>
+
+</div>

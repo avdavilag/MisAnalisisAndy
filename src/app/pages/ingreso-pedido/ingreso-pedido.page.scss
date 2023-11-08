@@ -1,0 +1,373 @@
+.logo{
+    width: 100px;
+    height: 50px;
+}
+
+.gridAnalisis{
+    color: black;
+    .rowtitle{
+        color: white;
+        font-weight: 700;
+        background-color: rgb(149, 149, 218);
+    }
+    /*
+    ion-row{
+        background-color: rgb(255, 255, 255);
+      }
+      ion-row:nth-child(even) {
+        background-color: rgb(233, 232, 232);
+      }
+      */
+}
+
+.itemcedula{
+    width: 300px;
+}
+
+
+.item_custom{
+    --min-height: 10px;
+    padding: 0;
+      border: solid 1.8px #cacaca;
+      border-bottom: solid 2px #929191;
+      border-right: solid 2px #929191;
+      margin: 5px 10px;
+      border-radius: 5px;
+      --background: #fbfbfb;
+      color: black;
+  }
+  
+  .item_custom ion-icon{
+    color: black;
+    font-size: unset;
+    margin: auto;
+    margin-right: 10px;
+  }
+  .item_custom ion-input{
+    text-transform: uppercase;
+    font-size: revert;
+    color: black;
+  }
+  
+  .item_custom ion-text{
+    height: 30px;
+    text-transform: uppercase;
+    font-size: revert;
+    color: black;
+  }
+
+  .item_custom:hover{
+    border-bottom: solid 2px #4268ec;
+ 
+      border-right: solid 2px #4268ec;
+    
+     ion-icon{
+      color: #4268ec !important;
+    }
+    
+  }
+  
+  .label_custom
+{
+    color: #6d6d6d;
+    font-weight: 600;
+    font-size: small;
+    padding-left: 9px;
+}
+
+.item_listado{
+    font-size: 15px;
+    font-weight: 600;
+    border-right: solid 0.5px #e6e5e5;
+}
+
+ion-content{
+  --background: #fdfdfd;
+}
+
+.gridcontent{
+  height: 99%;
+  ion-row{
+    height: 100%;
+    ion-col ion-card{height: 100%;}
+  }
+}
+
+
+.listadesplegable{
+  //position: fixed;
+  border: solid 0.5px #cecece;
+    overflow-y: scroll;
+   // width: 462px;
+    z-index: 999;
+    background: white;
+    height: 110px;
+    font-weight: 700;
+    font-size: smaller;
+    border-radius: 4px;
+    margin-left: 15px;
+    color: #646464;
+    box-shadow: 2px 2px 5px #3776b5;
+  ion-col{margin: auto;}
+  ion-row{
+      border-bottom: solid 0.5px rgb(194, 194, 194);
+  }
+  ion-row:hover{
+      background-color: rgb(209, 209, 209);
+  }
+
+}
+
+.listadesplegableanalisis{
+  position: absolute;
+ // height: fit-content;
+}
+
+.listaunidad{
+  height: 20% !important;
+}
+
+.rowcustom{
+  font-size: 14px;
+    font-weight: bolder;
+    border-right: solid #e1e1e1 0.5px;
+    border-bottom: solid 0.5px #e1e1e1;
+}
+
+ion-segment-button{
+  font-size: 9px;
+    font-weight: 700;
+}
+
+
+@media only screen and (min-height: 768px) { 
+  ion-segment-button{
+    font-size: 9px;
+      font-weight: 700;
+  }
+ }
+  
+   /* Large devices (laptops/desktops, 992px and up) */
+   @media only screen and (min-height: 992px) {
+    ion-segment-button{
+      font-size: 15px;
+        font-weight: 700;
+    } 
+  }
+
+   
+   /* Extra large devices (large laptops and desktops, 1200px and up) */
+   @media only screen and (min-height: 1200px) {
+    ion-segment-button{
+      font-size: 19px;
+        font-weight: 700;
+    }
+    }
+
+.row_card{
+  height: 97.8%;
+}
+
+.segment_custom{
+  --background:#f9f9f9;
+  ion-segment-button{
+    --background-checked: var(--ion-color-primary, #3880ff);
+    --color-checked: white;
+  }
+
+}
+
+
+
+ion-card-header{
+  padding: 0 16px;
+}
+
+.icon_ana{
+  font-size: 25px;
+}
+
+.inputdate{
+  height: 43px;
+      width: 94%;
+      //font-size: large;
+      font-weight: 900;
+      padding-left: 11px ;
+      border: solid 1.8px #cacaca;
+      border-bottom: solid 2px #929191;
+      border-right: solid 2px #929191;
+      margin: 5px 10px;
+      border-radius: 5px;
+      background: #fbfbfb;
+      color: black;
+}
+
+.inputdate:hover{
+  border-bottom: solid 2px #4268ec;
+
+    border-right: solid 2px #4268ec;
+  
+   ion-icon{
+    color: #4268ec !important;
+  }
+  
+}
+
+.unidad{
+  position: absolute;
+} 
+.desplegablediagnostico1{
+  //position: absolute;
+   // top: 185px;
+
+   // position: fixed;
+  //  float: left;
+    z-index: 99999;
+}
+
+.desplegablediagnostico2{
+ // position: absolute;
+  //  top: 130px;
+  //  position: fixed;
+  //  float: left;
+    z-index: 99999;
+}
+
+.franja_usr{
+  width: fit-content;
+  position: fixed;
+  z-index: 9999;
+  background: #ebebeb;
+  padding: 10px;
+  border-bottom-right-radius: 10px;
+  color: #414141;
+  box-shadow: 3px 2px 2px #d9d9d9;
+}
+
+ion-textarea{
+  width: initial;
+}
+
+.fab_button_web{
+  height: 75px;
+  width: 75px;
+  ion-icon{
+    font-size: 35px;
+  }
+}
+
+.row_fec_dis{
+   font-size: 7px;
+   font-weight: 900;
+    color: white;
+    ion-col{
+      color: rgb(231, 231, 231);
+      background: #9385a3;
+      font-size: 13px;
+      border: solid 0.5px #a5a6b1;
+    }
+
+    .selected{
+      color: white;
+      background: #502b6e;
+      font-size: 13px;
+      border: solid 0.5px #a5a6b1;
+    }
+  
+}
+
+
+.div_btnpac{
+  position: absolute;
+  height: 100%;
+  width: 40px;
+  margin: auto;
+  /* padding: 10px; */
+  right: -2px;
+  background: #009be5;
+  border-radius: 5px;
+  z-index: 9999999;
+  color: white;
+ion-icon{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: white !important;
+  font-size: 23px;
+  margin: auto;
+}
+}
+
+ion-toolbar{
+  --min-height: 35px;
+}
+
+.div_container{
+ // height: 100%;
+  ion-row{
+    ion-card{
+      height: 98%;
+    }
+    height: 50%;
+  }
+}
+
+/*
+ion-input {
+  border: solid 1.8px #cacaca;
+  border-bottom: solid 2px #929191;
+  border-right: solid 2px #929191;
+  margin: 5px 0px;
+  border-radius: 5px;
+  --padding-start: 5px!important;
+  padding-left: 5px!important;
+}
+
+ion-input:hover {
+  border-bottom: solid 2px #4268ec;
+  border-right: solid 2px #4268ec;
+  ion-icon {
+    color: #4268ec !important;
+  }
+}
+*/
+
+.row_container{
+ // height: 50%;
+  ion-card{
+    margin-top: 0;
+    margin-bottom: 0    ;
+    height: 98%;
+    overflow-y: scroll;
+    
+   min-height: 330px;
+   // max-height: 332px;
+  }
+}
+
+.card_analisis{
+  
+}
+
+.item_custom2{
+  --height: 19px !important;
+  --border-width: 0.5px;
+  --max-height: 19px !important;
+  --min-height: 19px !important;
+  margin: 5px 5px;
+  --border-radius: 7px;
+  --inner-padding-top:0px;
+  --inner-padding-bottom:0px;
+  --padding-bottom:0px;
+  --padding-top:0px;
+  ion-icon{
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  ion-input{
+    --min-height: 40px !important;
+    min-height: 40px !important;
+  }
+}

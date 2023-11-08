@@ -1,0 +1,9 @@
+<ion-button color="danger" expand="full" (click)="cerrar()" class="btn_cerrar" shape='' size='small'>
+  <ion-icon name="close"></ion-icon>
+</ion-button>
+<ion-content>
+  <ion-card> 
+     <qrcode [qrdata]="url" [width]="512" [errorCorrectionLevel]="'M'" [elementType]="'svg'"></qrcode>
+ 
+  </ion-card>
+</ion-content>

@@ -1,0 +1,19 @@
+<ion-toolbar class="ion-text-center toolbar-modal">
+  Unidad
+  <ion-button color="danger" fill="clean" lines="none" (click)="dismiss()" slot="end">
+    <ion-icon name="close" color="danger"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-searchbar placeholder="Filtrar" (ionChange)="filtro($event)" animated="true"></ion-searchbar>
+<ion-list>
+  <ion-item *ngFor="let item of ListUnidad | filtro:textofiltro" (click)="seleccionUnidad(item)">
+    <ion-label>
+      {{item.des_uni}}
+    </ion-label>
+    <ion-button (click)="seleccionUnidad(item)" size="large" color="success" fill="clear"> <ion-icon  name="checkmark-circle"></ion-icon>  <!--<ion-text *ngIf="!this.mobile"> Seleccionar</ion-text> --> </ion-button>
+      
+  </ion-item>
+</ion-list>
+</ion-content>

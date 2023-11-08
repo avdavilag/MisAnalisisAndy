@@ -1,0 +1,16 @@
+.btn_cerrar {
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    ion-icon {
+      color: #fff;
+    }
+  }
+
+  .col_question{
+    height: 160px;
+    overflow: scroll;
+  }

@@ -1,0 +1,115 @@
+ion-card{
+
+    margin: 20px;
+    //top: 45%;
+    //transform: translateY(-45%);
+     max-width: 720px;
+     h2{
+        font-weight: bold;
+        //color: #004d81
+        color: #7dcbff;
+     }
+      ion-list{
+        max-height: 78vh;
+        overflow: auto;
+        ion-list-header{
+            color: #004d81
+        }
+          ion-item{
+              
+        p{
+          margin: 3px 0 3px 0;
+        }
+        small{
+          font-weight: 800;
+        }
+              padding: 10px;
+              color: #4e4e4e;
+          }
+    
+      }
+    }
+    .close{
+        //margin: 20px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+    }
+    
+    .contenido{
+      display: flex;
+      background-color: rgb(245, 252, 255);
+        align-items: center;
+        justify-content: center;
+        height: 100%; 
+         animation: expand .8s ease forwards;
+    }
+    .btns_end{
+      ion-button{
+      //  margin: 10px 24px 10px 24px;
+        font-size: 2.8vw;
+      //|  margin: 10px;
+      }
+    }
+    @keyframes expand {
+        0% {
+          transform: translateX(1400px);
+        }
+        100% {
+          transform: translateX(0px);
+        }
+    }
+    @media only screen and (min-width: 600px) {
+      .btns_end{
+        ion-button{
+        margin: 0;
+        font-size: initial;
+        }
+        .btn_ver{
+        //  margin-left: 30px;
+        }
+      }
+  
+    ion-card{
+     padding: 30px;    
+    }
+    .contenido{
+      display: flex;
+    }
+        }
+        .icono{
+          padding: 10px;
+          
+  img{
+    max-height: 100px;
+  }
+        }
+  
+        .btns_end{
+          padding: 2vh 24px 2vh 24px;
+        }
+
+        .last-version{
+          width: 100%;
+          text-align: center;
+          //text-align: -webkit-center;
+          padding-left: 30px;
+          padding-right: 30px;
+          border: solid 1px #d1d1d1;
+          background: #ffffca;
+          font-size: x-small;
+          font-weight: bold;
+          color: rgb(110, 110, 110);
+          .versiones{
+            font-weight: normal;
+            //font-size: xx-small;
+            color: rgb(136, 136, 136);
+          }
+          .link{
+            width: 100%;
+            text-align: center;
+            padding-bottom: 8px;
+          }
+        }
+        

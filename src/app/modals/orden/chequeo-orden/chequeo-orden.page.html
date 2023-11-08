@@ -1,0 +1,90 @@
+<ion-toolbar>
+  <ion-title>Entrega</ion-title>
+</ion-toolbar>
+<ion-button color="danger" expand="full" (click)="cerrar()" class="btn_cerrar" shape='' size='small'>
+  <ion-icon name="close"></ion-icon>
+</ion-button>
+
+<ion-content>
+  <ion-segment [value]="this.dataOrden.stat_ord" [(ngModel)]="this.dataOrden.stat_ord" mode="ios">
+    <ion-segment-button class="urgent_segment" value="1">
+      <ion-label>Urgente</ion-label>
+    </ion-segment-button>
+    <ion-segment-button class="pri_segment" value="2">
+      <ion-label>Prioridad</ion-label>
+    </ion-segment-button>
+    <ion-segment-button class="rutina_segment" value="0" color="success">
+      <ion-label>Rutina</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <ion-row>
+    <ion-col size="5">
+      <ion-label class=" label_custom">
+        Observaciones:
+      </ion-label>
+      <ion-item class="item_custom2">
+        <ion-textarea placeholder="Ingrese aqui las observaciones" rows="3" [value]="observaciones_usuario" [(ngModel)]="observaciones_usuario">
+        </ion-textarea>
+      </ion-item>
+
+    </ion-col>
+    <ion-col *ngIf="this.preguntas_ana.length>0" size="7" class="col_question">
+      <ion-label class=" label_custom">
+        Preguntas:
+      </ion-label>
+     <div *ngFor="let item of preguntas_ana">
+      <ion-item class="item_custom2">
+        <ion-label position="stacked" class="ion-text-wrap"> {{item.cod_que}}</ion-label>
+        <ion-input type="text" [(ngModel)]="item.res_que" [value]="item.res_que"></ion-input>
+      </ion-item>
+
+     </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-label class=" label_custom">
+      Fecha de Entrega:
+    </ion-label>
+
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item class="item_custom2" lines="none">
+        <ion-label>1°</ion-label>
+        <input class="input_no_border" type="date" [(ngModel)]="fechaEntrega.fecha1" [value]="fechaEntrega.fecha1">
+      </ion-item>
+
+    </ion-col>
+    <!--
+    <ion-col>
+      <ion-item class="item_custom2" lines="none">
+        <ion-label>2°</ion-label>
+        <input class="input_no_border" type="date" [(ngModel)]="fechaEntrega.fecha2" [value]="fechaEntrega.fecha2">
+      </ion-item>
+
+    </ion-col>
+    -->
+  </ion-row>
+  <ion-row>
+    <ion-col size="6" *ngFor="let item of  optEntrega">
+      <ion-label class=" label_custom">
+        {{item.tag}}
+      </ion-label>
+      <ion-item  lines="none" >
+        <ion-icon slot="start" [name]="item.icon"></ion-icon>
+        <ion-checkbox [checked]="item.checked" [value]="item.checked" [(ngModel)]="item.checked" slot="start" (ionChange)="changeChecked($event)"></ion-checkbox>
+      </ion-item>
+      <ion-item class="item_custom2"  lines="none" *ngIf="item.checked && item.tipo!='pedidomed'">
+        <ion-input [type]="item.tinput" [value]="item.value" [(ngModel)]="item.value" placeholder="Ingrese {{item.tag}}"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  
+  <ion-row>
+    <ion-col class="ion-text-center">
+      <ion-button *ngIf="this.tipo=='S'" (click)="cerrarSave()" >Guardar</ion-button>
+      <ion-button *ngIf="this.tipo=='O'" (click)="cerrar()" >Aceptar</ion-button>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

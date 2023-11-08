@@ -1,0 +1,371 @@
+
+<ion-toolbar class="ion-text-center toolbar-modal">
+  <ion-title class="ion-text-start" style="font-size: 18px; margin: 1px 4px; padding: 5px 8px;">PACIENTE (Solamente confirmacion de Datos)</ion-title>
+  <ion-button color="success" expand="full" class="card_cod_pac" shape='' size='small'>
+   Cod Pac: {{input_cod_pac}}
+  </ion-button>
+    <ion-button color="danger" expand="full" (click)="dismiss()" class="btn_cerrar" shape='' size='small'>
+    <ion-icon name="close"></ion-icon>
+  </ion-button>
+  <ion-item-divider>
+  </ion-item-divider> 
+</ion-toolbar>
+<ion-content>
+    <ion-grid>    
+               
+        <ion-row>      
+          <ion-col size="12" size-xm="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+            <ion-label class="label_custom" position="stacked">Cedula/Passaporte/ND:</ion-label>
+            <ion-item class="item_custom" lines="none">
+             <ion-input type="text" [value]="this.cedula" [(ngModel)]="this.cedula" (keyup)="onDateKeyCedula($event)"  [attr.max]="getValidarcedula()" ></ion-input>
+            </ion-item>
+           
+            <ion-label *ngIf="esCedulaValidaennumero === -1" position="stacked" 
+            class="item_custom cedula-no-existe"
+            [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px; font-size: 11px;">[N/A]</ion-label>
+
+            <ion-label *ngIf="esCedulaValidaennumero === 0" position="stacked" 
+           class="item_custom cedula-valida-verde"
+           [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;">Cedula Correcta</ion-label>
+
+          <ion-label *ngIf="esCedulaValidaennumero === 1" position="stacked" 
+           class="item_custom cedula-invalida-rojo"
+           [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;">Cedula Incorrecta</ion-label>
+           
+           <ion-label *ngIf="esCedulaValidaennumero === 2" position="stacked" 
+           class="item_custom pasaporte-valida-verde"
+           [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;">Pasaporte</ion-label>
+           
+           <ion-label *ngIf="esCedulaValidaennumero === 3" position="stacked" 
+           class="item_custom pasaporte-invalida-rojo"
+           [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;">Pasaporte</ion-label>
+
+           <ion-label *ngIf="esCedulaValidaennumero === 4" position="stacked" 
+           class="item_custom ruc-valida-verde"
+           [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;">Ruc</ion-label>
+
+          <ion-label *ngIf="esCedulaValidaennumero === 5" position="stacked" 
+           class="item_custom ruc-valida-verde"
+           [style.fontSize.px]="esCedulaValidaennumero ? 10 : 12" style="padding: 3px;">Ruc</ion-label>  
+
+          </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12" size-sm="12" size-md="5" size-lg="5" size-xl="5">
+              <ion-label class="label_custom" position="stacked">Nombres:</ion-label>
+              <ion-item class="item_custom" lines="none">
+      <ion-input type="text" [value]="input_nombre" [(ngModel)]="input_nombre" style="width: 100%;" (ionChange)="onInputChange()"></ion-input>
+      </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="12" size-md="5" size-lg="5" size-xl="5">
+              <ion-label class="label_custom" position="stacked">Apellidos:</ion-label>
+              <ion-item class="item_custom" lines="none">
+                <ion-input type="text" [value]="this.input_apellido" [(ngModel)]="this.input_apellido" style="width: 100%;" (ionChange)="onInputChange()"></ion-input>
+             </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="12" size-md="2" size-lg="2" size-xl="2">
+              <ion-label class="label_custom" position="stacked">Titulo:</ion-label>
+              <ion-item class="item_custom_paciente" lines="none">
+                <ion-input type="text" [value]="this.input_titulo" [(ngModel)]="this.input_titulo" style="width: 100%;" (ionChange)="onInputChange()"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+      
+          <ion-row>
+        
+            <ion-col size="12" size-xm="12" size-sm="12" size-md="10" size-lg="10" size-xl="10">
+              <ion-label class="label_custom" position="stacked">Fecha de nacimiento:</ion-label>             
+              <input class="inputdate" type="date" [(ngModel)]="input_fec_nac" (keyup)="onDateKeyUp($event)" [attr.max]="getCurrentDate()"/>
+              
+
+            </ion-col>
+            
+            <ion-col size="12" size-xm="12" size-sm="12" size-md="2" size-lg="2" size-xl="2">
+              <ion-label class="label_custom" position="stacked">Edad:</ion-label>
+              <ion-item class="item_custom" lines="none">
+                <ion-input type="text" [(ngModel)]="edad" [value]="edad" (keyup)="EventoCalcularFecha($event)"  [attr.max]="calcularFechaNacimiento(edad)" ></ion-input>
+                
+                <!-- <ion-input type="text" [(ngModel)]="edad" readonly class="small-font"></ion-input> -->
+              </ion-item>
+            </ion-col>
+
+              </ion-row>           
+      
+        <ion-row>
+          <ion-col>
+            <ion-radio-group [(ngModel)]="this.input_genero" value="M">
+              <ion-row>
+               <ion-col size="12">
+                <ion-label class="label_custom" position="stacked">Genero:</ion-label>
+               </ion-col>
+      
+                <ion-col size="12" size-xm="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+                  <ion-item  lines="none" class="item-azul">
+                    <ion-label  class="item-azul">Masculino</ion-label>
+                    <ion-icon name="man-outline" style="color: #84c6ed;"></ion-icon>
+                    <ion-radio slot="start" value="M"  class="item-azul"></ion-radio>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-xm="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+                  <ion-item  lines="none" class="item-rosado">
+                    <ion-label class="item-rosado">Femenino</ion-label> 
+                    <ion-icon name="woman-outline" style="color: pink;"></ion-icon>
+                    <ion-radio slot="start" value="F" class="radio-rosado"></ion-radio>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-radio-group>
+          </ion-col>
+        </ion-row>
+      
+        <ion-row>     
+          <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+            <ion-label class="label_custom" position="stacked">Email:</ion-label>
+            <ion-item class="item_custom1" lines="none">
+              <ion-input type="email" [(ngModel)]="input_email"  (ionChange)="onInputChangeMinusculas()"></ion-input>
+            </ion-item>
+          </ion-col>
+          
+
+          <ion-col size="12" size-sm="12" size-md="5" size-lg="5" size-xl="5">
+            <ion-label class="label_custom" position="stacked">Celular:</ion-label>
+            <ion-item class="item_custom" lines="none">
+              <ion-input type="text" [value]="this.input_celular" [(ngModel)]="this.input_celular"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12" size-sm="12" size-md="5" size-lg="5" size-xl="5">
+            <ion-label class="label_custom" position="stacked">Telefono:</ion-label>
+            <ion-item class="item_custom" lines="none">
+              <ion-input type="text" [value]="this.input_telefono" [(ngModel)]="this.input_telefono"></ion-input>
+           </ion-item>     
+          </ion-col>
+                
+
+             
+          <ion-col size="12" size-sm="12" size-md="2" size-lg="2" size-xl="2">
+            <ion-label class="label_custom" position="stacked">Codigo Postal:</ion-label>
+            <ion-item class="item_custom_paciente" lines="none">
+              <ion-input type="text" [value]="this.input_cp" [(ngModel)]="this.input_cp"></ion-input>
+            </ion-item>
+          </ion-col>     
+    
+        </ion-row>
+             
+      
+      <ion-row>
+        <ion-col>
+         </ion-col>        
+      </ion-row>   
+      <ion-row>
+        <ion-col>
+         </ion-col>        
+
+
+      </ion-row>   
+        <ion-accordion-group [multiple]="true" [value]="['first']">
+         <ion-accordion value="first">
+        <ion-item slot="header" color="light" class="custom-header">
+          <ion-label class="white-text">Informacion Personal</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+
+          <ion-row>
+            <ion-col size="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+              <ion-label class="label_custom" position="stacked">Poblacion:</ion-label>
+              <ion-list>
+                <ion-item class="item_custom_select" lines="none">
+                  <ion-select [(ngModel)]="this.input_pob" interface="popover" aria-label="fruit"> 
+                    <!-- <ion-select [(ngModel)]="this.input_pob" interface="popover" toggleIcon="add" expandedIcon="remove" aria-label="fruit" placeholder="[N/A]">                   -->
+                 
+                      <ion-select-option *ngFor="let poblacion of array_poblacion" [value]="poblacion.cod_pob">
+                        {{ poblacion.cod_pob }} - {{ poblacion.cod_niv === 1 ? 'Provincia' : 'Ciudad' }} - {{ poblacion.des_pob }}
+                      </ion-select-option>                    
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+
+           
+            <ion-col size="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+              <ion-label class="label_custom" position="stacked">Direccion:</ion-label>
+              <ion-item class="item_custom_paciente" lines="none">
+                <ion-input type="text" [value]="this.input_direccion" [(ngModel)]="this.input_direccion" (ionChange)="onInputChange()"></ion-input>
+              </ion-item>
+            </ion-col>
+   
+          </ion-row>
+
+<ion-list>
+  <ion-item-group>
+
+    <ion-item-divider class="custom-divider">
+      <ion-label class="custom-label_label1">LUGAR DE NACIMIENTO</ion-label> 
+    </ion-item-divider>
+    
+            <ion-row>
+              <ion-col ion-col size="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+                
+              <ion-list>
+              <ion-item class="item_custom_lugar-naciemiento" lines="none">
+                <ion-label class="label_custom" position="stacked">Pais:</ion-label>
+                <ion-select [(ngModel)]="this.input_pais_origen" interface="popover" placeholder="">
+                  <ion-select-option value="ECU">Ecuador</ion-select-option>            
+                </ion-select>
+              </ion-item>
+            </ion-list>
+            </ion-col>
+      
+           <ion-col size="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">            
+              <ion-item class="item_custom" lines="none">
+                <ion-label class="label_custom" position="stacked">Ciudad:</ion-label>
+                <ion-input type="text" [value]="this.input_ciudad" [(ngModel)]="this.input_ciudad"></ion-input>
+                </ion-item>
+            </ion-col>
+           </ion-row>
+          </ion-item-group>
+        </ion-list>
+
+        <ion-item-divider class="custom-divider">
+          <ion-label class="custom-label_label2">ESTADO</ion-label> 
+          </ion-item-divider>
+
+           <ion-row>
+            <ion-col size="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+              <ion-label class="label_custom" position="stacked">Referencia:</ion-label>
+              <ion-list>
+                <ion-item class="item_custom_select" lines="none" >
+                  <ion-select [(ngModel)]="this.input_referencia" interface="popover" placeholder="">
+                    <!-- <ion-select-option [value]="">(Ninguno)</ion-select-option> -->
+                    <ion-select-option *ngFor="let referencia of array_referencia" [value]="referencia.cod_ref">{{referencia.cod_ref }} - {{referencia.des_ref}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+             
+
+      
+            <ion-col size="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+              <ion-label class="label_custom" position="stacked">Civil:</ion-label>
+              <ion-list>
+                <ion-item class="item_custom_select-civil" lines="none">
+                  <ion-select [(ngModel)]="this.input_estadoCivil" interface="popover" placeholder="">
+                    <ion-select-option>Soltero</ion-select-option>
+                    <ion-select-option>Casado</ion-select-option>
+                    <ion-select-option>Divorciado</ion-select-option>
+                    <ion-select-option>Viudo</ion-select-option>
+                    <ion-select-option>Union Libre</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+     
+        <ion-row>
+            <ion-col size="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+              <ion-label class="label_custom" position="stacked">Instruccion:</ion-label>
+              <ion-list>
+                <ion-item class="item_custom_select" lines="none">
+                   <ion-select [(ngModel)]="this.input_instruccion" interface="popover" placeholder="">
+                    <ion-select-option>Otro</ion-select-option>
+                    <ion-select-option>Primaria</ion-select-option>
+                    <ion-select-option>Secundaria</ion-select-option>
+                    <ion-select-option>Superior</ion-select-option>
+                     </ion-select>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+      
+            <ion-col size="12" size-sm="12" size-md="6" size-lg="6" size-xl="6">
+              <ion-label class="label_custom" position="stacked">Ocupacion:</ion-label>
+              <ion-item class="item_custom_paciente" lines="none">
+                <ion-input type="text" [value]="this.input_ocupacion" [(ngModel)]="this.input_ocupacion" (ionChange)="onInputChange()"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>  
+        
+        </div>
+      </ion-accordion>
+      <ion-accordion value="second">
+        <ion-item slot="header" color="light">
+          <ion-label class="white-text">Observacion</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          
+          <ion-row>
+            <ion-col size="12" size-sm="12" size-md="5" size-lg="5" size-xl="5">
+              <ion-label class="label_custom" position="stacked">Etnia/Raza:</ion-label>
+              <ion-item class="item_custom" lines="none">
+                <ion-input type="text" [value]="this.input_etnia" [(ngModel)]="this.input_etnia" (ionChange)="onInputChange()"></ion-input>
+              </ion-item>
+            </ion-col>          
+            <ion-col size="12" size-sm="12" size-md="5" size-lg="5" size-xl="5">
+              <ion-label class="label_custom" position="stacked">Inf.Crediticia:</ion-label>
+              <ion-list>
+                <ion-item class="item_custom_select" lines="none">
+                   <ion-select [(ngModel)]="this.input_info_crediticia" interface="popover" placeholder="">
+                    <ion-select-option >[Ninguna]</ion-select-option>
+                    <ion-select-option >Cobrar Siempre</ion-select-option>
+                    <ion-select-option >Cortesia (No Cobrar)</ion-select-option>              
+                     </ion-select>
+                </ion-item>
+              </ion-list>
+            </ion-col>      
+              <ion-col size="12" size-sm="12" size-md="2" size-lg="2" size-xl="2">
+              <ion-label class="label_custom" position="stacked">Tipo de Sangre:</ion-label>
+              <ion-item class="item_custom" lines="none">
+                <!-- <ion-input type="text"></ion-input> -->
+
+                <ion-input type="text" [value]="this.input_tipo_sangre" [(ngModel)]="this.input_tipo_sangre" (ionChange)="onInputChange()"></ion-input>
+
+
+
+              </ion-item>
+            </ion-col>
+          </ion-row>
+      
+            <ion-row>
+            <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+              <ion-label class="label_custom" position="stacked">Patologias previas del paciente:</ion-label>
+              <ion-item class="item_custom" lines="none">
+                <ion-textarea type="text" [value]="this.input_patol_pac" [(ngModel)]="this.input_patol_pac" (ionChange)="onInputChange()"></ion-textarea>
+              </ion-item>
+            </ion-col>
+           </ion-row>           
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="third">
+        <ion-item slot="header" color="light">
+          <ion-label class="white-text">Tarjeta</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <ion-row>
+            <ion-col size="12" size-sm="12" size-md="5" size-lg="5" size-xl="5">
+              <ion-label class="label_custom" position="stacked">Nro. Tarjeta:</ion-label>
+              <ion-item class="item_custom" lines="none">
+                <ion-input type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="12" size-md="5" size-lg="5" size-xl="5">
+              <ion-label class="label_custom" position="stacked">Formulario:</ion-label>
+              <ion-item class="item_custom" lines="none">
+                <ion-input type="text"></ion-input>
+             </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="12" size-md="2" size-lg="2" size-xl="2">
+              <ion-label class="label_custom" position="stacked">Vence:</ion-label>
+              <ion-item class="item_custom" lines="none">
+                <ion-input type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+      </div>
+      </ion-accordion>
+    </ion-accordion-group>   
+    </ion-grid>
+</ion-content>
+<ion-footer> 
+  <ion-button *ngIf="bandera_editar" (click)="CheckPaciente()" expand="full" color="success">Crear Paciente</ion-button>
+  <ion-button *ngIf="!bandera_editar" (click)="actualizarPaciente(this.input_cod_pac)" expand="full" color="success">Actualizar Paciente</ion-button>
+</ion-footer>

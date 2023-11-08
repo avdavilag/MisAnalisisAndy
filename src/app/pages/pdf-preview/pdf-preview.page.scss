@@ -1,0 +1,556 @@
+* {
+  font-family: Ubuntu, "times new roman", times, roman, serif !important;
+}
+.pdf-view {
+  pdf-viewer {
+    display: block;
+    height: 100%;;
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+    }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgb(109, 136, 255);
+      overflow: scroll;
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none;
+    }
+  }
+  .contenedor {
+    text-align: center;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+    height: 80vh;
+    overflow: auto;
+    //background: #c5c5c5;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .contenedor::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  /* Handle */
+  .contenedor::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  /* Handle on hover */
+  .contenedor::-webkit-scrollbar-thumb:hover {
+    background: rgb(109, 136, 255);
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+  }
+}
+.titulos {
+  font-weight: bold;
+  --background: #dadada;
+}
+
+.valores {
+  //padding-top: 5px;
+  //border-bottom: solid 1px #c9c9c9;
+  p {
+    margin: 0;
+    text-align: center;
+    font-size: small;
+    font-weight: bolder;
+  }
+  //margin-bottom: 30px;
+}
+
+ion-grid {
+  background-color: #f5fcff;
+  //PARA EL SCROLL
+  /* height */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  /* Track */
+  ion-card::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  /* Handle */
+  ion-card::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  /* Handle on hover */
+  ion-card::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+  }
+
+  ion-card {
+    height: 76vh;
+    overflow: auto;
+  }
+}
+
+.content_pend {
+  //height: 75vh;
+
+  height: 49vh;
+  overflow-y: auto;
+}
+.l_pendientes {
+  height: 30vh;
+  background: #ffdff94d;
+  padding: 10px;
+  pre {
+    height: 21vh;
+    overflow-y: auto;
+
+    margin: 0;
+    font-size: small;
+  }
+
+  pre::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  /* Handle */
+  pre::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  /* Handle on hover */
+  pre::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+  }
+}
+.pdf_view {
+  background-color: #f8f8f8;
+  // padding-top: 20px;
+  width: 100%;
+  height: 100%;
+}
+.searchbar {
+  display: inline-flex;
+  form {
+    float: left;
+
+    ion-searchbar {
+      padding-right: 0;
+      width: 230px;
+      min-width: 180px;
+      color: rgb(2, 0, 117);
+      --clear-button-color: rgb(255, 140, 140);
+    }
+  }
+  ion-button {
+    height: 88%;
+    margin-bottom: 4px;
+  }
+}
+.fab-button-lista {
+  width: 56px;
+  height: 56px;
+  margin: 0;
+
+  &.fab-button-close-active {
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    --ion-color-base: var(--ion-color-danger, #eb445a) !important;
+  }
+}
+.lista_fab_options {
+  ion-fab-button {
+    margin-bottom: 2vh;
+    width: 54px;
+    height: 54px;
+  }
+  //para entrar al shadow
+  ion-fab-button::part(native) {
+    contain: initial !important;
+    overflow: initial !important;
+  }
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  // border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: auto;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px;
+  position: absolute;
+  z-index: 9999 !important;
+  left: 70px;
+  white-space: break-spaces;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #555 transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.valores {
+  ion-checkbox {
+    margin: 0;
+
+    margin-right: 10px;
+  }
+  ion-item {
+    max-height: 40px;
+  }
+  .resultados {
+    padding: 0;
+    .examenes {
+      ion-label {
+        margin: 0;
+        font-size: 15px;
+        padding-left: 15px;
+      }
+    }
+  }
+}
+
+.menu {
+  ion-col {
+    align-self: center;
+    .n_orden {
+      align-self: center;
+      font-size: larger;
+      display: inline-flex;
+      .lbl_orden {
+        font-size: medium;
+        padding-right: 6px;
+        padding-bottom: 2px; //EL MISMO TAMAÑO DEL SHADOW
+        align-self: flex-end;
+      }
+      b {
+        text-shadow: 2px 2px #9a9a9a;
+        font-size: larger;
+        font-family: serif;
+        font-weight: 200;
+      }
+    }
+  }
+
+  .btn_todos {
+    text-align: right;
+    ion-button {
+      --background: #ffa135;
+    }
+  }
+  .nombre_paciente {
+    padding-left: 5px;
+  }
+}
+.formatos {
+  position: fixed;
+  width: 200px;
+  text-align: center;
+  left: 38%;
+  bottom: 0;
+  color: #7d7d7d;
+  padding-bottom: 10px;
+  background: #fdffd2;
+  z-index: 9999;
+  //padding: 1px;
+  box-shadow: 2px -3px 10px 0px RGB(0 0 0 / 20%);
+  ion-select {
+    padding: 3px;
+    padding-left: 25%;
+  }
+}
+
+.contenedor_img {
+  width: 100%;
+  position: absolute;
+  bottom: 20vh;
+  text-align: center;
+  z-index: -1;
+  opacity: 0.1;
+  .fondo_logo {
+    pointer-events: none;
+  }
+}
+
+.contenedor_img_toolbar {
+  display: none;
+}
+//CSS PARA MOVILES
+@media only screen and (max-width: 600px) {
+  .searchbar {
+    //width: 60%;
+    position: absolute;
+    z-index: 9999;
+    /* height: 100%; */
+    display: inline-flex !important;
+    ion-searchbar {
+      width: 200px;
+    }
+  }
+  .contenedor {
+  //  height: 100% !important;
+  //  overflow: auto;
+  }
+  .formatos {
+    left: 25%;
+  }
+}
+@media only screen and (max-height: 632px) {
+  .lista_fab_options {
+    ion-fab-button {
+      margin-bottom: 0vh;
+      width: 50px;
+      height: 50px;
+    }
+  }
+}
+
+@media only screen and (min-width: 1496px) {
+  .contenedor_img_toolbar {
+    //width: 100%;
+    display: block;
+    text-align: center;
+    .fondo_logo {
+      width: 50px;
+      height: 50px;
+      padding-left: 4px;
+      max-height: 50px;
+    }
+  }
+}
+
+//SOLO PARA
+@media only screen and (min-width: 1024px) and (max-width: 1190px) {
+  .btn_user {
+    ion-label {
+      display: none;
+    }
+  }
+}
+ion-menu {
+  ion-toolbar {
+    --background: #545454;
+    color: #fff;
+  }
+}
+
+.content_disable {
+  --background: #d3d3d3 !important;
+  background: #d3d3d3 !important;
+  opacity: 0.5;
+  ion-fab-button {
+    opacity: 0.5;
+  }
+}
+
+.mensajeValida {
+  margin-top: 20%;
+  margin-bottom: 50%;
+  padding: 35px;
+  text-align: center;
+  color: rgb(136, 136, 136);
+  // opacity: 0.5;
+  font-size: xx-large;
+}
+
+.disabled-line {
+  border-bottom: solid 5px #ff1d1d;
+  position: absolute;
+  width: 140%;
+  transform: rotate(130deg);
+  z-index: 999;
+  opacity: 1;
+}
+.select-pdf {
+  .contenedor_select {
+    color: #626262;
+    padding-bottom: 8px;
+  }
+  .clicked {
+    --background: rgb(255, 255, 155) !important;
+    border: solid 0.5px #d6d6d6;
+    border-radius: 9px;
+    .contenedor_select {
+      color: #515151;
+      font-size: larger;
+    }
+    .version-right {
+      opacity: 1 !important;
+    }
+  }
+  .version {
+    float: left;
+    color: #417c93;
+    font-size: large;
+    font-size: 14px;
+    padding-right: 7px;
+  }
+
+  .version-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: large;
+    opacity: 0.6;
+  }
+
+  h5 {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 0;
+  }
+  ion-item {
+    max-height: fit-content;
+    ion-icon {
+      font-size: 14px;
+      float: left;
+      padding-right: 4px;
+    }
+    .sub {
+      font-size: 14px;
+      float: left;
+    }
+    .accion {
+      color: #858585;
+    }
+  }
+  .even {
+    --background: #f0f0f0;
+  }
+  .odd {
+    --background: #fff;
+    //--background: #000000fa;
+  }
+}
+//NO SE USA
+.adjuntos {
+  position: absolute;
+  z-index: 9;
+  ion-item {
+    border-bottom-right-radius: 24px;
+    box-shadow: -10px -8px 9px 13px RGB(0 0 0 / 30%);
+  }
+}
+//
+.historial-busqueda {
+  padding-left: 30px;
+  padding-right: 30px;
+  text-align-last: center;
+  height: 10px;
+  padding-bottom: 30px;
+  ion-col {
+    margin-bottom: 30px;
+    text-align: -webkit-center;
+    max-width: max-content;
+  }
+
+  ion-badge {
+    max-width: max-content;
+    width: max-content;
+    //opacity: 0.6;
+    position: absolute;
+    top: 0;
+    font-size: 6px;
+    padding: 3px;
+    background-color: rgb(255, 107, 107);
+    //right: 34%;
+  }
+  .historial-item {
+    font-size: small;
+    background: #fffdd4;
+    color: #7b7b7b;
+    border-radius: 30px;
+    width: max-content;
+    padding-left: 13px;
+    padding-right: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+}
+.btn-accion-datos {
+  ion-col {
+    padding: 0px 5px 5px 5px;
+  }
+}
+.referencia {
+  padding-left: 5px;
+}
+iframe {
+  position: absolute;
+  top: -1000px;
+}
+.mensaje_info {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: black;
+  font-weight: bold;
+  background: #ffb6b6;
+  padding: 10px;
+  border-radius: 14px;
+  z-index: 9;
+  animation-duration: 1.2s;
+  animation-name: pulse;
+  animation-iteration-count: infinite;
+  ion-icon {
+    float: left;
+    padding-right: 5px;
+  }
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.2;
+  }
+}
+
+.franja_usr {
+  width: fit-content;
+  position: fixed;
+  z-index: 9999;
+  background: #ffffff;
+  padding: 10px;
+  border-bottom-left-radius: 10px;
+  color: #3880ff;
+  box-shadow: 3px 2px 2px #d9d9d9;
+  right: 8px;
+}

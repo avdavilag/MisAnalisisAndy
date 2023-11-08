@@ -1,0 +1,6 @@
+Version	Comentario	Variables	cs-graphql	cs-intra	otro
+
+6.67	Default formato intra y correccion auditoria intra whatsapp	tipoWhatsapp formatodefIntra	"no"	"no"	"no" 
+3.68	Unido cambios anto ingreso orden masive orden	"no"	si	si	"no" 
+3.70	Cambio de version de ionic 7	"no"	"no"	"no"	"no" 
+3.74	La politica y permite solo adjuntos	permiteSoloAdjuntos	si	si	"no" 

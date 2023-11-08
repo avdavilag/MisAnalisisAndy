@@ -1,0 +1,63 @@
+{
+    "tipoSystem":"",
+    
+    "apiBaseHttps":false,
+    "apiBaseUrl": "",
+    "apiBasePuerto":9080,
+    "apiBasePuertoSsl":9080,
+    "apiBaseSubDir":"",
+    "apiBaseType":1,
+	
+    "apiGraphQL":"192.168.57.107",
+    "apiGraphQLPuerto":null,
+    "apiGraphQLPuertoSsl":"",
+    "apiGraphQLSubDir":"api_avalab",
+     
+    "apiPdfMailUrl": "",
+    "apiPdfMailPuerto":8080,
+    "apiPdfMailPuertoSsl":8080,
+    "apiPdfMailSubDir":"common-pdf-generator",
+    "pdfEncabezado":"",
+    "pdfPie":"",
+
+    "apiIntranet": "",
+    "apiIntranetPuerto":9080,
+    "apiIntranetPuertoSsl":9080,
+    "apiIntranetSubDir":"",
+
+    "parametrosPDF":["FIRMA_DIRECTOR"],
+    "parametrosPDFOrden":[], 
+    "activaVersionamiento":false,
+    "activaMail":true,
+    "activaWhatsApp":true,
+    
+    "tiempoInactividad":10000,
+    "rootPath":"login-intranet",
+    "tipoUserDef":"Paciente",
+    "ActivaTiposUsuarios":{
+        "Orden":false,
+        "Paciente":true,
+        "Medico":true,
+        "Empresa":true
+    },
+    
+    "formatoFechaDisplay":"yyyy-MM-dd HH:mm",
+    "estilo":2,
+    "enableLog":false,
+    "defaultLenguaje":"es",
+    "nombreLab":"Autolab",
+    "paginacion": 10,
+    "detalleOrden":{
+        "colorEtiqueta":null,
+        "colorTitulo":null,
+        "colorSubTitulo":null,
+        "colorExamenOdd":null,
+        "colorExamenEven":null
+
+    },
+
+    "redirectWeb":"http://10.0.239.138:18080/",
+    "enablePedidos":false,
+    "onlyPedidos":true,
+    "defaultInicioMed":"lista-ordenes"
+}

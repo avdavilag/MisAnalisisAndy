@@ -1,0 +1,117 @@
+<ion-toolbar>
+  <ion-button color="danger" expand="full" (click)="dismiss()" class="btn_cerrar" shape='' size='small'>
+    <ion-icon name="close"></ion-icon>
+  </ion-button>
+  <ion-title>Médico (busqueda listado)</ion-title>
+</ion-toolbar>
+
+
+<ion-content [fullscreen]="true">
+
+<ion-grid>
+  <ion-col>
+    <ion-label class="label_custom" position="stacked">Cédula/Ruc</ion-label>
+    <ion-item  class="item_custom" >
+      <ion-input  type="text" [(ngModel)]="cedula" [value]="cedula"></ion-input>
+          </ion-item>
+  </ion-col>
+
+<ion-row>
+  <ion-col>
+    <ion-label class="label_custom" position="stacked">Codigo</ion-label>
+    <ion-item class="item_custom">
+    <ion-input type="text" [(ngModel)]="codigo" [value]="codigo"></ion-input>    
+  </ion-item>
+</ion-col>
+  <ion-col>
+    <ion-label  class="label_custom" position="stacked">Medico</ion-label>
+<ion-item class="item_custom">
+<ion-input type="text" [(ngModel)]="nombre" [value]="nombre"></ion-input>
+
+</ion-item>
+</ion-col> 
+</ion-row>
+
+<ion-row>
+<ion-col>
+  <ion-label  class="label_custom" position="stacked">Celular</ion-label>
+  <ion-item class="item_custom">
+    <ion-input type="text" [(ngModel)]="celular" [value]="celular"></ion-input>
+
+</ion-item>
+</ion-col>
+
+<ion-col>
+  <ion-label  class="label_custom" position="stacked">Colegio</ion-label>
+  <ion-item class="item_custom">
+  <ion-input type="text" [(ngModel)]="colegio" [value]="colegio"></ion-input>
+  
+</ion-item>
+</ion-col>
+
+</ion-row>
+<ion-row>
+  <ion-col  class="ion-text-start">
+    <ion-button (click)="createModalNewPaciente()" color="secondary" fill="outline" size="small">
+      <ion-icon slot="end" name="person-add-outline"></ion-icon>
+      Crear Medico
+    </ion-button>
+  </ion-col>
+  <ion-col class="ion-text-end">       
+    
+    <ion-button  color="secondary" fill="outline" size="small">
+      <ion-icon slot="end" name="refresh-outline"></ion-icon>
+      Reset
+    </ion-button>
+    
+    <ion-button color="primary"  size="small" (click)="buscarMedico()">
+      <ion-icon slot="end" name="search-outline"></ion-icon>
+      Buscar
+    </ion-button>
+  </ion-col>
+</ion-row>
+
+</ion-grid>
+<ion-card class="card_table">
+<ion-card-header>
+  Resultados
+</ion-card-header>
+<ion-card-content>
+  <ion-row class="tbl_header" >
+    <ion-col size="2">
+      Cod
+    </ion-col>
+    <ion-col size="3">
+      Médico
+    </ion-col>    
+    <ion-col size="3">
+      Cédula
+    </ion-col>
+        <ion-col size="2">&nbsp;</ion-col>
+  </ion-row>
+  <div class="div_container" *ngIf="list_result.length>0">
+    <ion-row class="row_datail_result" *ngFor="let item of list_result" button (dblclick)="presentAlertConfirmPac(item)" >
+      <ion-col class="col_detail_result" size="1.5">
+      {{item.cod_med}}
+      </ion-col >
+      <ion-col class="col_detail_result" size="3">
+        {{item.nom_med}}        
+      </ion-col>
+      <ion-col class="col_detail_result" size="4">
+        {{item.id_med}}
+      </ion-col>
+      <ion-col size="3">
+        <ion-button fill="clear" color="warning" size="small" (click)="presentModalFormMedicoCompleto(item,'edit')">
+          <ion-icon name="create-outline"></ion-icon>                                                                   
+        </ion-button>
+        <ion-button fill="clear"  color="success" size="small" (click)="presentAlertConfirmPac(item)">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </ion-button>
+        
+      </ion-col>
+    </ion-row>
+  </div>
+  
+</ion-card-content>
+</ion-card>
+</ion-content>

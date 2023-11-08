@@ -1,0 +1,57 @@
+<ion-content>
+  <ion-row>
+    <ion-col size="12" size-sm="6" offset-sm="3" size-md="6" offset-md="3" size-lg="6" offset-lg="3" size-xl="4" offset-xl="3.5">
+      <ion-card>
+        <div class="cabecera">
+        <div class="icono">
+          <img src="assets/img/logo_intra.png" width="284" height="81" alt="logo">
+        </div>
+       <h5 class="titulo">{{ 'Intranet' | translate }}</h5>       
+      </div>    
+      
+        <form [formGroup]="loginForm2" (submit)="submit()" action="" (keyup.enter)="submit()" *ngIf="loginForm2" autocomplete="off" >
+     <!--CON ESTO CAPTURO LA AUTOCOMPLETADA DE CHROME Y LA DESHABILITO-->
+     <!-- 
+         <ion-input [type]="passwordType" style="opacity: 0;position: absolute;top:-100px;"></ion-input>
+         <ion-input type="email"  name="user" style="opacity: 0;position: absolute;;top:-100px;" ></ion-input>
+     -->
+     
+          <!--USUARIO-->
+          <ion-item>
+            <ion-label position="stacked">{{ 'complex.login_in_usuario' | translate }}</ion-label>
+            <ion-input formControlName="id_user" [class.invalid]="isItemInvalid('id_user')" name="id_user" autocomplete="off" (input)="forceUppercaseConditionally('id_user', $event);"></ion-input>
+          </ion-item>
+          <!--CONTRASENIA-->
+          <ion-item>
+            <ion-label position="stacked">{{ 'complex.login_in_clave' | translate }}</ion-label>
+            <ion-input [type]="passwordType" clearOnEdit="false" formControlName="pwd" [class.invalid]="isItemInvalid('pwd')" name="pwd"  (input)="forceUppercaseConditionally('pwd', $event);"></ion-input>
+            <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()' slot="end"></ion-icon>
+          </ion-item>  
+          <ion-button (click)="submit()" expand="block" color="secondary">{{ 'complex.login_titulo' | translate }}</ion-button>        
+        </form>
+
+        <ion-item class="seg_idioma">
+          <ion-segment (ionChange)="cambia_lenguaje($event)" [value]="_translate.getDefaultLang()" mode="ios" color="medium" slot="start" layout="icon-top">
+            <ion-segment-button value="en">
+            <!--  <ion-label>{{ 'simple.Ingles' | translate }}</ion-label>-->
+              <ion-icon src="assets/icon/english.svg"  size="small"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="es" >
+              <ion-icon src="assets/icon/spanish.svg"  size="small"></ion-icon>
+            <!--  <ion-label>{{ 'simple.Español' | translate }}</ion-label>-->
+            </ion-segment-button>
+          </ion-segment>
+        </ion-item>
+      </ion-card>
+    </ion-col>
+
+  </ion-row>
+  <!-- 
+
+  <div class="pie_pag">
+    <small> Powered by Cubosoft <sup>&reg;</sup></small>
+  </div>
+  -->
+</ion-content>
+
+<app-pie-pagina></app-pie-pagina>

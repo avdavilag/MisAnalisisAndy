@@ -1,0 +1,9 @@
+<ion-list lines=none>
+  <ion-item><ion-icon name="person-circle-outline" slot="start"></ion-icon><ion-text slot="end"><p>{{usuario.nombre}}</p></ion-text></ion-item>
+  
+  <ion-item *ngIf="var_usuario.entidades&&var_usuario.entidades.length > 1" button (click)="cambiarUsuario()" ><ion-icon name="repeat-outline" slot="start" color="withe"></ion-icon><ion-button slot="end" color="withe" fill="clear">{{ 'complex.lista_cambiar_usr' | translate }}</ion-button></ion-item>
+  <ion-item *ngIf="flag_ingreso_orden_ref"  (click)="presentModalPdfOrdenWeb()" ><ion-icon name="documents-outline" slot="start" color="tertiary"></ion-icon><ion-button class="ion-text-wrap" slot="end" color="primary" fill="clear">Ingresos web Reporte</ion-button></ion-item>
+  <ion-item *ngIf="tipo_usuario!='ext'"  (click)="presentModalClave()" ><ion-icon name="lock-closed-outline" slot="start" color="primary"></ion-icon><ion-button class="ion-text-wrap" slot="end" color="primary" fill="clear">{{ 'complex.change_password' | translate }}</ion-button></ion-item>
+
+  <ion-item button (click)="cerrarSesion()" ><ion-icon name="exit-outline" slot="start" color="danger"></ion-icon><ion-button slot="end" color="danger" fill="clear">{{ 'complex.lista_cerrar_sesion' | translate }}</ion-button></ion-item>
+</ion-list>

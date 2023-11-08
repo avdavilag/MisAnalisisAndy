@@ -1,0 +1,54 @@
+
+.btn_cerrar{
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+}
+ion-toolbar{
+    padding-top: 10px;
+}
+.toolbar-end{
+    padding-right: 30px;
+}
+.content-pdf{
+    overflow: scroll;
+    display: block;
+    height: 100%;
+    position: relative;
+    //background: red;
+    text-align: center!important;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+    pdf-viewer{
+        display: contents;
+        width: max-content;
+       // overflow: scroll;
+       // height: 100%;
+        //width: 100%;
+    }
+}
+
+*::-webkit-scrollbar {
+    width: 5px;
+   height: 8px;
+}
+  
+*::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  /* Handle */
+  *::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  /* Handle on hover */
+  *::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    //scrollbar-width: none;
+  }
+  

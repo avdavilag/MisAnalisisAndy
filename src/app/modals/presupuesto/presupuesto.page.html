@@ -1,0 +1,164 @@
+<ion-button color="danger" expand="full" (click)="cerrar()" class="btn_cerrar" shape='' size='small'>
+  <ion-icon name="close" ></ion-icon>
+</ion-button>
+<ion-content [fullscreen]="true">
+  <ion-item class="item_custom" lines="none">
+    <ion-label position="floating">Plan</ion-label>
+    <ion-select placeholder="Escoja un plan" [(ngModel)]="this.plan_selected" (ionChange)="updatePreciosbyPlan('todo','')">
+      <div *ngFor="let item of planList ">
+        <ion-select-option disabled=true>{{item.des_seg}}</ion-select-option>
+        <ion-select-option [value]="item2" *ngFor="let item2 of item.Plan">{{item2.des_plan}}
+        </ion-select-option>
+      </div>
+      
+      
+    </ion-select>
+  </ion-item> 
+  <ion-item  class="item_custom" lines="none">
+    <ion-label position="floating">Plan descuento</ion-label>
+    <ion-select placeholder="Escoja un plan de descuento" [(ngModel)]="this.descuento_selected" (ionChange)="selecPlanDescuento('dscto_plan')" >
+      <div *ngFor="let item of planList ">
+        <ion-select-option disabled=true>{{item.des_seg}}</ion-select-option>
+        <ion-select-option [value]="item2" *ngFor="let item2 of item.Plan">{{item2.des_plan}}
+        </ion-select-option>
+      </div>
+      
+    </ion-select>
+  </ion-item>
+  <ion-item  class="item_custom" lines="none">
+    <ion-label  lines="none" position="floating">Dscto %(+/-)</ion-label>
+    <ion-input type="number"  [value]="porcentaje_descuento" [(ngModel)]="porcentaje_descuento" debounce="500" (ionChange)="updatePreciosbyPlan('todo','')" (ionChange)="selecPlanDescuento('dscto')"></ion-input>
+  </ion-item>
+ 
+   <ion-card-header>
+    Lista de Análisis
+   </ion-card-header>
+  
+  <ion-row>
+    <ion-col size="8">
+     <ion-item  class="item_custom" lines="none"  >
+       <ion-icon color="primary" name="search" slot="end"  (click)="getAnalisis()"></ion-icon>
+       <ion-input type="text" placeholder="codigo analisis" (keyup.enter)="getAnalisis()" [(ngModel)]="cod_ana_input" ></ion-input>
+     </ion-item>
+    </ion-col>
+   <ion-col size="4" class="ion-text-end" style="margin: auto;">
+     <!--
+     <ion-item >
+       <ion-label  lines="none" position="floating">%(+/-)</ion-label>
+       <ion-input type="number"  [value]="porcentaje_descuento" [(ngModel)]="porcentaje_descuento" debounce="500" (ionChange)="updatePreciosbyPlan('todo','')" (ionChange)="selecPlanDescuento('dscto')"></ion-input>
+     </ion-item>
+     -->
+     <ion-button  class="btn_buscar"  fill="solid" expand="full" color="tertiary" (click)="presentModalListAnalisis()">
+      <ion-icon slot="start" name="reader-outline"></ion-icon>
+      Análisis
+      </ion-button>
+   </ion-col>
+  </ion-row>
+  <div class="divAnalisis">
+  <ion-card  *ngFor="let item of AnalisisList; let i=index">
+   <ion-grid   class="gridcustom">
+    <ion-row  class="rowtitle">
+      <ion-col size="11">
+        <ion-label class="ion-text-wrap" ><small>  {{item.cod_ana}} - {{item.des_ana}}</small>
+        </ion-label>
+      </ion-col>
+     
+      <ion-col size="1" class="ion-text-end">
+         <div class="divClose" (click)="eliminar_analisis(i)">
+          <ion-icon name="close"></ion-icon>
+         </div>
+        </ion-col>
+    </ion-row >
+    <ion-row class="rowcontent">
+      <ion-col size="2.4" class="ion-text-wrap">
+        <ion-label>{{item.subtotal|currency}}<br>
+        <small class="ion-text-wrap">Normal</small>
+        </ion-label>
+      </ion-col>
+      <ion-col size="2.4">
+        <ion-label>{{porcentaje_descuento}} <br>
+        <small class="ion-text-wrap">%(+/-)</small>
+        </ion-label>
+      </ion-col>
+      <ion-col size="2.4">
+        <ion-label>{{item.precio_ahora|currency}} <br>
+        <small class="ion-text-wrap">Precio</small>
+        </ion-label>
+      </ion-col>
+
+     <ion-col size="2.4" *ngIf="this.flag_descuento=='dscto'">
+        <ion-label>{{item.precio_dcto|currency}} <br>
+        <small class="ion-text-wrap">Dcto</small>
+        </ion-label>
+      </ion-col>
+      <ion-col size="2.4" *ngIf="this.flag_descuento=='dscto_plan'">
+        <ion-label>{{item.totalplandscto|currency}} <br>
+        <small class="ion-text-wrap">Dctof</small>
+        </ion-label>
+      </ion-col>
+
+      <ion-col size="2.4">
+        <ion-label>{{item.pospago|currency}} <br>
+        <small class="ion-text-wrap">Seguro</small>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+   </ion-grid>
+  </ion-card>
+</div>
+ 
+</ion-content>
+
+  <ion-card class="card_footer" [hidden]="hidden_total">
+    
+    <ion-row class="rowcontent text-price row_total" >
+       <ion-col size="3" class="ion-text-wrap">
+         <ion-label>{{precio_normal|currency}} <br>
+         <small class="ion-text-wrap">Normal</small>
+         </ion-label>
+       </ion-col>
+       <ion-col size="3">
+         <ion-label>{{precio_ahora|currency}} <br>
+         <small class="ion-text-wrap">Ahora</small>
+         </ion-label>
+       </ion-col>
+
+       <ion-col *ngIf="this.flag_descuento=='dscto'"  size="3">
+         <ion-label>{{precio_descuento|currency}} <br>
+         <small class="ion-text-wrap">Dcto</small>
+         </ion-label>
+       </ion-col>
+       <ion-col *ngIf="this.flag_descuento=='dscto_plan'" size="3">
+        <ion-label>{{precio_totalplandscto|currency}} <br>
+        <small class="ion-text-wrap">Dcto</small>
+        </ion-label>
+      </ion-col>
+
+       <ion-col size="3">
+         <ion-label>{{precio_seguro|currency}} <br>
+         <small class="ion-text-wrap">Seguro</small>
+         </ion-label>
+       </ion-col>
+     </ion-row>
+     <ion-row>
+       <ion-col class="ion-text-center">
+         <ion-label >
+          <ion-badge color="primary">
+            {{fecha_label}}
+          </ion-badge> 
+          <br>
+           <small>Fecha de Entrega</small>
+         </ion-label>
+       </ion-col>
+     </ion-row>
+ </ion-card>
+ <ion-fab horizontal="end" vertical="bottom">
+  <ion-fab-button size="small">
+    <ion-icon name="settings-outline"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="top">
+    <ion-fab-button color="danger" (click)="reset()"><ion-icon  name="trash-outline"></ion-icon></ion-fab-button>
+    <ion-fab-button color="primary" (click)="print()"><ion-icon  name="print-outline"></ion-icon></ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
+

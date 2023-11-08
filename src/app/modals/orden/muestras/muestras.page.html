@@ -1,0 +1,58 @@
+  <ion-toolbar>
+    <ion-title>Muestras</ion-title>
+  </ion-toolbar>
+<ion-button size="small" class="btn_cerrar" color="danger" (click)="dismiss()"> <ion-icon name="close-outline"></ion-icon></ion-button>
+<ion-content >
+<ion-grid>
+  <ion-card-header>
+    Imprimir Etiquetas
+  </ion-card-header>
+  <ion-row>
+    <ion-col>
+      <ion-button expand="block" fill="outline" color="secondary">
+        Pedidos
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button expand="block" fill="outline" color="secondary">
+        Todos
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button expand="block" fill="outline" color="secondary">
+        Referencia
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button expand="block" fill="outline" color="secondary">
+        Web
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<ion-item-divider lines="none">Muestras</ion-item-divider>
+<ion-list *ngIf="listMuestras">
+  <ion-card  *ngFor="let item of listMuestras">
+   
+    <ion-card-content class="full_width">
+      <ion-row>
+        <ion-col>{{item.des_mst}}</ion-col>
+        <ion-col class="ion-text-end">
+          <ion-button size="small"  color="tertiary" fill="clear"><ion-icon name="print-outline"slot="start"></ion-icon>Imprimir</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="1">
+          <ion-checkbox ></ion-checkbox>
+        </ion-col>
+        <ion-col class="ion-text-start">
+          E/T
+        </ion-col>
+        <ion-col class="ion-text-end">  {{item.fec_ent|date:'short'}}<br>
+        <small>Entrega o Toma</small></ion-col>
+      </ion-row>
+    </ion-card-content>
+
+  </ion-card>
+</ion-list>
+</ion-content>

@@ -1,0 +1,32 @@
+.alert-custom{
+    padding: 20px;
+}
+
+.alert-buttons{
+    text-align: end;
+    margin: 10px;
+}
+
+ion-list{
+    ion-item{
+        ion-label{
+            font-size: larger;
+            color: rgb(156, 156, 156);
+        }
+    }
+}
+h2{
+    color: grey;
+}
+
+.btn_cerrar{
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    ion-icon{
+      color:#fff
+    }
+  }

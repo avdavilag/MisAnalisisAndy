@@ -1,0 +1,50 @@
+
+<div class="contenido" [class]="select_flag?'close-contenido':''">
+  
+<ion-button color="danger" expand="full" (click)="cerrar()" class="btn_cerrar" shape='' size='small'>
+  <ion-icon name="close" ></ion-icon>
+</ion-button>
+<ion-content>
+  <div class="titulo">
+    <h2>{{ 'complex.select_pdf_titulo' | translate }}</h2>
+    <p>{{ 'complex.select_pdf_subtitulo' | translate }}:</p>
+  </div>
+<ion-list>
+  <!-- 
+
+  <ion-radio-group  [(ngModel)]="select_pdf" (ionChange)="seleccion()">
+  -->
+
+    <ion-item *ngFor="let item_pdf of lista_pdfs" button (click)="seleccion(item_pdf)"  detail="false">
+      <div class="contenedor_select"> 
+        <b *ngIf="!item_pdf.hoy"> {{item_pdf.fecha|date:'MMM d, y, H:mm'|uppercase}}</b>
+        <b *ngIf="item_pdf.hoy"> Hoy, {{item_pdf.fecha|date:'H:mm'|uppercase}}</b>
+        <br>
+        
+        <ion-icon name="person-outline"></ion-icon>
+        <div class="sub"> {{item_pdf.usuario | uppercase}} </div>
+        <div class="sub accion"> ({{item_pdf.accion}}) </div>
+        
+        <b class="version version-right"><small>v.</small> {{item_pdf.version}}</b>
+      </div>
+    <!-- 
+
+      <ion-radio slot="end" [value]='item_pdf'></ion-radio>
+    -->
+    </ion-item>
+
+</ion-list> 
+<!-- 
+
+<div class="alert-buttons" *ngIf="select_pdf">
+
+  <ion-button fill="outline" color="secondary" (click)="modificar()">{{ 'simple.Modificar' | translate }}</ion-button>
+  <ion-button fill="solid" color="secondary" (click)="imprimir()">{{ 'simple.Imprimir' | translate }}</ion-button>
+
+</div>
+
+-->
+</ion-content>
+
+
+</div>

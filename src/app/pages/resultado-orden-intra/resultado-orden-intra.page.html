@@ -1,0 +1,126 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>Usuarios Disponibles</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+
+<ion-content>
+  <div class="contenido">
+    <ion-card class="ion-text-center">
+      <ion-button color="danger" expand="full" class="close" (click)="back()" shape='' size='small'>
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+
+      <div>
+        <!--
+      <h2>{{ 'simple.Bienvenido' | translate }}</h2>
+      <p >sss</p>
+      -->
+        <div class="icono">
+          <!--PREVIENE EL CACHE-->
+          <img [src]="'assets/img/logo_intra.png?date='+fecha_actual" width="284" height="81" alt="logo">
+        </div>
+      </div>
+      <ion-list lines="none">
+
+        <ion-item *ngIf="datosPaciente.name_pac&&datosPaciente.name_pac!=''">
+          <ion-icon name="person-outline" slot="start" size="large"></ion-icon>
+          <ion-text>
+            <!--    <small>{{ 'complex.result_ord_nombres_paciente' | translate |uppercase}}</small> -->
+            <p>{{datosPaciente.name_pac}} </p>
+          </ion-text>
+        </ion-item>
+
+        <ion-item *ngIf="datosPaciente.id_pac&&datosPaciente.id_pac!=''">
+          <ion-icon src="assets/icon/id-card.svg" slot="start" size="large"></ion-icon>
+          <ion-text>
+            <!--           <small>{{ 'complex.result_ord_doc_paciente' | translate |uppercase}}</small>-->
+            <p>{{datosPaciente.id_pac}}</p>
+          </ion-text>
+        </ion-item>
+
+        <ion-item *ngIf="datosPaciente.fec_ord&&datosPaciente.fec_ord!=''">
+          <ion-icon name="calendar-outline" slot="start" size="large"></ion-icon>
+          <ion-text>
+            <!--  <small>{{ 'simple.Fecha' | translate |uppercase}} {{ 'simple.Orden' | translate |uppercase}}</small>-->
+            <p>{{datosPaciente.fec_ord}}</p>
+          </ion-text>
+        </ion-item>
+
+        <ion-item *ngIf="datosPaciente.name_med&&datosPaciente.name_med!=''">
+          <ion-icon src="assets/icon/doctor3.svg" slot="start" size="large"></ion-icon>
+          <ion-text>
+            <!--
+          <small>{{ 'simple.Doctor' | translate |uppercase }}</small>-->
+            <p>Dr(a) {{datosPaciente.name_med}}</p>
+          </ion-text>
+        </ion-item>
+        <!--  
+      <ion-item *ngFor="let entidad of entidades" >
+        <ion-label>{{entidad.nombre}}</ion-label>
+        <ion-radio slot="end" [value]="entidad" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Anthony Patricio Valverde Quispe</ion-label>
+        <ion-radio slot="end" value="griff"></ion-radio>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Mario Castañeda Palacios</ion-label>
+        <ion-radio slot="end" value="buford"></ion-radio>
+      </ion-item>
+      -->
+        <div class="btns_end" *ngIf="pdf_saved&&permiso_impresion">
+          <ion-button [disabled]="!listo" size="default" color="secondary" expand="block" (click)="imprimir()"
+            class="btn_ver">{{ 'complex.result_ord_ver_result' | translate |uppercase }}</ion-button>
+          <p class="wait" *ngIf="!listo">Generando informe...</p>
+        </div>
+
+        <div *ngIf="!permiso_impresion" class="btns_end">
+          <ion-badge class="ion-text-wrap saldo_pen" color="warning">
+            Saldo Pendiente
+          </ion-badge>
+        </div>
+        
+        <div class="btn_end_info" *ngIf="mesajePendientes.length>0">
+          <div >Análisis en proceso:</div>
+          <pre>{{mesajePendientes}}</pre>
+        </div>
+
+        <ion-item *ngIf="pdf_last_version">
+          <ion-text class="last-version">
+            <div>
+              <p>Existe una versión más reciente del reporte, generada
+                <b *ngIf="!pdf_last_version.hoy"> la fecha {{pdf_last_version.fecha|date:'MMM d, y,
+                  H:mm'|uppercase}}</b>
+                <b *ngIf="pdf_last_version.hoy"> Hoy, {{pdf_last_version.fecha|date:'H:mm'|uppercase}}</b>
+                <!-- 
+
+           <div class="versiones">
+            <p>Versión reciente: {{pdf_last_version.version}}</p>
+            <p>Versión actual: {{pdf_saved.version}}</p>
+            </div>
+           -->
+            </div>
+            <div class="link">
+              <a (click)="verInforme(pdf_last_version.uuid)">Ver informe</a>
+            </div>
+          </ion-text>
+        </ion-item>
+      </ion-list>
+
+
+      <ion-item lines="none">
+
+
+        <!--<ion-back-button defaultHref=""></ion-back-button> -->
+        <!-- 
+ <ion-button slot="start" size="default" color="secondary" fill="outline" (click)="validaEnvio()" class="btn_enviar" >{{ 'complex.result_ord_enviar_mail' | translate |uppercase }}</ion-button>
+    
+     -->
+      </ion-item>
+    </ion-card>
+  </div>
+
+</ion-content>

@@ -1,0 +1,193 @@
+
+<ion-content>
+  <div class="franja_usr">
+    <ion-icon name="person-circle-outline"></ion-icon> {{des_usr}}
+  </div>
+  <ion-card>
+
+
+    <ion-card-header>
+
+      <ion-row class="fechas">
+        <ion-col size="3" *ngIf="!mobile">
+          <ion-item>
+            <ion-label position="stacked">Desde</ion-label>
+            <ion-input type="date" position="stacked" [value]="f_desde| date: 'yyyy-MM-dd'"
+              [(ngModel)]="f_desde" (ionChange)="validaFecha()"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3" *ngIf="!mobile">
+          <ion-item>
+            <ion-label position="stacked">Hasta</ion-label>
+            <ion-input type="date" position="stacked" [value]="f_hasta | date: 'yyyy-MM-dd'"
+              [(ngModel)]="f_hasta" (ionChange)="validaFecha()"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col [size]="mobile?'12':'6'">
+          <div *ngIf="tipo_server==1" class="search-input">
+            <ion-searchbar *ngIf="filtro||!mobile" [placeholder]="'Buscar: cedula o nombre' " [(ngModel)]="dato_find"
+              (ionCancel)="cancelFiltroBusqueda($event)" showCancelButton="focus" debounce="2000"
+              (ionInput)="buscaxFiltro()">
+            </ion-searchbar>
+          </div>
+          <small class="info-search" *ngIf="dato_find!=''&&dato_find.length<4">Debe digitar más de 3 caracteres</small>
+        </ion-col>
+      </ion-row>
+ 
+
+      <ion-item>
+
+        <ion-card-title *ngIf="!mobile">{{ 'complex.lista_titulo_pedido' | translate }}</ion-card-title>
+        <div *ngIf="lista_filtrar.length>=300" class="info_size">
+          Se estan mostrando los primeros 300 registros de su búsqueda, por favor ser más específico en el filtro
+        </div>
+        <div *ngIf="lista_filtrar.length<300" class="info_size"> {{lista_filtrar.length}} registro(s) encontrados</div>
+
+        <ion-buttons slot="end" class="btn_listas">
+          <!-- 
+
+          <ion-button (click)="presentPopoverFiltro($event)" fill="clear" size="large" class="btn_filtro"
+            color="secondary">
+            {{ 'simple.Filtrar' | translate }}<ion-icon name="funnel-outline"></ion-icon>
+          </ion-button>
+          -->
+          
+          <ion-button class="btn_orden" *ngIf="mobile&&tipo_server==1" fill=clear size="large" (click)="abrirFiltro()" [color]="filtro?'danger':'tertiary'">
+           Buscar 
+           <ion-icon name="search" *ngIf="!filtro"></ion-icon>
+           <ion-icon name="close-circle-outline" *ngIf="filtro"></ion-icon>
+          </ion-button>
+          <ion-button (click)="presentPopoverOrden($event)" fill="clear" size="large" class="btn_orden"
+            color="secondary">
+            {{ 'simple.Ordenar' | translate }} <ion-icon name="filter-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+      </ion-item>
+
+      <ion-item *ngIf="mobile" (click)="openModalPeriodo()">
+        <div class="fechas_mob">
+          <small position="stacked">Desde / Hasta</small>
+          <br>
+          <div> {{f_desde}} / {{f_hasta}}</div>
+        </div>
+
+      </ion-item>
+    </ion-card-header>
+
+
+
+  
+    <ion-card-content>
+
+      <ion-list>
+        <ion-item *ngIf="!lista_filtrar||lista_filtrar.length<1 " class="no_results">
+          <div>
+          NO HAY PEDIDOS PARA MOSTRAR
+          </div>
+        </ion-item>
+        <div *ngIf="infoText!=''" class="info-text">{{infoText}}</div>
+        <ion-item *ngFor="let orden of lista_filtrar;let index =index; ">
+     <!-- 
+
+          <div class="indice" [slot]="mobile?'':'start'">
+            {{index+1}}
+          </div>item_anulado
+     -->
+          <ion-text  class="{{orden.anular_pedido==0?'':'item_anulado'}}"  >
+
+            <ion-row class="ion-text-left nombres_orden">
+              <ion-col>
+                {{orden.Paciente.nombre_completo}}
+              </ion-col>
+              <ion-col>
+                <!-- 
+                <ion-badge>
+                  {{orden.estado}}
+                </ion-badge>
+                -->
+                <ion-chip *ngIf="orden.anular_pedido==0" (click)="go_ingresar_duplicado(orden)" color="secondary" size="small">
+                  <ion-label>Duplicar</ion-label>
+                </ion-chip>
+                &nbsp;
+                <ion-chip *ngIf="checkAnular(orden)" (click)="presentAlertAnular(orden)" disabled="{{orden.anular_pedido==0?false:true}}" outline="true" color="danger">
+                  <ion-label color="danger">{{orden.anular_pedido==0?"Anular":"Anulado"}}</ion-label>
+                </ion-chip>
+              </ion-col>
+              <ion-col class="ion-text-right val_orden" *ngIf="!mobile">
+                <div class="tag">Id</div>
+                <div>{{orden.id_pedidos}}</div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="orden.anular_pedido==0" class="orden_values">
+              <ion-col class="val_fecha">
+                <ion-icon name="calendar-outline"></ion-icon>{{orden.fec_examen | date:'MMM d, y'}}
+              </ion-col>
+              <ion-col [class]="orden.Paciente.id_pac ? 'val_ced':'val_ced disable_val'">
+            
+                <div *ngIf="orden.Paciente.id_pac&&orden.Paciente.id_pac!=''"
+                  class="val_ced_dis">
+                  <ion-icon src="assets/icon/id-card.svg"></ion-icon>
+                  <div *ngIf="orden.Paciente.id_pac">{{orden.Paciente.id_pac}} </div>
+                  <div *ngIf="!orden.Paciente.id_pac">{{ 'complex.lista_sin_documento' | translate }}
+                  </div>
+                </div>
+              </ion-col>
+
+              <ion-col *ngIf="!mobile">
+                <ion-buttons class="btn_orden" class="ion-text-wrap">
+                  <ion-button (click)="presentModal(orden)" color="danger">
+                    <ion-icon name="eye-outline" size="large"></ion-icon>
+                  </ion-button>
+                  
+                  <ion-button *ngIf="this.qr_link!=''" (click)="openModalQR(orden.uuid_pedido)" color="tertiary">
+                    <ion-icon name="qr-code-outline" size="large"></ion-icon>
+                  </ion-button>
+                  
+                  <ion-button (click)="openPDF(orden)" color="secondary">
+                    <ion-icon name="print-outline" size="large"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+
+                <ion-buttons *ngIf="mobile" class="btn_orden" class="ion-text-wrap" slot="end">
+                  <ion-button (click)="presentModal(orden)" color="danger">
+                    <ion-icon name="eye-outline" size="large"></ion-icon>
+                  </ion-button>
+                  <ion-button *ngIf="this.qr_link!=''" (click)="openModalQR(orden.uuid_pedido)" color="tertiary">
+                    <ion-icon name="qr-code-outline" size="large"></ion-icon>
+                  </ion-button>
+                  <ion-button (click)="openPDF(orden)" color="secondary">
+                    <ion-icon name="print-outline" size="large"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-col>
+              <ion-col class="val_orden" *ngIf="mobile">
+                <ion-icon name="pricetag-outline"></ion-icon>{{orden.id_pedidos}}
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-center f_ingreso" >
+                Fecha de Ingreso del Pedido: {{orden.fec_ord| date:'MMM d, y, h:mm a'}}
+              </ion-col>
+            </ion-row>
+          </ion-text>
+          
+          
+        </ion-item>
+
+      </ion-list>
+
+      <ion-infinite-scroll threshold="100px" (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" [loadingText]="'complex.lista_cargando_mas' | translate">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+      <ion-button fill="clear" (click)="doInfinite($event)"
+        *ngIf="lista_filtrar.length != lista_pedidos.length && cargando&&!infiniteScroll.disabled&&digitosBusqueda.length==0">
+        {{ 'complex.lista_cargar_mas' | translate }}
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+<app-pie-pagina></app-pie-pagina>

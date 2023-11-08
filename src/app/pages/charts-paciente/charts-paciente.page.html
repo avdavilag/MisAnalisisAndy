@@ -1,0 +1,480 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button color="primary" slot="start" [text]="mobile?'':'Regresar'">
+    </ion-back-button>
+    <ion-title>{{nombre_pac}}</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+<!-- <ion-content [appAppearTitleAcordion]="titleAcordion" #titleAcordion [scrollEvents]="true"> -->
+<ion-content>
+  <ion-row class="primary-container">
+    <ion-col class="primary-col" size="11" sizeSm="12" sizeXs="12" offset="0.5" offsetSm="0" offsetXs="0">
+      <ion-card>
+        <ion-card-content>
+
+          <ion-row class="container-fecha">
+            <ion-col *ngIf="!mobile" size="2" sizeMd="4" sizeSm="4" sizeXl="2" sizeLg="3" class="title-ana">
+              <h1>PERIODO</h1>
+            </ion-col>
+            <ion-col size="4" sizeSm="4" sizeMd="6" sizeXs="12" sizeXl="4">
+              <ion-item lines="none" class="input-fecha">
+                <ion-label position="stacked">DESDE</ion-label>
+                <ion-input type="date" [value]="fDesde| date: 'yyyy-MM-dd'" [(ngModel)]="fDesde"
+                  (ionChange)="validaFecha()"></ion-input>
+              </ion-item>
+
+              <ion-item lines="none" class="input-fecha">
+                <ion-label position="stacked">HASTA</ion-label>
+                <ion-input type="date" [value]="fHasta| date: 'yyyy-MM-dd'" [(ngModel)]="fHasta"
+                  (ionChange)="validaFecha()"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col class="col-search-ana" *ngIf="!mobile&&listaAnalisis&&listaAnalisisOrigen.length>0">
+              <ion-searchbar [class]="classSearch" placeholder="Filtra analisis" [(ngModel)]="anaFiltrado"
+                (ionInput)="onSearchChange($event)" [debounce]="250" showCancelButton="never" showClearButton="never">
+              </ion-searchbar>
+              <ion-button fill="clear" (click)="appearSearch()">
+                <ion-icon [name]="classSearch=='inactive'?'search':'close-circle'"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <!-- 
+            <ion-col *ngIf="!mobile" size="8" class="title-ana">
+              <h1 *ngIf="listaAnalisis&&listaAnalisis.length>0">Analisis en el periodo </h1>
+              <h1 *ngIf="!listaAnalisis||listaAnalisis.length==0">No existen analisis en el periodo </h1><span>{{fDesde|
+                date: 'yyyy-MM-dd'}} // {{fHasta| date: 'yyyy-MM-dd'}} </span>
+            </ion-col>
+
+            -->
+
+          </ion-row>
+
+          <ion-item button detail="true" (click)="openModalAlertSelect()" class="select-analisis" lines="none" *ngIf="mobile">
+            <ion-label>SELECCIONE ANALISIS</ion-label>
+            <!-- 
+            <ion-select #select1 [interfaceOptions]='{ showBackdrop: false,cssClass: ""} ' [multiple]="true"
+              placeholder="Seleccione" [(ngModel)]="codigoAnalisis" (ionChange)="actualizaResultados()">
+              <ion-select-option value="todos">Todos</ion-select-option>
+              <ion-select-option *ngFor="let analisis of listaAnalisis" [value]="analisis">
+                <div>{{analisis.descripcion_analisis}}</div>
+              </ion-select-option>
+            </ion-select>
+            -->
+          </ion-item>
+
+          <div class="compex-ana" *ngIf="!mobile&&valAcordion.length==0"></div>
+          <ion-accordion-group class="acordion-ana" [multiple]="true" [value]="valAcordion"
+            *ngIf="!mobile&&listaAnalisis&&listaAnalisisOrigen.length">
+            <ion-accordion value="ana" [hidden]="scrollIntoButtonChart">
+              <ion-item slot="header" class="header-acordion-ana">
+                <ion-label class="header-accordion">ANALISIS</ion-label>
+
+              </ion-item>
+              <ion-row id="row-analisis" (scroll)="onScrollDivAnalisis($event)" slot="content" class="row-analisis"
+                *ngIf="!mobile&&listaAnalisis&&listaAnalisisOrigen.length">
+                <div [class]="scrollRowAnalisis?'transparent-content':''"></div>
+                <ion-col size="1" class="btn-ana" *ngIf="listaAnalisis.length>1">
+                  <ion-button expand="block" (click)="selectAllResultados()">TODOS</ion-button>
+                </ion-col>
+                <ion-col size="1" class="btn-ana" *ngIf="listaAnalisis.length>1">
+                  <ion-button (click)="clearResultados()">Ninguno</ion-button>
+                </ion-col>
+                <ion-col *ngFor="let analisis of listaAnalisis" (click)="valideAnalisis(analisis)">
+                  <ion-checkbox color="secondary" [(ngModel)]="analisis.active">
+                  </ion-checkbox>
+                  <div class="lbl-des">{{analisis.descripcion_analisis}}</div>
+                </ion-col>
+              </ion-row>
+              <ion-button *ngIf="scrollRowAnalisis" slot="content" size="small" fill="clear" class="btn-scroll">
+                <ion-icon [name]="'arrow-down'"></ion-icon>
+              </ion-button>
+            </ion-accordion>
+
+          </ion-accordion-group>
+          <div class="none-ana" *ngIf="!gridResultados||gridResultados.length==0">NINGUN ANALISIS SELECCIONADO</div>
+
+          <!-- RESULTADOS-->
+
+          <ion-segment *ngIf="mobile&&gridResultados&&gridResultados.length>0" color="primary" [value]="tipoPanelMobile"
+            (ionChange)="cambiaPanel($event)" mode="md">
+            <ion-segment-button value="table">
+              PARAMETROS
+            </ion-segment-button>
+            <ion-segment-button *ngIf="multi&&multi.length>0" value="chart">
+              GRAFICAS
+            </ion-segment-button>
+          </ion-segment>
+
+          <ion-grid *ngIf="gridResultados&&gridResultados.length>0" class="mat-table">
+            <ion-row class="etiquetas">
+              <ion-col [size]="(multi&&multi.length>0&&!mobile)?7:12" [resizeColumn]="true" [index]="0"
+                class="mat-header-cell" [hidden]="mobile&&tipoPanelMobile!='table'" onTouchMove>
+                <ion-item lines="none" id="title-accordion-chart">
+                  <ion-label class="header-accordion">Tabla de parámetros</ion-label>
+
+                </ion-item>
+                <!--LA TABLA-->
+                <ion-grid id="table-result" class="grid-table" [class]="(multi&&multi.length>0&&!mobile)?'':'full-grid'" [fixed]="true" [appAppearHeader]="header" #header>
+
+                  <!-- 
+                  <h1 class="title-chart" *ngIf="codigoAnalisis">{{codigoAnalisis.descripcion_analisis}}</h1>
+                      <ion-row>
+                        <ion-col size="3"></ion-col>
+                        <ion-col size="9" class="col-title">
+                        FECHAS
+                        </ion-col>
+                      </ion-row>
+                      -->
+                      <!-- 
+                        
+                  <div class="nw">
+                    <ion-row nowrap class="title-grid row-primary">
+
+                      -->
+                    <ion-row nowrap class="title-grid row-primary">
+                      <ion-col size="1" class="col-title">
+                        <ion-checkbox checked="true" class="check-group" (click)="activaTodosResultados($event)">
+                        </ion-checkbox>
+                        <ion-icon name="analytics-outline" size="large"></ion-icon>
+                      </ion-col>
+                      <ion-col class="col-title col-param" size="2">Parametros</ion-col>
+                      <ion-col class="col-title" size="1"></ion-col>
+                      <ion-col class="col-title" size="1">Unidad</ion-col>
+                      <ion-col size="7" class="col-dates row-dates-min">
+                        <ion-row class="row-dates">
+                          <ion-col class="col-param col-param-compex col-title2" size="1" #column> Parametros</ion-col>
+                          <ion-col *ngFor="let objYear of gridYearsDates; let i =index; trackBy: trackByFn"
+                            [style.background-color]="objYear.color"
+                            [size]="12/gridLabelResultados.length*objYear.dates.length" class="col-dates-year">
+                            <ion-row>
+                              <ion-col class="col-title"> {{objYear.year}} </ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col *ngFor="let label of objYear.dates; trackBy: trackByFn"
+                                [size]="12/objYear.dates.length" class="col-title col-dinamic-content">
+                                <div class="fecha">{{label|date:'MMMdd':undefined:'es-MX'|uppercase}}
+                                  {{label|date:'hh:mm'|uppercase}}</div>
+                              </ion-col>
+                            </ion-row>
+                          </ion-col>
+
+
+                          <!-- 
+                        <ion-col *ngFor="let year of yearLabelGrid(); let i =index; trackBy: trackByFn"    [style.background-color]="setColorRandom(i)"
+                          [size]="12/gridLabelResultados.length*columLabelByYearGrid(year).length">
+                          <ion-row>
+                            <ion-col size="12" class="col-title"> {{year}} </ion-col>
+                          </ion-row>
+                          <ion-row>
+                            <ion-col *ngFor="let label of columLabelByYearGrid(year); trackBy: trackByFn"
+                              [size]="12/columLabelByYearGrid(year).length" class="col-title">
+                              <div class="fecha">{{label|date:'MMMdd':undefined:'es-MX'|uppercase}}</div>
+                              <div class="hora">{{label|date:'hh:mm'|uppercase}}</div>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+       -->
+                        </ion-row>
+
+                      </ion-col>
+                      <!-- 
+  
+                    <ion-col class="col-title" size="7">
+                      <ion-row>
+                        <ion-col *ngFor="let label of yearLabelGrid()" [size]="(12/yearLabelGrid().length)">{{label}}</ion-col>
+                      </ion-row>
+                      <ion-row> 
+                        <ion-col *ngFor="let label of gridLabelResultados" [size]="(12/gridLabelResultados.length)"
+                        class="col-title"><div class="fecha">{{label|date:'y/MMM/dd':undefined:'es-MX'|uppercase}}</div><div class="hora">{{label|date:'hh:mm'|uppercase}}</div>
+                      </ion-col>
+                      </ion-row>
+                    </ion-col>
+                    -->
+
+                      <!-- 
+                    <ion-col *ngFor="let label of gridLabelResultados" [size]="(7/gridLabelResultados.length)"
+                      class="col-title"><div class="fecha">{{label|date:'y/MMM/dd':undefined:'es-MX'|uppercase}}</div><div class="hora">{{label|date:'hh:mm'|uppercase}}</div></ion-col>
+                     -->
+                    </ion-row>
+                  <div class="content-grid">
+                <!-- 
+                    <div class="nw" 
+                      *ngFor="let resultados of gridResultados let isOdd=odd; let isEven=even;trackBy:identify"
+                      [class.odd]="isOdd" [class.even]="isEven">
+                      <ion-row  class="row-primary">
+                -->
+                      <ion-row  class="row-primary"  *ngFor="let resultados of gridResultados let isOdd=odd; let isEven=even;trackBy:identify"
+                      [class.odd]="isOdd" [class.even]="isEven">
+
+                        <ion-col size="1" class="col-check">
+                          <ion-checkbox *ngIf="resultados.tipo=='N'&&resultados.chart&&resultados.chart.length"
+                          [(ngModel)]="resultados.active" (ionChange)="activaResultado($event,resultados)">
+                          </ion-checkbox>
+                        </ion-col>
+
+                        <ion-col size="2" class="col-param"> {{resultados.parametro|lowercase}}</ion-col>
+                        <ion-col size="1" (click)="focusChart(resultados)" class="col-chart">
+                          <div class="content-col-chart">
+
+                            <ngx-charts-line-chart
+                              *ngIf="resultados.chart&&resultados.chart.length>0&&resultados.tipo=='N'&&resultados.active"
+                              [view]="viewSmall" class="chart-small" [scheme]="resultados.colorScheme" [legend]="false"
+                              [animations]="false" [tooltipDisabled]="true" [autoScale]="true" [showXAxisLabel]="false"
+                              [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="" [showGridLines]="false"
+                              [roundDomains]="true" [showRefLines]="false" [showRefLabels]="false"
+                              [results]="resultados.chart">
+                            </ngx-charts-line-chart>
+                          </div>
+
+
+                        </ion-col>
+                        <ion-col size="1">{{resultados.unidad}}</ion-col>
+                        <ion-col size="7" class="row-dates-min">
+                          <ion-row class="col-result row-dates">
+                            <ion-col class="col-param col-param-compex" size="1" #column>  {{resultados.parametro|lowercase}}</ion-col>
+                            <ion-col *ngFor="let objYear of gridYearsDates; let i =index; trackBy: trackByFn"
+                              class="col-dates-year" [size]="12/gridLabelResultados.length*objYear.dates.length">
+                              <ion-row [class.odd]="isOdd" [class.even]="isEven">
+                                <ion-col *ngFor="let label of objYear.dates; trackBy: trackByFn"
+                                  [size]="12/objYear.dates.length" class="col-dinamic-content">
+                                  <div class="value">
+                                    {{resultados[label]}}
+                                  </div>
+                                </ion-col>
+                              </ion-row>
+                            </ion-col>
+
+                            <!-- 
+                          <ion-col *ngFor="let year of yearLabelGrid();trackBy:identify"
+                            [size]="12/gridLabelResultados.length*columLabelByYearGrid(year).length">
+                            <ion-row [class.odd]="isOdd" [class.even]="isEven">
+                              <ion-col *ngFor="let label of columLabelByYearGrid(year);trackBy:identify"
+                                [size]="12/columLabelByYearGrid(year).length">
+                                <div class="value">
+                                  {{resultados[label]}}
+                                </div>
+                              </ion-col>
+                            </ion-row>
+                          </ion-col>
+  
+                      -->
+                          </ion-row>
+
+                        </ion-col>
+                        <!-- 
+                      <ion-col class="col-result" *ngFor="let year of yearLabelGrid()" [size]="7/gridLabelResultados.length*columLabelByYearGrid(year).length">
+                         <ion-row>
+                          <ion-col *ngFor="let label of columLabelByYearGrid(year)" >  
+                            <div class="value">
+                              {{resultados[label]}}
+                            </div>
+                        </ion-col>
+                      </ion-row>
+                      </ion-col>
+                      -->
+                        <!-- 
+                      <ion-col *ngFor="let label of gridLabelResultados" [size]="(7/gridLabelResultados.length)">
+                        {{resultados[label]}}</ion-col>
+  
+  -->
+                      </ion-row>
+                    </div>
+                    
+                  <div class="dif-scroll" [class]="(multi&&multi.length>0)?'abs':'stick'">
+                    <ion-button size="small" fill="clear" disabled="true" class="btn-scroll">
+                      <ion-icon [name]="'arrow-down'"></ion-icon>
+                    </ion-button>
+                  </div>
+                </ion-grid>
+                <ion-icon (mousedown)="resizeTable()" [hidden]="mobile||multi==undefined||multi.length==0" name="resize-outline" class="icon-resize">
+                </ion-icon>
+              </ion-col>
+
+
+              <!--COMIENZA LAS GRAFICAS-->
+              <ion-col *ngIf="multi&&multi.length>0" [size]="!mobile?5:12" [hidden]="mobile&&tipoPanelMobile!='chart'"
+                class="mat-final">
+                <ion-item lines="none" id="title-accordion-chart">
+                  <ion-label class="header-accordion">Curva de evolución</ion-label>
+
+                </ion-item>
+                <div>
+                  <ion-row id="change-chart">
+                    <ion-col class="col-title-seg">
+                      AGRUPAR POR
+                    </ion-col>
+                    <ion-col>
+                      <ion-segment color="primary" [value]="tipoGrafica" (ionChange)="cambiaGrafica($event)" mode="ios">
+                        <ion-segment-button value="resultado">
+                          RESULTADO
+                        </ion-segment-button>
+                        <ion-segment-button value="unidad">
+                          UNIDAD
+                        </ion-segment-button>
+                      </ion-segment>
+                    </ion-col>
+                  </ion-row>
+                </div>
+                <ion-button *ngIf="target.clientHeight < target.scrollHeight && !mobile" (click)="scrollDown(target)"
+                  size="small" fill="outline" expand="block" class="btn-scroll-top">
+                  <ion-icon [name]="'arrow-up'"></ion-icon>
+                </ion-button>
+
+                <ion-button *ngIf="target.clientHeight < target.scrollHeight && !mobile" (click)="scrollUp(target)"
+                  size="small" fill="outline" expand="block" class="btn-scroll-end">
+                  <ion-icon [name]="'arrow-down'"></ion-icon>
+                </ion-button>
+                <div class="charts-container" #target>
+
+                  <!--
+                  <ion-row>
+                    <h1 class="title-unidad">{{chart.unidad}}</h1>
+                  </ion-row> -->
+                  <div *ngIf="tipoGrafica=='resultado'">
+
+                    <div *ngFor="let resultados of gridResultados">
+                      <ion-col class="chart-line" [id]="resultados.parametro"
+                        *ngIf="resultados.chart&&resultados.chart.length>0&&resultados.active">
+                        <h1>{{resultados.parametro|titlecase}}</h1>
+                        <ion-button size="small" class="btn-show-chart" fill="clear" color="secondary"
+                          (click)="openModalChart(resultados)">
+                          <ion-icon src="assets/icon/search-plus.svg"></ion-icon>
+                        </ion-button>
+                        <div class="container-chart">
+                          <ngx-charts-line-chart class="ng-chart" #chartLine (window:resize)="onResize($event)"
+                            [view]="view" [scheme]="resultados.colorScheme" [legend]="false" [showXAxisLabel]="false"
+                            [autoScale]="true" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+                            [showGridLines]="true" [yAxisLabel]="resultados.unidad" [showGridLines]="true"
+                            [roundDomains]="true" [showRefLines]="true" [xAxis]="xAxis" [yAxis]="yAxis"
+                            [timeline]="timeline" [results]="resultados.chart" (select)="onSelect($event)"
+                            (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+                          </ngx-charts-line-chart>
+                        </div>
+
+
+
+                        <!-- 
+    
+                    <ngx-charts-line-chart class="ng-chart" #chartLine (window:resize)="onResize($event)" [view]="view"
+                      [scheme]="colorScheme" [legend]="false" [legendTitle]="'RESULTADOS'"
+                      *ngIf="parametro" [showXAxisLabel]="false" [xScaleMin]="'09/02/2018'"
+                      [xAxisTickFormatting]="formattingTic" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+                      [yAxisLabel]="chart.unidad" [showGridLines]="true" [roundDomains]="true" [showRefLines]="true"
+                      [showRefLabels]="true" [xAxis]="xAxis" [yAxis]="yAxis" [timeline]="timeline"
+                      [results]="[parametro]" (select)="onSelect($event)" (activate)="onActivate($event)"
+                      (deactivate)="onDeactivate($event)">
+                      
+                    </ngx-charts-line-chart>
+                      -->
+
+                      </ion-col>
+                    </div>
+                  </div>
+
+                  <div *ngIf="tipoGrafica!='resultado'">
+
+                    <ion-col class="chart-line leyend" *ngFor="let chart of multi" [id]="chart.unidad"
+                      [hidden]="!chart||!chart.parametros_origen||chart.parametros_origen.length==0">
+                      <h1>Resultados en {{chart.unidad}}</h1>
+                      <ion-button size="small" class="btn-show-chart" fill="clear" color="secondary"
+                        (click)="openModalChart(chart)">
+                        <ion-icon src="assets/icon/search-plus.svg"></ion-icon>
+                      </ion-button>
+                      <ion-row class="container-chart-leyend">
+                        <ion-col size="8" class="col-chart-line">
+                          <ngx-charts-line-chart class="ng-chart" #chartLine (window:resize)="onResize($event)"
+                            [view]="view" [legend]="false" [legendTitle]="'RESULTADOS'"
+                            *ngIf="chart.parametros.length>0" [showXAxisLabel]="false" [xScaleMin]=""
+                            [xAxisTickFormatting]="formattingTic" [showYAxisLabel]="showYAxisLabel"
+                            [xAxisLabel]="xAxisLabel" [yAxisLabel]="!mobile?chart.unidad:undefined"
+                            [showGridLines]="true" [roundDomains]="true" [showRefLines]="true" [showRefLabels]="true"
+                            [xAxis]="xAxis" [yAxis]="yAxis" [timeline]="timeline" [results]="chart.parametros"
+                            (select)="onSelect($event)" (activate)="onActivate($event)" [customColors]="chart.colors"
+                            (deactivate)="onDeactivate($event)">
+                          </ngx-charts-line-chart>
+                          <div class="no-param-chart" *ngIf="chart.parametros.length==0">
+                            <h3>SELECCIONE UN PARAMETRO</h3>
+                          </div>
+
+                        </ion-col>
+                        <ion-col size="4">
+                          <div class="leyenda-resultados">
+                            <h4>Resultados</h4>
+                            <ion-row *ngFor="let param of chart.parametros_origen" (click)="selectParamLeyend(param)">
+                              <ion-col size="1"><span class="span-color" [style.background-color]="param.color"></span>
+                              </ion-col>
+                              <ion-col class="name-param " [class]="param.active?'active':'inactive'">{{param.name}}
+                              </ion-col>
+                            </ion-row>
+                          </div>
+                        </ion-col>
+                      </ion-row>
+
+                    </ion-col>
+
+                  </div>
+
+                  <!-- 
+                ESTO VA DENTRO DEL NGX CHART
+                    <ng-template #tooltipTemplate let-model="model">
+                      This is the single point tooltip template
+                      <pre>{{model|json}}</pre>
+                    </ng-template>
+                  
+                    <ng-template #seriesTooltipTemplate let-model="model">
+                      This is vertical line tooltip template
+                      <pre>{{model|json}}</pre>        
+                    </ng-template>
+                    -->
+                </div>
+
+              </ion-col>
+
+
+            </ion-row>
+          </ion-grid>
+          <!-- 
+  
+          <ion-accordion-group [multiple]="true" [value]="accordionPrincipal">
+
+            <ion-accordion value="table" *ngIf="gridResultados&&gridResultados.length>0">
+              <ion-item slot="header">
+                <ion-label class="header-accordion">TABLA DE PARAMETROS</ion-label>
+              </ion-item>
+         
+
+            </ion-accordion>
+            <ion-item lines="none" id="static-title-chart" *ngIf="scrollIntoButtonChart">
+              <ion-label *ngIf="!mobile" class="header-accordion">CURVA DE EVOLUCIÓN</ion-label>
+              <div slot="end">
+                <ion-row id="change-chart">
+                  <ion-col class="col-title-seg">
+                    AGRUPAR POR
+                  </ion-col>
+                  <ion-col>
+                    <ion-segment color="primary" [value]="tipoGrafica" (ionChange)="cambiaGrafica($event)" mode="ios">
+                      <ion-segment-button value="resultado">
+                        RESULTADO
+                      </ion-segment-button>
+                      <ion-segment-button value="unidad">
+                        UNIDAD
+                      </ion-segment-button>
+                    </ion-segment>
+                  </ion-col>
+                </ion-row>
+              </div>
+            </ion-item>
+
+            <ion-accordion value="chart" *ngIf="multi&&multi.length>0">
+
+            </ion-accordion>
+
+          </ion-accordion-group>
+
+-->
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+  </ion-row>
+</ion-content>

@@ -1,0 +1,408 @@
+<ion-content>
+  <ion-grid class="grid_custom">
+    <ion-row class="ion-row_c">
+      <ion-col class="ion-col_c" size="12" size-lg="4" size-xl="4" size-md="4">
+        <ion-card class="card_custom">
+          <ion-toolbar color="primary">
+            <ion-title>Datos Orden</ion-title>
+            <ion-buttons *ngIf="this.origen_lab!=null" slot="end">
+              <ion-button fill="clear">
+                {{this.origen_lab.des_ori}}
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+          <ion-card-header>
+            Datos Paciente
+             <ion-button *ngIf="!flag_paciente" fill="clear" size="small" color="secondary"  (click)="presentModalNuevoPaciente()">
+                <ion-icon slot="end" name="add-circle-outline"></ion-icon>
+                {{ 'tags.new_pacient' | translate }}</ion-button>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-row>
+            <ion-col *ngIf="flag_paciente && !orden_view" size="12" class="ion-text-end">
+                <ion-button size="small" (click)="presentAlertChangePacient()">
+                  <ion-icon slot="start" name="reload-outline"></ion-icon>
+                  <ion-icon slot="start" name="person-outline"></ion-icon>
+                  Cambiar paciente
+                </ion-button> </ion-col>
+              <ion-col *ngIf="!flag_paciente">
+                <ion-label class="label_custom" position="stacked">Cédula: <ion-text
+                    color="danger">*</ion-text></ion-label>
+                <ion-item class="item_custom2" lines="none">
+                  <ion-icon (click)="this.getPaciente()" name="search" slot="end"></ion-icon>
+                  <ion-input type="text" placeholder="{{ 'tags.identification' | translate }} "
+                    [value]="this.inputCedula" [disabled]="this.disabled_cedula" [(ngModel)]="this.inputCedula"
+                    (keyup.enter)="this.getPaciente()">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="this.paciente.cod_pac!=null">
+              <ion-col>
+                <ion-item>
+                  <ion-text>
+                    <ion-row>
+                      <ion-col size="12">
+                        <ion-icon name="person-outline"></ion-icon> {{this.paciente.nombre_completo}} <br>
+                      </ion-col>
+                      <ion-col>
+                        {{this.paciente.cod_pac}} <br>
+                        <small>Código Pac</small>
+                      </ion-col>
+
+                      <ion-col>
+                        {{this.paciente.id_pac}} <br>
+                        <small>Cédula/Ruc Pac</small>
+                      </ion-col>
+
+                      <ion-col>
+                        <ion-icon
+                          [name]="(this.paciente.sex_pac=='M')?'male-outline':(this.paciente.sex_pac=='F')?'female-outline':''"></ion-icon>
+                        {{(this.paciente.sex_pac=='M')?'MASCULINO':(this.paciente.sex_pac=='F')?'FEMENINO':''}} <br>
+                        <small>Género Pac</small>
+                      </ion-col>
+                    </ion-row>
+                  </ion-text>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+
+          <ion-card-header>
+            Datos Medico
+          </ion-card-header>
+          <ion-card-content>
+            <ion-row>
+              <ion-col size="12"  size-lg="5" size-xl="5" size-md="5" size-sm="12" size-xs="12" >
+                <ion-label class="label_custom" position="stacked">Codigo: <ion-text
+                    color="danger">*</ion-text></ion-label>
+                <ion-item class="item_custom2" lines="none">
+                  <ion-icon (click)="this.getMedico()" name="search" slot="end"></ion-icon>
+                  <ion-input type="text" placeholder="Código Médico " [value]="this.inputMedico"
+                    [(ngModel)]="this.inputMedico" (keyup.enter)="this.getMedico()" [disabled]="(orden_view || flag_referencia)">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col *ngIf="this.medico!=null" size="12" size-lg="7" size-xl="7" size-md="7" size-sm="12" size-xs="12">
+                <ion-label class="label_custom" position="stacked">Nombre:</ion-label>
+                <ion-item lines="none">
+                  <ion-text>
+                    <ion-row>
+                      <ion-col size="12" class="iont-text-wrap">
+                        <ion-icon name="person-outline"></ion-icon> {{this.medico.nom_med}} <br>
+                      </ion-col>
+                    </ion-row>
+                  </ion-text>
+                </ion-item>
+              </ion-col>
+
+            </ion-row>
+          </ion-card-content>
+
+          <ion-card-header>
+            Información Extra
+          </ion-card-header>
+          <ion-card-content>
+           <ion-row>
+            <ion-col>
+              <ion-label class="label_custom" position="stacked">
+                Plan
+              </ion-label>
+              <ion-item lines="none">
+                <ion-input *ngIf="flag_referencia && planSelected" disabled="true" type="text">{{planSelected.des_plan}}</ion-input>
+                <!--
+                <ion-select *ngIf="!flag_referencia" [interfaceOptions]="options_select" [(ngModel)]="planSelected"
+                  (ionChange)="updatePreciosbyPlan('todo','')" [disabled]="(orden_view || flag_referencia)">
+                      <div *ngFor="let item of listSeguro ">
+                    <ion-select-option disabled=true>{{item.des_seg}}</ion-select-option>
+                    <ion-select-option [value]="item2" *ngFor="let item2 of item.Plan">{{item2.des_plan}}
+                    </ion-select-option>
+                  </div>
+                </ion-select>
+                -->
+              </ion-item>
+            </ion-col>
+           </ion-row>
+           <ion-row>
+            <ion-col  size="12"  size-lg="5" size-xl="5" size-md="12" size-sm="12" size-xs="12" >
+              <ion-label class="label_custom" position="stacked">
+                Nro externo
+              </ion-label>
+              <ion-item class="item_custom2" >
+                <ion-input   type="text"   [disabled]="(orden_view)"  [value]="this.dataOrden.nro_ext" [(ngModel)]="this.dataOrden.nro_ext"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col  size="12"  size-lg="7" size-xl="7" size-md="12" size-sm="12" size-xs="12" >
+              <ion-label class="label_custom" position="stacked">
+                Nota
+              </ion-label>
+              <ion-item class="item_custom2" >
+                <ion-input  type="text"   [disabled]="(orden_view)"  [value]="this.dataOrden.obs_ext" [(ngModel)]="this.dataOrden.obs_ext"></ion-input>
+                </ion-item>
+            </ion-col>
+           </ion-row>
+            <!--
+            <ion-col>
+              <ion-label class="label_custom" position="stacked">
+                Unidad
+              </ion-label>
+              <ion-item lines="none">
+                <ion-select  [(ngModel)]="dataOrden.cod_uni"
+                  [interfaceOptions]="options_select" [disabled]="(orden_view)">
+                  <ion-select-option value="">Ninguno</ion-select-option>
+                  <ion-select-option *ngFor="let item of listUnidad" value="{{item.cod_uni}}"> {{item.des_uni}}</ion-select-option> </ion-select>
+              </ion-item>
+            </ion-col>
+-->
+
+          </ion-card-content>
+
+          <ion-card-header>
+            Datos de entrega
+          </ion-card-header>
+          <ion-card-content>
+            <ion-segment [value]="this.dataOrden.stat_ord"[(ngModel)]="this.dataOrden.stat_ord"  mode="ios" (ionChange)="checkPriority()" [disabled]="(orden_view)"  >
+              <ion-segment-button class="urgent_segment" value="1">
+                <ion-label>Urgente</ion-label>
+              </ion-segment-button>
+              <ion-segment-button class="pri_segment" value="2">
+                <ion-label>Prioridad</ion-label>
+              </ion-segment-button>
+              <ion-segment-button class="rutina_segment" value="0" color="success">
+                <ion-label>Rutina</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+            <ion-item lines="none">
+              <ion-badge slot="end" color="secondary">Hora de entrega de Resultados: {{this.hora_entrega}}</ion-badge>
+            </ion-item>
+            <ion-item class="item_custom2" lines="none">
+              <ion-label>1°</ion-label>
+              <input class="input_no_border" type="date" [(ngModel)]="fechaEntrega.fecha1"
+                [value]="fechaEntrega.fecha1" [disabled]="(orden_view)">
+            </ion-item>
+
+            
+            <!--
+            <ion-item class="item_custom2" lines="none">
+              <ion-label>2°</ion-label>
+              <input class="input_no_border" type="date" [(ngModel)]="fechaEntrega.fecha2"
+                [value]="fechaEntrega.fecha2" [disabled]="(orden_view)">
+            </ion-item>
+            -->
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+
+      <!--segunda columna-->
+      <ion-col size="12" size-lg="8" size-xl="8" size-md="8">
+        <ion-card class="card_custom">
+          <ion-toolbar color="primary">
+            <ion-title>Información de la Orden</ion-title>
+          </ion-toolbar>
+          <ion-card-content>
+            <ion-row>
+              <ion-col size="12" size-sm="12" size-xm="12" size-md="6" size-lg="6" size-xl="6">
+                <!-- 
+                   <ion-col size="12" size-xm="12" size-sm="12" size-md="12" size-lg="7.5" size-xl="7.5">
+                  <ion-item class="item_custom" lines="none">
+                    <ion-icon color="primary" name="search" slot="end" (click)="buscarAnalisis2()"></ion-icon>
+                    <ion-input type="text" placeholder="Análisis" (Keyup.enter)="buscarAnalisis2()"
+                      (ionFocus)="buscarAnalisis2()" (ionChange)="buscarAnalisis2()" debounce="500"
+                      [(ngModel)]="inputAnalisis"></ion-input>
+                  </ion-item>
+                </ion-col>
+                
+                -->
+                <ion-searchbar (ionFocus)="searchAnalisisList()" (ionBlur)="close_analisis()"
+                  [(ngModel)]="analisisbuscar" [debounce]="1000" (keyup.enter)="searchAnalisisList()"
+                  (ionInput)="searchAnalisisList()" show-cancel-button="never" mode="ios"
+                  placeholder="Buscar Análisis" [disabled]="(orden_view)"></ion-searchbar>
+                <!-- 
+    <div *ngIf="show_listaAnalisis" class='{{this.mobile?"listadesplegable":"listadesplegable listadesplegableanalisis"}}' >
+                  <ion-grid class="analisislist" *ngIf="ListaAnalisisTemp.length>0">
+                    <ion-row *ngFor="let item of ListaAnalisisTemp; let i =index" class="analisislist">
+                      <ion-col (click)="addAnalisis(item)" size="12" class="analisislist">
+                        <ion-label class="analisislist">{{item.des_ana}}</ion-label>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                  <ion-grid class="analisislist" *ngIf="ListaAnalisisTemp.length==0"> 
+                    <ion-row>
+                      <ion-col>No se encontraron resultados</ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </div>
+-->
+                <div [hidden]="hiddenlistSearchAnalisis" *ngIf="listSearchAnalisis">
+                  <ion-list class="listadesplegable">
+                    <ion-item *ngFor="let item of listSearchAnalisis" class="item_list" (click)="selectAnalisis(item)">
+                      {{item.des_ana}}
+                    </ion-item>
+                  </ion-list>
+                </div>
+              </ion-col>
+              <ion-col size="12" size-sm="12" size-xm="12" size-md="6" size-lg="6" size-xl="6" class="ion-text-end" style="margin: auto;">
+                <ion-button size="small" (click)="presentModalPerfilesAva()" [disabled]="(orden_view)">
+                  <ion-icon name="clipboard-outline"></ion-icon>
+                  Perfiles
+                </ion-button>
+              </ion-col>
+
+            </ion-row>
+
+            <ion-row class="header_tbl">
+              <ion-col  [size]="(this.mobile)?5:1">Cod</ion-col>
+              <ion-col size="3"  *ngIf="!this.mobile">Análisis</ion-col>
+              <ion-col size="2" *ngIf="!this.mobile">F. Entrega</ion-col>
+              <ion-col size="2" *ngIf="!this.mobile">Estado</ion-col>
+              <ion-col size="2" [size]="(this.mobile)?5:2">Precio</ion-col>
+              <ion-col size="2" *ngIf="(!orden_view)">&nbsp;</ion-col>
+            </ion-row>
+            <ion-grid class="grid_tbl">
+
+              <div *ngIf="listAnalisis.length>0">
+
+                <div *ngFor="let item of listAnalisis">
+                  <ion-row  *ngIf="!item.flag_no_precio" class="row_tbl">
+                    <ion-col  [size]="(this.mobile)?5:1"> {{item.cod_ana}}</ion-col>
+                    <ion-col size="3" *ngIf="!this.mobile"> {{item.des_ana}}</ion-col>
+                    <ion-col size="2" *ngIf="!this.mobile"> {{item.fechaFinal| date:'EE d MMM y'}}</ion-col>
+                    <ion-col size="2" *ngIf="!this.mobile"> <ion-badge color="primary">{{item.des_sts}}</ion-badge></ion-col>
+                    <ion-col [size]="(this.mobile)?5:2">$ {{item.total_vista}}</ion-col>
+                    <ion-col size="2" *ngIf="(!orden_view)"><ion-button size="small" color="danger" (click)="removeAnalisis(item)"><ion-icon
+                          name="close-outline"></ion-icon></ion-button></ion-col>
+                  </ion-row>
+                </div>
+               
+              </div>
+
+            </ion-grid>
+          </ion-card-content>
+
+          <ion-card-header>
+          <ion-row>
+            
+            <ion-col>
+            <ion-label (click)="presentAlertConfirmPrinter()">
+              Muestras
+              <ion-icon name="alert-circle-outline"></ion-icon>
+            </ion-label>    
+              
+            </ion-col>
+            <ion-col class="ion-text-end">
+              <ion-button color="tertiary" fill="outline" [hidden]="(!orden_view)" size="small" (click)="print_ticket_custom('todo','')"><ion-icon slot="start" name="print-outline"></ion-icon> Etiquetas</ion-button>
+          
+            </ion-col>
+          </ion-row>
+             
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid class="grid_muestras">
+              <ion-row>
+                <ion-col *ngIf="listMuestras.length==0">
+                  No existen muestras
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="listMuestras.length>0">
+                <ion-col *ngFor="let item of listMuestras" size="3"
+                  class="titleMuestras ion-text-uppercase ion-text-wrap col_muestras">
+                  {{item.des_mst}}
+                  <ion-button [disabled]="(!orden_view)" size="small" fill="clear" (click)="print_ticket_custom('mst', item)"><ion-icon name="print-outline"></ion-icon></ion-button>
+                </ion-col>
+
+              </ion-row>
+            </ion-grid>
+
+          </ion-card-content>
+          <ion-toolbar color="primary">
+            <ion-title>Generalidades</ion-title>
+          </ion-toolbar>
+          <ion-card-header>
+
+          </ion-card-header>
+          <ion-card-content>
+            <ion-row>
+              <ion-col>
+                <ion-card class="card_btn pagocard">
+                  <ion-card-content>
+                    <ion-row>
+                      <ion-col class="col_pago ion-text-start">
+                       $ {{this.total_ord}}
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col class="ion-text-end">
+                        Total a pagar
+                      </ion-col>
+                    </ion-row>
+
+                  </ion-card-content>
+                </ion-card>
+
+              </ion-col>
+              <ion-col>
+                <ion-card button="true" color="tertiary" class="card_btn" (click)="presentModalObservations('O')">
+                  <ion-card-content>
+                    <ion-row>
+                      <ion-col class="ion-text-center">
+                        <ion-icon name="eye-outline"></ion-icon>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col class="col_text ion-text-center">
+                        Observaciones
+                      </ion-col>
+                    </ion-row>
+
+                  </ion-card-content>
+                </ion-card>
+
+              </ion-col>
+              <ion-col>
+                <ion-card button="true" [disabled]="(this.paciente.cod_pac!=null && this.medico!=null && !this.orden_view)?false:true" color="success" class="card_btn" (click)="presentModalObservations('S')">
+                  <ion-card-content>
+                    <ion-row>
+                      <ion-col class="ion-text-center">
+                        <ion-icon name="save-outline"></ion-icon>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col class="col_text ion-text-center">
+                        Guardar
+                      </ion-col>
+                    </ion-row>
+
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+
+              <ion-col>
+
+                <ion-card  color="danger" class="card_btn" button (click)="this.resetOrden()" >
+                  <ion-card-content>
+                    <ion-row>
+                      <ion-col class="ion-text-center">
+                        <ion-icon name="trash-outline"></ion-icon>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col class="col_text ion-text-center">
+                        Limpiar
+                      </ion-col>
+                    </ion-row>
+
+                  </ion-card-content>
+                </ion-card>
+              
+              </ion-col>
+            </ion-row>
+
+          </ion-card-content>
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

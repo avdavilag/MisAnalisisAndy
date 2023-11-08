@@ -1,0 +1,8 @@
+{
+  "name": "MisAnalisis2",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "innerHTMLTemplatesEnabled":true
+}

@@ -1,0 +1,161 @@
+{
+    "tipoSystem":"",
+    "apiBaseType":1,
+    "versionApp":"misAnalisisOnlineDesa",
+    
+    "apiBaseHttps":false,
+    
+    "apiBaseUrl": "",
+    "apiBasePuerto":9080,
+    "apiBaseSubDir":"cs-common-intra",
+    "apiBasePuertoSsl":"",
+     
+    "apiIntranetSubDir":"cs-common-intra",
+    
+    "apiPdfMailUrl": "",
+    "apiPdfMailPuerto":9080,
+    "apiPdfMailSubDir":"common-pdf-generator",
+
+    "apiGraphQL":"192.168.58.95",
+    "apiGraphQLPuerto":8180,
+    "apiGraphQLPuertoSsl":"",
+    "apiGraphQLSubDir":"graphql",
+
+    "activaVersionamiento":false,
+    "apiMongo":"",
+    "apiMongoPuerto":9280,
+    "apiMongoPuertoSsl":"",
+    "apiMongoSubDir":"",
+
+    "activaFirma":false,
+    "apiFirma":"",
+    "apiFirmaPuerto":9580,
+    "apiFirmaPuertoSsl":"",
+    "apiFirmaSubDir":"",
+
+    "permiteSoloAdjuntos":false,
+    "tipoWhatsapp":"",
+    "formatoDefIntra":"sin_fondo",
+    "activaProtect":true,
+
+    "activaFirmaList":false,
+    "activaImagenesAnalisis":true,
+    "messageWebAnalisis":"Resultado privado, por favor acercarse a retirar a Laboratorio",
+    "messageWebAnalisisStsWeb":"[En proceso...]",
+    "parametrosPDF":[],
+    "parametrosPDFOrden":[], 
+    "activaMail":true,
+    "activaWhatsApp":true,
+    
+    "tiempoInactividad":30000,
+    "rootPath":"login-intranet",
+    "tipoUserDef":"Medico",
+    "ActivaTiposUsuarios":{
+        "Orden":false,
+        "Paciente":true,
+        "Medico":true,
+        "Empresa":true,
+        "Intranet":true,
+        "Externo":true
+    },
+    "label_externo":"Externo",
+
+    "ActiveByHost":{
+        "Medico":[],
+        "Empresa":[],
+        "Intranet":[],    
+        "Externo": [ "127.0.0.1","172.20.33.239"]
+    },
+    "DefaultUpperCase":{
+        "Paciente":true,
+        "Medico":true,
+        "Empresa":true,
+        "Intranet":true
+    },
+    "ActiveByPrivateIp":"http://192.168.57.55:9180/",
+    "activaLiberacion":false,
+    "progressPDF":false,
+    "formatoRefPDF":"ochoa",
+    "fechaInicioChart":"2020-01-01",
+
+    "pdfEncabezado":"",
+    "pdfPie":"",
+    "formatoFechaDisplay":"yyyy-MM-dd HH:mm",
+    "estilo":2,
+    "enableLog":false,
+    "defaultLenguaje":"es",
+    "nombreLab":"Autolab-des",
+    "paginacion": 10,
+    "detalleOrden":{
+        "colorEtiqueta":null,
+        "colorTitulo":null,
+        "colorSubTitulo":null,
+        "colorExamenOdd":null,
+        "colorExamenEven":null
+
+    },
+
+    "redirectWeb":"",
+    "enablePedidos":true,
+    "onlyPedidos":false,
+    "defaultInicioMed":"ingreso-pedido",
+
+    "active_turno":true,
+    "max_pedidos_turno":1,
+
+
+    "active_lugar_pedido":true,
+    "lugar_default":false,
+    "listado_lugar_pedido":[
+        {"descripcion":"EMERGENCIA","codigo":2,"enable":true,"style":"emergencia"},
+        {"descripcion":"HOSPITALIZACION","codigo":1,"enable":true,"style":"hospitalizacion"},
+        {"descripcion":"CONSULTA EXTERNA","codigo":3,"enable":true,"style":"consulta"}
+    
+      ],
+    
+    "unidad_pedido":{
+        "enable":false,
+        "required":false
+    },
+    "diagnostico_pedido":{
+        "enable":true,
+        "required":false
+    },
+    "diagnostico_extra_pedido":{
+        "enable":false,
+        "required":false
+    },
+
+    "pac_fec_nac":{
+        "enable":true,
+        "required":true
+    },
+
+    "pac_sex":{
+        "enable":true,
+        "required":true
+    },
+
+    "observaciones_pedido":{
+        "enable":true,
+        "required":true,
+        "default_msg":"Sin observaciones"
+    },
+
+    "refentrega_pedido":{
+        "enable":false,
+        "required":false
+    },
+
+    "enable_pedido_referencia":false,
+    "enable_orden_referencia":true,
+    "cod_med_default":1,
+    "enableOrden":true,
+    "enabe_hora_turno":true,
+    "check_ped_ord":false,
+    "printer_name":"ssda",
+    "intra_envio_bloque":true,
+    "enable_orden_completa":true,
+    "enable_envio_iess":true,
+    "enable_presupuesto":true
+}

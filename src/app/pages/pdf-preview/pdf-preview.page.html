@@ -1,0 +1,307 @@
+<ion-split-pane contentId="main-content">
+  <!-- EL MENU-->
+  <ion-menu side="end" contentId="main-content" type="overlay">
+    <ion-header>
+      <ion-toolbar color="" class="menu">
+
+        <ion-row *ngIf="orden.paciente" class="nombre_paciente">
+          <div>{{orden.paciente.nombre_paciente}}</div>
+      
+        </ion-row>
+        <ion-row  class="referencia" *ngIf="datosPaciente&&datosPaciente.referencia">
+          <div><ion-badge color="tertiary">{{datosPaciente.referencia}}</ion-badge></div>
+        </ion-row>
+        <ion-row *ngIf="orden.id_orden" class="btn-accion-datos">
+          <ion-col size=6>
+            <div class="n_orden">
+              <div class="lbl_orden">{{"simple.Orden"| translate}} </div><b> {{orden.id_orden}}</b>
+            </div>
+          </ion-col>
+          <ion-col class="btn_todos" size=3 *ngIf="!select_pdf">
+            <ion-button color="" size="small" expand=block (click)="selectTodosNinguno(false)">{{ "simple.Todos" |
+              translate}}</ion-button>
+          </ion-col>
+          <ion-col class="btn_todos" size=3 *ngIf="!select_pdf">
+            <ion-button color="" size="small" expand=block (click)="selectTodosNinguno(true)">{{ "simple.Ninguno"|
+              translate}}</ion-button>
+          </ion-col>
+
+
+        </ion-row>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content [ngClass]="{'content_disable':itemsCheked < 1&&!orden.id_orden}">
+      <div class="lista_examenes">
+        <!-- 
+
+        <h1 class="mensajeValida" *ngIf="!orden.id_orden">{{"complex.pdf_no_orden"| translate}}</h1>
+        -->
+        <ion-list *ngIf="orden.id_orden" lines="none ">
+          <div class="valores" *ngIf="!select_pdf" [ngClass]="{'content_pend':lista_pendientes!=''}">
+            <!--<p>{{titulo.descripcion_tipo_analisis}}</p>-->
+            <div *ngFor="let tipo of  orden.tipo_analisis ">
+              <ion-item *ngIf="tipo.descripcion_tipo_analisis" lines="none" class="titulos">
+              <!-- 
+                <ion-text>{{tipo.descripcion_tipo_analisis}}</ion-text>
+              -->  
+                <ion-checkbox justify="space-between" [(ngModel)]="!tipo.isChecked" (ionChange)="variarResultado(null,tipo,'t')">
+                  {{tipo.descripcion_tipo_analisis}}
+                </ion-checkbox>
+              </ion-item>
+
+              <ion-list lines="none" class="resultados">
+                <ion-item class="examenes" *ngFor="let examen of tipo.analisis; ">
+                  <!-- 
+                  <ion-label>{{examen.descripcion_analisis}}</ion-label>
+                  -->
+                  <ion-checkbox justify="space-between" [(ngModel)]="!examen.isChecked" (ionChange)="variarResultado(tipo,examen,'e')">
+                    {{examen.descripcion_analisis}}
+                  </ion-checkbox>
+                </ion-item>
+              </ion-list>
+            </div>
+
+          </div>
+          <!--Reportes versiones-->
+          <div class="valores select-pdf" *ngIf="select_pdf">
+            <h5>{{ 'complex.select_pdf_titulo' | translate }}</h5>
+
+            <ion-item *ngFor="let item_pdf of lista_pdfs let isOdd=odd;
+              let isEven=even;" [class.odd]="isOdd" [class.even]="isEven" button (click)="seleccion(item_pdf)"
+              [class]="select_pdf==item_pdf?'clicked':''" detail="false">
+              <div class="contenedor_select">
+
+                <b *ngIf="!item_pdf.hoy"> {{item_pdf.fecha|date:'MMM d, y, H:mm'|uppercase}}</b>
+                <b *ngIf="item_pdf.hoy"> Hoy, {{item_pdf.fecha|date:'H:mm'|uppercase}}</b>
+                <br>
+
+                <!--  
+                <b class="version">{{item_pdf.version}}</b>   -->
+                <b class="version version-right"> <small>v.</small> {{item_pdf.version}}</b>
+                <div class="sub">
+                  <!-- <ion-icon name="person-outline"></ion-icon> -->{{item_pdf.usuario | uppercase}}
+                </div>
+                <div class="sub accion"> ({{item_pdf.accion}}) </div>
+                <small></small>
+              </div>
+
+
+
+            </ion-item>
+
+          </div>
+        </ion-list>
+
+        <!-- <ion-button expand=block (click)="cargarPDF(orden)" color="secondary">GENERAR</ion-button> -->
+      </div>
+      <div class="l_pendientes" *ngIf="lista_pendientes!=''">
+        <h3>Pendientes</h3>
+        <pre>{{lista_pendientes}}</pre>
+      </div>
+    </ion-content>
+
+  </ion-menu>
+  <!--FIN DEL MENU-->
+  <div class="ion-page" id="main-content">
+    <!--INICIO DE LA PAGAINA-->
+    <ion-header>
+      <ion-toolbar color="">
+        <!--SEARCHBAR-->
+        <div class="contenedor_img_toolbar" slot="start">
+          <img class="fondo_logo" src="assets/img/icono_lab.png" width="50" height="50" alt="logo">
+        </div>
+        <div class="searchbar" slot="start">
+          <ion-button *ngIf="mobile&&!filtro" fill=clear size="large" (click)="abrirFiltro()" color="secondary">
+            <ion-icon name="search-outline"></ion-icon>
+          </ion-button>
+          <div>
+
+            <form (submit)="buscarOrden()" action="" *ngIf="filtro||!mobile">
+              <div lines=none color="">
+                <ion-searchbar #inputId name="inputId" class="search_ordenes" [placeholder]="'complex.pdf_buscar'| translate"
+                  [(ngModel)]="idOrden" mode="md" (ionCancel)="cancelFiltroBusqueda($event)" showCancelButton="never"
+                  (click)="cancelFiltroBusqueda($event)">
+                </ion-searchbar>
+              </div>
+            </form>
+            <ion-button fill="clear" color="secondary" *ngIf='(filtro||!mobile)&&idOrden.length>0'
+              size="small"
+              (click)="buscarOrden()">
+              <ion-icon slot="icon-only" size="" name="search-outline"></ion-icon>
+            </ion-button>
+          </div>
+
+        </div>
+        <!--ZOOM Y OTROS-->
+        <div slot="primary" *ngIf="!filtro">
+          <ion-item lines="none" color="">
+            <ion-button fill="clear" (click)="addRemoveZoom('r')">
+              <ion-icon slot="icon-only" name="remove-circle-outline" [size]="mobile?'small':''"></ion-icon>
+            </ion-button>
+            <ion-text>
+              <small><b>Zoom</b></small><br>
+              <small>{{zoomPage*100 | number}}%</small>
+            </ion-text>
+            <ion-button fill="clear" (click)="addRemoveZoom('a')">
+              <ion-icon slot="icon-only" name="add-circle-outline" [size]="mobile?'small':''"></ion-icon>
+            </ion-button>
+
+            <ion-button fill="clear" (click)="rotarPage('izq')" color="secondary">
+              <ion-icon slot="icon-only" src="assets/icon/rotation.svg" [size]="mobile?'small':''"
+                style="transform: scaleX(-1);"></ion-icon>
+            </ion-button>
+            <small><b>{{"simple.Rotar"| translate}}</b></small><br>
+            <ion-button fill="clear" (click)="rotarPage('der')" color="secondary">
+              <ion-icon slot="icon-only" src="assets/icon/rotation.svg" [size]="mobile?'small':''"></ion-icon>
+            </ion-button>
+
+          </ion-item>
+        </div>
+        <ion-row class="historial-busqueda" *ngIf="!mobile">
+          <ion-col *ngFor="let item of historial_busqueda">
+            <div class="historial-item ion-activatable ripple-parent" color="tertiary" mode=ios
+              (click)="buscaHistorialItem(item)">
+              {{item}}
+              <ion-badge mode=ios color="danger" (click)="eliminaHistorialItem(item)">X </ion-badge>
+              <ion-ripple-effect></ion-ripple-effect>
+            </div>
+          </ion-col>
+          <!--
+          <ion-col >  <div class="historial-item ion-activatable ripple-parent" color="tertiary" mode=ios>
+            123sss3333
+            <ion-badge mode=ios color="danger">X</ion-badge>
+            <ion-ripple-effect></ion-ripple-effect>
+          </div> 
+          </ion-col>
+          <ion-col >  <div class="historial-item ion-activatable ripple-parent" color="tertiary" mode=ios>
+            33
+            <ion-badge mode=ios color="danger">X</ion-badge>
+            <ion-ripple-effect></ion-ripple-effect>
+          </div> 
+          </ion-col>
+          -->
+
+        </ion-row>
+
+        <!--BOTONES END-->
+        <ion-buttons slot="end">
+          <ion-button fill="clear" color="primary" (click)="presentPopover($event)" class="btn_user">
+            <!-- 
+            <ion-label *ngIf="!mobile">{{sesion_usuario_des}}</ion-label>
+            -->
+            <ion-icon size="large" name="person-circle-outline">
+            </ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+        <!--
+      <ion-buttons slot="secondary">
+        <ion-button (click)="guardarPDF()">Descargar</ion-button>
+        <ion-button (click)="imprimirPDF()">Imprimir</ion-button>
+        <ion-button (click)="enviarEmail()">Email</ion-button>
+        <ion-button (click)="enviarWsp()">Whatsapp</ion-button>    
+      </ion-buttons>
+   -->
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content padding (click)="validaFocus()">
+
+      <div class="franja_usr">
+        <ion-icon name="person-circle-outline"></ion-icon> {{sesion_usuario_des}}
+      </div>
+      <div  class="pdf_view" [ngClass]="{'content_disable':itemsCheked < 1&&!orden.id_orden}" >
+      <!-- 
+
+      <div class="contenedor_img">
+        <img class="fondo_logo" src="assets/img/logo_intra.png" width="284" height="81" alt="logo">
+      </div>
+
+      -->
+
+    
+
+      <!--formatos-->
+      <div class="formatos" *ngIf="itemsCheked >= 1&&!select_pdf">
+        <ion-select [interfaceOptions]='{ showBackdrop: false,cssClass: "popover_formatos"} ' interface="popover"
+          placeholder="Formatos" [(ngModel)]="formato" (ionChange)="actualizaFormato()"
+          [disabled]="!formatos||(formatos.length<2)">
+          <ion-select-option *ngFor="let formato of formatos" [value]="formato">
+            <div>{{formato}}</div>
+            <!-- 
+            <div *ngIf="_translate.getDefaultLang()=='en'">{{formato.nombre_en}}</div>
+            -->
+          </ion-select-option>
+        </ion-select>
+      </div>
+
+  
+      <!-- 
+<div *ngIf="mensaje_info!=''" class="mensaje_info"><ion-icon name="information-circle-outline"></ion-icon> {{mensaje_info}}</div>
+
+      -->
+
+      <div class="pdf-view">
+        <div class="contenedor">
+          <h1 class="mensajeValida" *ngIf="(itemsCheked < 1&&permiteSoloAdjuntos&&pdf64==null)||(itemsCheked < 1&&!permiteSoloAdjuntos)">{{"complex.pdf_vista_previa"| translate}}</h1>
+          <pdf-viewer *ngIf="itemsCheked >= 1||(pdf64!=null&&permiteSoloAdjuntos)" [src]="pdf64" 
+            [original-size]="true"     
+            [zoom]="zoomPage"
+            [stick-to-page]="true"
+            [fit-to-page]="false"
+            [show-borders]="true" 
+            [rotation]="rotatePage" (error)="onErrorPDF($event)"></pdf-viewer>
+    
+        </div>
+      </div>
+    </div>
+    <ion-fab horizontal="start" vertical="bottom" slot="fixed" [activated]="!mobile&&(itemsCheked >= 1||(pdf64!=null&&permiteSoloAdjuntos))&&permiso_impresion" >
+      <ion-fab-button class="fab-button-lista" color="secondary" close-icon="chevron-down" [disabled]="(itemsCheked < 1&&permiteSoloAdjuntos&&pdf64==null)||(itemsCheked < 1&&!permiteSoloAdjuntos)">
+        <ion-icon name="options"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list side="top" class="lista_fab_options" >
+        <ion-fab-button *ngIf="activaWzp" color="success" class="tooltip" (click)="enviarWsp($event)" [disabled]="!permiso_impresion">
+          <span class="tooltiptext">{{ 'complex.pdf_enviar_whatsapp' | translate }}</span>
+          <ion-icon name="logo-whatsapp" size="large"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button *ngIf="activaMail" color="tertiary" class="tooltip" (click)="enviarEmail($event)" [disabled]="!permiso_impresion">
+          <span class="tooltiptext">{{ 'complex.result_ord_enviar_mail' | translate }}</span>
+          <ion-icon name="mail" size="large"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="medium" class="tooltip" (click)="imprimirPDF($event)" [disabled]="!permiso_impresion">
+          <span class="tooltiptext">{{ 'simple.Imprimir' | translate }}</span>
+          <ion-icon name="print" size="large"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="primary" class="tooltip" (click)="guardarPDF($event)" [disabled]="!permiso_impresion">
+          <span class="tooltiptext">{{ 'simple.Descargar' | translate }}</span>
+          <ion-icon name="download" size="large"></ion-icon>
+        </ion-fab-button>
+        <div [hidden]="!showButtonAdjunto">
+          
+        <ion-fab-button color="tertiary" class="tooltip adjuntos_fab" (click)="adjuntosAddRemove($event)"
+        [hidden]="!showButtonAdjunto" >
+          <div class="disabled-line" *ngIf="!adjuntos_flag"></div>
+          <span class="tooltiptext" *ngIf="adjuntos_flag">{{ 'complex.pdf_del_adjunto' | translate }}</span>
+          <span class="tooltiptext" *ngIf="!adjuntos_flag">{{ 'complex.pdf_add_adjunto' | translate }}</span>
+          <ion-icon name="attach" size="large"></ion-icon>
+        </ion-fab-button>
+        </div>
+        <ion-fab-button *ngIf="activaLib" color="secondary" class="tooltip cerrar" (click)="liberaPDF($event)"> 
+          <span class="tooltiptext">Liberación {{activaLib}}</span>
+          <ion-icon name="checkmark-done" size="large"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="light" class="tooltip cerrar" (click)="limpiarPantalla($event)"> 
+          <span class="tooltiptext">{{ 'simple.Limpiar' | translate }}</span>
+          <ion-icon name="reload-outline" size="large" style="transform: scaleX(-1);"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="secondary" *ngIf="mobile" (click)="openMenu()">
+      <ion-fab-button>
+        <ion-icon name="clipboard"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    </ion-content>
+  </div>
+</ion-split-pane>

@@ -1,0 +1,144 @@
+<ion-button color="danger" expand="full" (click)="cerrar()" class="btn_cerrar" shape='' size='small'>
+  <ion-icon name="close"></ion-icon>
+</ion-button>
+<ion-content>
+  <ion-grid>
+    <ion-row  class="titulos-principales">
+      <ion-col >
+        <b>DATOS DEL PACIENTE</b>
+      </ion-col>
+    </ion-row>
+    <ion-row class="datos-pedido">
+      <ion-col size=3>
+        <b>
+          Nombres Paciente:
+        </b>
+      </ion-col>
+      <ion-col size=3>
+       {{pedido.Paciente.nombre_completo}}
+      </ion-col>
+      
+      <ion-col size=3>
+        <b>
+          Fecha Nacimiento:
+        </b>
+      </ion-col>
+      <ion-col size=3>
+        {{pedido.Paciente.fec_nac}}
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="datos-pedido">
+      <ion-col size=3>
+        <b>
+          Identificación:
+        </b>
+      </ion-col>
+      <ion-col size=3>
+        {{pedido.Paciente.id_pac}}
+      </ion-col>
+    </ion-row>
+    
+    <ion-row class="titulos-principales ion-text-center">
+      <ion-col >
+        <b>DATOS DEL PEDIDO</b>
+       
+      </ion-col>
+      <ion-badge  class="badge_custom" color='{{pedido.estado_pedido==0?"success ":pedido.estado_pedido==1?"danger":pedido.estado_pedido==2?"warning":""}}'>
+        <ion-label color="light">{{pedido.estado_pedido==0?"RUTINA  ":pedido.estado_pedido==1?"EMERGENCIA ":pedido.estado_pedido==2?"PRIORIDAD":""}}</ion-label>
+      </ion-badge>
+    </ion-row>
+
+    <ion-row  class="datos-pedido">
+      <ion-col size=2>
+        <b>
+          Lugar:
+        </b>
+      </ion-col>
+      <ion-col size=2>
+       {{pedido.cod_lugar==1?"HOSPITALIZACION ":pedido.cod_lugar==2?"EMERGENCIA":pedido.cod_lugar==3?"CONSULTA EXTERNA":""}}
+      </ion-col>
+      <ion-col size=2>
+        <b>
+          Unidad:
+        </b>
+      </ion-col>
+      <ion-col size=2>
+        {{pedido.des_uni}}
+      </ion-col>      
+      <ion-col size=2>
+        <b>
+          Nro. Habitación:
+        </b>
+      </ion-col>
+      <ion-col size=2>
+        {{pedido.nro_habitacion}}
+      </ion-col>
+    </ion-row>
+
+      <ion-row  class="datos-pedido">
+        <ion-col size=3>
+          <b>
+            Número de pedido:
+          </b>
+        </ion-col>
+        <ion-col size=3>
+         {{pedido.id_pedidos}}
+        </ion-col>
+        <ion-col size=3>
+          <b>
+            Fecha examen:
+          </b>
+        </ion-col>
+        <ion-col size=3>
+          {{pedido.fec_examen}}
+        </ion-col>
+      </ion-row>
+      
+      <ion-row class="datos-pedido">
+        <ion-col size=3>
+          <b>
+            Observación:
+          </b>
+        </ion-col>
+        <ion-col size=9>
+          {{pedido.observaciones}}
+         </ion-col>
+         <ion-col size=3>
+           <b>
+             Diagnostico:
+           </b>
+         </ion-col>
+         <ion-col size=3>
+           {{pedido.descripcion_diagnostico}}
+         </ion-col>
+         <ion-col size=3>
+           <b>
+             Diagnostico 2:
+           </b>
+         </ion-col>
+         <ion-col size=3>
+           {{pedido.descripcion_diagnostico_extra}}
+         </ion-col>
+      </ion-row>
+
+  </ion-grid>
+
+  <ion-row  class="titulos-principales">
+    <ion-col>
+      <b>LISTA DE ANALISIS</b>
+    </ion-col>
+  </ion-row>
+  <ion-grid>
+    <ion-row>
+
+      <ion-col size="6" *ngFor="let analisis of pedido.Analisis;let index =index; ">
+        <div class="analisis" [style.background-color]="getColor(index)">
+          <b>{{analisis.des_ana}}</b><br>
+          <small>{{analisis.cod_ana}}</small>
+        </div>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

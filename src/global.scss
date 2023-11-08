@@ -1,0 +1,666 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+@font-face {
+  font-family: Ubuntu;
+  src: url(assets/fonts/Ubuntu-Regular.ttf) format("truetype");
+}
+
+* {
+  font-family: Ubuntu, "times new roman", times, roman, serif !important;
+}
+@media only screen and (min-width: 765px) {
+  .modal-detalle-orden .modal-wrapper {
+    //height: 20%;
+    //width: 765px;
+    width: 70%;
+    max-width: 970px;
+  }
+  .modal-select-pdfs .modal-wrapper {
+    width: 50%;
+    max-width: 470px;
+  }
+  .alert-mail {
+    --max-width: 400px;
+    --width: 400px;
+  }
+  
+
+}
+
+.mat-table {
+  width: 100%;
+  &.resizing {
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: col-resize;
+  }
+  .mat-cell {
+    span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  .mat-header-cell {
+    position: relative;
+
+    &:not(:last-child) {
+      .resize-holder {
+        cursor: col-resize;
+        width: 10px;
+        height: 100%;
+        position: absolute;
+        right: -7px;
+        top: 0;
+        z-index: 1;
+      }
+    }
+  }
+  .mat-cell,
+  .mat-header-cell {
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+    &:not(:nth-child(1)) {
+      padding: 0 10px;
+    }
+  }
+}
+
+.cancel-button-alert {
+  border-style: solid !important;
+  border-width: 2px !important;
+  color: var(--ion-color-secondary, #3dc2ff) !important;
+  margin: 4px 2px;
+  height: 36px;
+}
+
+.principal-button-alert {
+  color: var(--ion-color-secondary-contrast, #fff) !important;
+  background-color: var(--ion-color-secondary, #3dc2ff) !important;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  padding: 13px;
+  margin: 4px 2px;
+  height: 36px;
+  border-radius: 4px;
+}
+
+.modal-alert {
+  --height: 345px;
+  --width: 400px;
+  padding: 30px;
+}
+
+.modal-alert-wzp {
+  --height: 200px;
+  --width: 400px;
+  padding: 30px;
+}
+
+//esto es para que se pueda seleccionar el contenido
+body {
+  -webkit-user-select: auto !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: auto !important;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (min-width: 1024px) {
+  body {
+    zoom: 1.1;
+  }
+}
+
+::-webkit-scrollbar {
+  //background-color: red;
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  //background-color:#1eff00;
+}
+.popover_formatos {
+  color: #8c8c8c;
+  ion-item {
+    font-size: small;
+    color: #8c8c8c;
+  }
+}
+
+.alert-login {
+  --background: #ff4747;
+  text-align: center;
+
+  .alert-message {
+    align-items: center !important;
+    font-size: x-large;
+    color: white;
+    ion-icon {
+      font-size: 50px;
+    }
+  }
+  .alert-button-group {
+    justify-content: center;
+    .alert-button {
+      color: white;
+      font-size: large;
+    }
+  }
+}
+.modal-alert-login {
+  --height: 200px;
+  --width: 300px;
+  padding: 30px;
+  .modal-wrapper {
+    border-radius: 25px;
+  }
+}
+
+.alert-mail {
+  .alert-input-wrapper {
+    font-size: large;
+    ::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
+      // color: red;
+      // opacity: 1; /* Firefox */
+      font-size: medium;
+    }
+  }
+}
+
+.mensajes-pdf {
+  z-index: 60000 !important;
+  .alert-message {
+    text-align: center;
+    
+    ion-icon {
+      font-size: 60px;
+      color: red;
+    }
+  }
+}
+
+.mensajes-pdf-success {
+  z-index: 60000 !important;
+  .alert-message {
+    text-align: center;
+    
+    ion-icon {
+      font-size: 60px;
+      color: green;
+    }
+  }
+}
+
+.modal-select-pdfs {
+  .close-contenido {
+    // animation: expand .200s ease forwards;
+  }
+
+  //
+}
+@keyframes expand {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(1200px);
+  }
+}
+.toast-verde {
+  // --background: green;
+}
+
+.search_ordenes {
+  .searchbar-search-icon {
+    background: url("./assets/icon/clipboard.svg") !important;
+    content-visibility: hidden;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    opacity: 0.7;
+  }
+}
+
+.qrcode {
+  max-width: 100%;
+  height: 100%;
+  svg {
+    max-width: 100%;
+  }
+}
+
+.modal_analisisA {
+  --width: 90%;
+}
+
+.modal_Unidad {
+  --width: 400px;
+}
+app-pie-pagina {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.mensajes-pendientes {
+  z-index: 60000 !important;
+  .alert-message {
+    text-align: left;
+  }
+  .a_pend {
+    height: 150px;
+    overflow-y: scroll;
+    font-size: small;
+    color: #9c9c9c;
+  }
+
+  .a_pend::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  /* Handle */
+  .a_pend::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  /* Handle on hover */
+  .a_pend::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+  }
+}
+body {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.modal-change-login {
+  --height: 570px;
+  --width: 350px;
+  padding: 30px;
+  .modal-wrapper {
+    border-radius: 15px;
+  }
+}
+.alert-info-wzp {
+  margin-left: 6%;
+  margin-right: 6%;
+  &.listo {
+    height: 13px;
+    width: 13px;
+    background: #39ff3f;
+    border-radius: 35px;
+  }
+  &.alert {
+    background: #ff2525;
+  }
+}
+ngx-charts-line-chart {
+  .line-highlight {
+    display: block;
+  }
+}
+
+.toolbar-not-top {
+  position: sticky;
+  top: -7px;
+  z-index: 9999;
+  ion-col {
+    background: #f4fcff;
+    border-top: solid 1px #ececec;
+  }
+}
+.column-not-rigth {
+  position: sticky!important;
+  left: 0px;
+  z-index: 9998!important;
+  &.column-results{
+    display: block!important;
+    padding-left: 10px!important;
+    left: -10px;
+  }
+  &.col-title {
+    background: #ffff;
+  }
+}
+
+.acordion-not-rigth {
+  width: 87vw;
+  position: fixed;
+  top: 47px;
+  z-index: 999;
+  left: 0;
+  margin-left: 15px;
+  margin-right: 111px;
+  ion-label {
+    display: block;
+  }
+}
+.acordion-not-top {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  .header-acordion-ana {
+    display: block !important;
+    padding-top: 12px;
+  }
+  ion-accordion {
+    background: #f5ffff;
+  }
+  #change-chart2 {
+    padding: 0;
+    padding-top: 6px;
+  }
+}
+
+.last-point {
+  animation: pulses 1200ms infinite;
+}
+.tick-text {
+  font-size: x-small !important;
+}
+.tick {
+  text {
+    font-size: x-small !important;
+  }
+}
+@keyframes pulses {
+  from {
+    //opacity: 1;
+    r: 7;
+  }
+
+  to {
+    //opacity: 0.2;
+    r: 1;
+  }
+}
+
+.col-visor-chart {
+  .ngx-charts {
+    height: 400px;
+  }
+}
+
+.btn_cerrar {
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  ion-icon {
+    color: #fff;
+  }
+}
+
+.leyenda-resultados {
+  overflow: auto;
+  padding: 5px;
+  padding-bottom: 18px;
+  background: #e5fff4;
+  max-height: 250px;
+  h4 {
+    text-align: center;
+    font-weight: bold;
+  }
+  ion-row {
+    cursor: pointer;
+    ion-col {
+      padding: 0;
+      font-size: smaller;
+    }
+  }
+  .name-param {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-left: 5px;
+    &.active {
+      //text-decoration: line-through;
+    }
+    &.inactive {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+  }
+  .span-color {
+    display: inline-block;
+    height: 15px;
+    width: 100%;
+    color: #5b646b;
+    border-radius: 3px;
+  }
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+    height: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+  }
+}
+
+.popover-end-page {
+  .popover-content {
+    left: inherit !important;
+    right: 10px !important;
+  }
+}
+
+.popover-end-page::part(content){
+  left: inherit !important;
+  right: 10px !important;
+}
+
+.pop-fecha{
+  --width:350px;
+  --max-width:350px
+
+}
+
+.mensajes-pdf {
+  z-index: 60000 !important;
+  //--width:600px;
+  --max-width:600px;
+  --min-width:200px;
+  .alert-message {
+    text-align: center;
+
+    ion-icon {
+      font-size: 60px;
+      color: #ffd600;
+    }
+  }
+  
+}
+
+//ESTO ES POR EL SCROLL
+.ng2-pdf-viewer-container{
+ height: auto!important;
+}
+
+@media only screen and (max-width: 1250px) {
+  .ng2-pdf-viewer-container{
+    width:  auto!important;
+   }
+  
+}
+
+button.alert-button.emergencia{
+  width: 100%;
+  background: #e76868;
+  text-align: center !important;
+  color: white;
+  span{
+    display: initial;
+    text-align: center;
+  }
+}
+
+button.alert-button.hospitalizacion{
+  width: 100%;
+  background: #71dfc0;
+  text-align: center !important;
+  color: white;
+  span{
+    display: initial;
+    text-align: center;
+  }
+}
+
+button.alert-button.consulta{
+  width: 100%;
+  background: #7479ff;
+  text-align: center !important;
+  color: white;
+  span{
+    display: initial;
+    text-align: center;
+  }
+}
+
+
+ion-alert.alert_select {
+ --width: 410px;
+ --max-width: 435px;
+ --min-width: 300px;
+ word-wrap: break-word;
+}
+
+.item_custom2{
+  --height: 19px !important;
+  --border-width: 0.5px;
+  --max-height: 19px !important;
+  --min-height: 19px !important;
+  margin: 5px 5px;
+}
+
+.input_no_border{
+  border: initial;
+}
+
+.label_custom
+{
+    color: #6d6d6d;
+    font-weight: 600;
+    font-size: small;
+    padding-left: 9px;
+}
+
+
+/* iOS styles */
+
+
+.rutina_segment{
+  --indicator-color: rgb(41, 180, 72);
+ // color: rgb(41, 180, 72);
+  --color:rgb(41, 180, 72);
+  --color-checked:white;
+  --background-checked:rgb(41, 180, 72);
+  --color-focused:white
+}
+.urgent_segment{
+
+  --indicator-color: rgb(180, 57, 41);
+  // color: rgb(41, 180, 72);
+   --color:rgb(180, 57, 41);
+   --color-checked:white;
+   --background-checked:rgb(180, 57, 41);
+}
+
+.pri_segment{
+
+  --indicator-color: #eda116;
+  // color: rgb(41, 180, 72);
+   --color:#eda116;
+   --color-checked:white;
+   --background-checked:#eda116;
+}
+
+
+
+ion-alert.alert_printer {
+  --width: 410px;
+  --max-width: 435px;
+  --min-width: 300px;
+  word-wrap: break-word;
+  overflow: scroll;
+  --height: 400px;
+  --max-height: 400px;
+  --min-height: 400px;
+ }
+
+ .alert_printer .alert-button-group {
+  text-transform: none !important;
+
+}
+ 
+.alert_sbloque_select{
+ 
+  --max-height: 240px;
+  --min-height: 240px;
+  --min-width:280px;
+  --max-width:280px
+}
+
+ion-popover-custom {
+  --background: rgba(40, 173, 218, 0.6);
+  padding-top: 5px ;
+  --width: 300px;
+}
+
+//CAMBIO POR LA VERSION 7
+ion-select{
+  padding: 10px;
+  min-height: 22px;
+}
+
+.pop_over_pago{
+  --height: 360px;
+  --width:300px;
+  padding: 7px;
+}
+
+
+.modal-policy {
+  --height: 32vh;
+  --width: 40vw;//74 mobile
+  padding: 30px;
+}

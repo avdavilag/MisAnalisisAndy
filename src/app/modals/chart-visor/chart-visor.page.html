@@ -1,0 +1,56 @@
+<ion-button color="danger" expand="full" (click)="cerrar()" class="btn_cerrar" shape='' size='small'>
+  <ion-icon name="close"></ion-icon>
+</ion-button>
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="tipo=='resultado'">{{dataChart.parametro|titlecase}}</ion-title>
+    <ion-title *ngIf="tipo!='resultado'">Resultados en {{dataChart.unidad}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-row *ngIf="tipo=='resultado'">
+      <ion-col size="12">
+
+          <ngx-charts-line-chart *ngIf="dataChart&&tipo=='resultado'" class="ng-chart" #chartLine
+            [yScaleMin] = "0"
+            (window:resize)="onResize($event)" [view]="view" [scheme]="dataChart.colorScheme" [legend]="false"
+            [showXAxisLabel]="false" [autoScale]="true" [showYAxisLabel]="true" [showGridLines]="true"
+            [yAxisLabel]="dataChart.unidad" [showGridLines]="true" [roundDomains]="true" [showRefLines]="true"
+            [xAxis]="true" [yAxis]="true" [results]="dataChart.chart">
+          </ngx-charts-line-chart>
+
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="tipo!='resultado'" class="container-chart-leyend">
+        <ion-col size="8" sizeSm="12" sizeXs="12" class="col-chart-line">
+          <ngx-charts-line-chart class="ng-chart" #chartLine (window:resize)="onResize($event)"
+          [yScaleMin] = "0"
+            [view]="view" [legend]="false" [legendTitle]="'RESULTADOS'"
+            *ngIf="dataChart.parametros.length>0" [showXAxisLabel]="false" 
+             [showYAxisLabel]="true"
+            [xAxisLabel]="" [yAxisLabel]="dataChart.unidad"
+            [showGridLines]="true" [roundDomains]="true" [showRefLines]="true" [showRefLabels]="true"
+            [xAxis]="true" [yAxis]="true" [results]="dataChart.parametros"
+            [customColors]="dataChart.colors">
+          </ngx-charts-line-chart>
+          <div class="no-param-chart" *ngIf="dataChart.parametros.length==0">
+            <h3>SELECCIONE UN PARAMETRO</h3>
+          </div>
+
+        </ion-col>
+        <ion-col size="4" sizeSm="12" sizeXs="12">
+          <div class="leyenda-resultados">
+            <h4>Resultados</h4>
+            <ion-row *ngFor="let param of dataChart.parametros_origen" (click)="selectParamLeyend(param)">
+              <ion-col size="1"><span class="span-color" [style.background-color]="param.color"></span>
+              </ion-col>
+              <ion-col class="name-param " [class]="param.active?'active':'inactive'">{{param.name}}
+              </ion-col>
+            </ion-row>
+          </div>
+    </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

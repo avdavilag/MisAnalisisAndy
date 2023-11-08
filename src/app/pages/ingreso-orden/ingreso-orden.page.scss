@@ -1,0 +1,227 @@
+
+
+.itemcedula{
+    width: 300px;
+}
+
+.label_custom
+{
+    color: #6d6d6d;
+    font-weight: 600;
+    font-size: small;
+   // padding-left: 9px;
+}
+
+
+.item_custom{
+    --height: 30px;
+      border: solid 1.5px #cacaca;
+      border-bottom: solid 2px #929191;
+      border-right: solid 2px #929191;
+      margin: 5px 10px;
+      border-radius: 8px;
+      --background: #fbfbfb;
+      color: black;
+  }
+  
+  .item_custom ion-icon{
+    color: black;
+    font-size: unset;
+    margin: auto;
+    margin-right: 10px;
+  }
+  .item_custom ion-input{
+    text-transform: uppercase;
+    font-size: revert;
+    color: black;
+   
+  }
+  
+  .item_custom ion-text{
+    height: 10px;
+    text-transform: uppercase;
+    font-size: revert;
+    color: black;
+  }
+
+  .item_custom:hover{
+    border-bottom: solid 2px #4268ec;
+ 
+      border-right: solid 2px #4268ec;
+    
+     ion-icon{
+      color: #4268ec !important;
+    }
+    
+  }
+
+  .card_custom{
+    height: 99%;
+    overflow: scroll;
+  }
+
+
+  
+.listadesplegable{
+  position: absolute;
+  border: solid 0.5px #cecece;
+    overflow-y: scroll;
+   // width: 462px;
+    z-index: 999;
+    background: white;
+    height: 224px;
+    width: 500px;
+    font-weight: 700;
+    font-size: smaller;
+    border-radius: 4px;
+    margin-left: 15px;
+    color: #646464;
+    box-shadow: 2px 2px 5px #3776b5;
+  ion-col{margin: auto;}
+  ion-row{
+      border-bottom: solid 0.5px rgb(194, 194, 194);
+  }
+  ion-row:hover{
+      background-color: rgb(209, 209, 209);
+  }
+
+}
+
+.listadesplegableanalisis{
+  position: absolute;
+  height: fit-content;
+}
+
+.exitbuttonmodal{
+  position: absolute;
+    right: 0;
+}
+
+.list_peticiones{
+  height: 276px;
+    overflow: scroll;
+}
+
+ion-toolbar{
+ --min-height: 40px;
+}
+
+.grid_custom{
+height: 100%;
+.ion-row_c{
+  height: 100%;
+  
+}
+.ion-col_c{
+    height: 100%;
+  //  margin: auto;
+  }
+}
+
+.list_muestras{
+  height: 285px;
+  overflow: scroll;
+}
+
+.header_tbl{
+  background: #3db9b3;
+  color: white;
+  font-weight: 500;
+}
+
+.row_tbl{
+  color: black;
+    border-bottom: solid 0.5px #ede5e5;
+}
+
+.col_muestras{
+  border-bottom: solid 0.5px #c7c7c7;
+    border-right: solid 0.5px #c7c7c7;
+}
+
+.grid_tbl{
+  height: 220px;
+  overflow: scroll;
+  ion-row{
+    margin: initial;
+    ion-col{
+      margin: initial;
+    }
+  }
+}
+
+.grid_muestras{
+  height: 100px;
+  overflow: scroll;
+}
+
+ion-card-header{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+ion-card-content{
+  padding-bottom: 3px;
+}
+
+
+.item_custom2{
+  --height: 19px !important;
+  --border-width: 0.5px;
+  --max-height: 19px !important;
+  --min-height: 19px !important;
+  margin: 5px 5px;
+  --border-radius: 7px;
+}
+
+.div_btnpac{
+  position: absolute;
+  height: 100%;
+  width: 40px;
+  margin: auto;
+  /* padding: 10px; */
+  right: -2px;
+  background: #009be5;
+  border-radius: 5px;
+  z-index: 9999999;
+  color: white;
+ion-icon{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: white !important;
+  font-size: 23px;
+}
+}
+
+.input_no_border{
+  border: initial;
+}
+
+.card_btn{
+  
+  ion-card-content{
+    padding: 2px;
+
+  }
+  ion-icon{
+    font-size: 35px;
+  }
+  .col_text{
+    font-size: 20px;
+    font-weight: 600;
+    padding-top: 0px;
+  }
+  .col_pago{
+    font-size: 30px;
+    font-weight: 600;
+  }
+}
+
+.pagocard{
+  background: #66abb3;
+color: white;
+
+}

@@ -1,0 +1,68 @@
+<ion-toolbar class="ion-text-center toolbar-modal">
+  Mis Perfiles
+  <ion-button color="danger" fill="clean" lines="none" (click)="dismiss()" slot="end">
+    <ion-icon name="close" color="danger"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+<ion-content (click)="test($event)">
+  <ion-row class="ion-text-start">
+    <ion-col size="12">
+      <ion-label class="label_custom" position="stacked">Nombre:</ion-label>
+      <ion-item class="item_custom" lines="none">
+        <ion-input [(ngModel)]="nombreperfil" [value]="nombreperfil" type="text"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-text-start">
+    <ion-col size="12">
+      <ion-label class="label_custom" position="stacked">Observación:</ion-label>
+      <ion-item class="item_custom" lines="none">
+        <ion-input [(ngModel)]="observacion" [value]="observacion" type="text"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <!--
+  <ion-searchbar placeholder="analsis" [(ngModel)]="inputAnalisis" [value]="inputAnalisis" (ionChange)="buscarAnalisis()" debounce="500"></ion-searchbar>
+  -->
+
+  <ion-item   class="item_custom" lines="none"  >
+
+  <ion-icon *ngIf="this.icon_search=='buscar'" color="primary" name="search" slot="end"  (click)="buscarAnalisis()"></ion-icon>
+  <ion-icon  *ngIf="this.icon_search=='cerrar'" color="primary" name="close-circle" slot="end"  (click)="cerrarBusqueda()"></ion-icon>
+  <ion-input type="text" placeholder="codigo analisis" (ionInput)="buscarAnalisis()" debounce="500" (keyup.enter)="buscarAnalisis()" [(ngModel)]="inputAnalisis" [value]="inputAnalisis" ></ion-input>
+
+</ion-item>
+
+
+
+<div *ngIf="showListado" class="listadesplegable" >
+ <ion-grid  class="here" >
+  <ion-row  *ngFor="let item of ListaAnalisis; let i =index" class="here" (click)="addAnalisis(item,i)" >
+    <ion-col size="10" class="here">
+        <ion-label class="here">{{item.des_ana}}</ion-label>
+     </ion-col>
+     <ion-col size="2" class="here"><ion-button (click)="addAnalisis(item,i)" fill="clear"><ion-icon size="large" color="success" name="add-circle"></ion-icon></ion-button></ion-col>
+     <!--<ion-col size="2" ><small> {{item.cod_ana}}</small></ion-col>-->
+  </ion-row>
+ </ion-grid>
+</div>
+<ion-grid>
+  <ion-row>
+
+  </ion-row>
+</ion-grid>
+
+<ion-item-divider>Analisis</ion-item-divider>
+<ion-list *ngFor="let item of ListaAnalisisFinal; let i =index" >
+   <ion-item>
+      <ion-label >{{item.des_ana}}</ion-label>
+      <ion-button  (click)="quitarListadoFinal(i)" fill="clean" > <ion-icon color="danger" name="close" ></ion-icon></ion-button>
+    </ion-item>
+  
+</ion-list>
+
+</ion-content>
+<ion-footer class="ion-text-end">
+  <ion-button *ngIf="this.flag_tipo=='nuevo'" color="success" (click)="guardarPerfil()"> Guardar</ion-button>
+  <ion-button *ngIf="this.flag_tipo=='actualizar'" color="success" (click)="actualizarPerfil()"> Actualizar</ion-button>
+</ion-footer>

@@ -1,0 +1,177 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+  Iniciar sesión
+  sss
+</ion-header> -->
+<ion-content>
+  <ion-row>
+    <ion-col size="12" class="ion-text-end contacto"> <a [href]="'mailto:'+contacto">Contactenos</a></ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12" size-md="6" offset-md="3" size-lg="6" offset-lg="3" size-xl="5" offset-xl="3.5">
+      <ion-card>
+        <div class="cabecera">
+          <div class="icono">
+            <img src="assets/img/logo.png" width="284" height="81" alt="logo">
+          </div>
+          <!--<h3 class="titulo">{{ 'complex.login_titulo' | translate }}</h3> -->
+
+
+        </div>
+        <form [formGroup]="loginForm" (submit)="submit()" action="" (keyup.enter)="submit()" *ngIf="loginForm">
+          <!--TIPO-->
+          <ion-item lines="none" *ngIf="unicoActivo==''">
+            <ion-label position="stacked">{{ 'complex.login_in_tipo' | translate }}</ion-label>
+          </ion-item>
+          <ion-item lines="none" class="tipo_usuario" *ngIf="unicoActivo==''">
+            <ion-segment color="secondary" scrollable [value]="tipo_usuario" (ionChange)="segmentChanged($event)"
+              [class]="'estilo_tipo_'+estilo_pagina" mode="md">
+              <ion-segment-button *ngIf="validaUsuariosActivos('Orden')" value="Orden" layout="icon-top">
+                <ion-icon name="pricetag" [size]="mobile?'small':'large'"></ion-icon>
+                <ion-label>{{'simple.Orden'| translate}}</ion-label>
+              </ion-segment-button>
+
+              <ion-segment-button *ngIf="validaUsuariosActivos('Paciente')" value="Paciente" layout="icon-top">
+                <ion-icon name="person" [size]="mobile?'small':'large'"></ion-icon>
+                <ion-label>{{'simple.Paciente' | translate}}</ion-label>
+              </ion-segment-button>
+
+              <ion-segment-button *ngIf="validaUsuariosActivos('Medico')" value="Medico" layout="icon-top">
+                <ion-icon src="assets/icon/doctor3.svg" [size]="mobile?'small':'large'"></ion-icon>
+                <ion-label>{{'simple.Doctor'| translate}}</ion-label>
+              </ion-segment-button>
+
+              <ion-segment-button *ngIf="validaUsuariosActivos('Empresa')" value="Empresa" layout="icon-top">
+                <ion-icon name="business" [size]="mobile?'small':'large'"></ion-icon>
+                <ion-label>{{'simple.Empresa' | translate}}</ion-label>
+              </ion-segment-button>
+
+              <!-- Usuario externo-->
+              <ion-segment-button *ngIf="validaUsuariosActivos('Externo')" value="Externo" layout="icon-top">
+                <ion-icon src="assets/icon/externo_user.svg" [size]="mobile?'small':'large'"></ion-icon>
+                <ion-label>{{label_externo}}</ion-label>
+              </ion-segment-button>
+              <!---->
+              <ion-segment-button *ngIf="validaUsuariosActivos('Intranet')" value="Intranet" layout="icon-top" routerLink="/login-intranet">
+                <ion-icon name="globe" [size]="mobile?'small':'large'"></ion-icon>
+                <ion-label>Intranet</ion-label>
+              </ion-segment-button>
+
+            </ion-segment>
+          </ion-item>
+          <!--UNICO TIPO-->
+          <div class="tipo-unico">
+            <div *ngIf="unicoActivo=='Medico'">
+              <ion-icon src="assets/icon/doctor3.svg" [size]="mobile?'small':'large'"></ion-icon>
+              <br>
+              <ion-label>{{'simple.Doctor' | translate}}</ion-label>
+            </div>
+            <div *ngIf="unicoActivo=='Paciente'">
+              <ion-icon name="person" [size]="mobile?'small':'large'"></ion-icon>
+              <br>
+              <ion-label>{{'simple.Paciente' | translate}}</ion-label>
+              
+            </div>
+            <div *ngIf="unicoActivo=='Empresa'">
+              <ion-icon name="business" [size]="mobile?'small':'large'"></ion-icon>
+              <br>
+              <ion-label>{{'simple.Empresa' | translate}}</ion-label>
+            </div>
+
+            <!-- Externo-->
+            <div *ngIf="unicoActivo=='Externo'">
+              <ion-icon src="assets/icon/externo_user.svg" [size]="mobile?'small':'large'"></ion-icon>
+              <br>
+              <ion-label>{{this.label_externo}}</ion-label>
+            </div>
+
+
+            <div *ngIf="unicoActivo=='Orden'">
+              <ion-icon name="pricetag" [size]="mobile?'small':'large'"></ion-icon>
+              <br>
+              <ion-label>{{'simple.Orden'| translate}}</ion-label>
+            </div>
+
+          </div>
+          <!--USUARIO-->
+          <ion-item>
+            <ion-label position="stacked">{{ 'complex.login_in_usuario' | translate }}</ion-label>
+            
+            <ion-input *ngIf="tipoSystem!='MSP'" formControlName="id_user" [class.invalid]="isItemInvalid('id_user')"
+              (input)="forceUppercaseConditionally('id_user', $event);" [class.invalid]="isItemInvalid('pwd')">
+            </ion-input>
+            <ion-input *ngIf="tipoSystem=='MSP'" formControlName="id_user" [class.invalid]="isItemInvalid('id_user')"
+              [class.invalid]="isItemInvalid('pwd')">
+            </ion-input>
+          </ion-item>
+          <!--CONTRASENIA-->
+          <ion-item>
+            <ion-label position="stacked">{{ 'complex.login_in_clave' | translate }}</ion-label>
+            <!--
+            <ion-input type="password" formControlName="pwd" [class.invalid]="isItemInvalid('pwd')"></ion-input>
+            -->
+
+         
+            <ion-input *ngIf="tipoSystem!='MSP'" formControlName="password" [type]="passwordType" clearOnEdit="false" formControlName="pwd"
+              (input)="forceUppercaseConditionally('pwd', $event);"></ion-input>
+            
+            <ion-input *ngIf="tipoSystem=='MSP'" formControlName="password" [type]="passwordType" clearOnEdit="false" formControlName="pwd"
+              ></ion-input>
+            <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()' slot="end">
+            </ion-icon>
+
+          </ion-item>
+
+          <div *ngIf="validaUsuariosActivos('Medico') && this.pedido_enable && this.tipo_lugar_pedido && this.tipo_usuario=='Medico' && show_listado_lugar">
+            
+            <ion-item><ion-label position="stacked">Lugar</ion-label></ion-item>
+            <ion-item  lines="none" class="tipo_lugar" >
+              
+              <ion-segment color="secondary" scrollable [value]="pedido_lugar_select" (ionChange)="segmentChanged_pedido($event)"
+                [class]="(pedido_lugar_select==2)?'estilo_tipo_emergency' :'estilo_tipo_'+estilo_pagina" mode="md"
+                
+                >
+                <ion-segment-button *ngFor="let item of this.listado_lugar_pedido" [hidden]="(item.enable?false:true)" [value]="item.codigo" layout="icon-top">
+                  <ion-label>{{item.descripcion}}</ion-label>
+                </ion-segment-button>
+  
+              </ion-segment>
+            </ion-item>
+          </div>
+
+
+
+
+          <ion-button [disabled]="!activaLogin" (click)="submit()" expand="block">{{ 'complex.login_titulo' | translate }}</ion-button>
+          <div class="disconnect" *ngIf="!activaLogin">
+            <ion-badge color="danger" *ngIf="mensajeInfo!=''">
+              <ion-icon color="danger" src="assets/icon/plug-disconnected.svg"></ion-icon>
+              {{mensajeInfo}}
+            </ion-badge>
+            <div *ngIf="mensajeInfo==''">Conectando...</div>
+          </div>
+
+        </form>
+
+        <ion-item class="seg_idioma">
+          <ion-segment (ionChange)="cambia_lenguaje($event)" [value]="_translate.getDefaultLang()" mode="ios"
+            color="medium" slot="start" layout="icon-top">
+            <ion-segment-button value="en">
+              <!--  <ion-label>{{ 'simple.Ingles' | translate }}</ion-label>-->
+              <ion-icon src="assets/icon/english.svg" size="small"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="es">
+              <ion-icon src="assets/icon/spanish.svg" size="small"></ion-icon>
+              <!--  <ion-label>{{ 'simple.Español' | translate }}</ion-label>-->
+            </ion-segment-button>
+          </ion-segment>
+        </ion-item>
+      </ion-card>
+    </ion-col>
+
+  </ion-row>
+  
+</ion-content>
+<app-pie-pagina></app-pie-pagina>

@@ -1,0 +1,62 @@
+
+
+    <ion-tabs (click)="prueba()">
+      
+
+      <ion-tab-bar slot="top">
+        <div class="contenedor_img_toolbar">
+          <img class="fondo_logo" [src]="mobile?'assets/img/icono_lab.png':'assets/img/logo.png'" alt="logo" height="50">
+        </div>
+        <div class="tabs-buttons">
+      
+        <ion-tab-button tab="lista-ordenes">
+          <ion-icon name="newspaper-outline"></ion-icon>
+          <ion-label *ngIf="!mobile">Resultados</ion-label>
+        </ion-tab-button>
+
+        
+   
+<!--
+        <ion-tab-button (click)="presentPopover($event)" class="btn-user" >
+          <ion-icon color="secondary" name="person-circle-outline"></ion-icon>
+          <ion-label *ngIf="!mobile" color="secondary">{{sesion_usuario_des}}</ion-label >
+        </ion-tab-button>
+      -->
+       <ion-tab-button class="btn-user" (click)="cerrarSesion()"  color="danger">
+        <ion-icon name="exit-outline"  color="danger"></ion-icon>
+       <ion-label   color="danger" *ngIf="!mobile">{{ 'complex.lista_cerrar_sesion' | translate }}</ion-label> </ion-tab-button>
+      </div>
+    
+<!-- 
+      <ion-buttons class="btn-end">
+        <ion-button fill="clear" color="primary" (click)="presentPopover($event)" class="btn_user">
+          <ion-label *ngIf="!mobile">{{sesion_usuario_des}}</ion-label>
+          <ion-icon size="large" name="person-circle-outline">
+          </ion-icon>
+        </ion-button>
+      </ion-buttons>
+  -->
+      </ion-tab-bar>
+    </ion-tabs>
+    <!--
+<ion-header>
+  <ion-toolbar> 
+     <div class="contenedor_img_toolbar" slot="start">
+    <img class="fondo_logo" src="assets/img/icono_lab.png" width="50" height="50" alt="logo">
+  </div>
+
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear" color="primary" (click)="presentPopover($event)" class="btn_user">
+        <ion-label *ngIf="!mobile">{{sesion_usuario_des}}</ion-label>
+        <ion-icon size="large" name="person-circle-outline">
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+</ion-content>
+-->

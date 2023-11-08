@@ -1,0 +1,34 @@
+<ion-button color="danger" expand="full" (click)="cerrar()" class="btn_cerrar" shape='' size='small'>
+  <ion-icon name="close"></ion-icon>
+</ion-button>
+<ion-header>
+  <ion-toolbar mode="md">
+    <ion-title *ngIf="idOrden">Orden {{idOrden}}
+    </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button fill="clear" (click)="addRemoveZoom('r')">
+        <ion-icon slot="icon-only" name="remove-circle-outline" size='small'></ion-icon>
+      </ion-button>
+      <ion-text>
+        <small><b>Zoom</b></small><br>
+        <small>{{zoomPage*100 | number}}%</small>
+      </ion-text>
+      <ion-button fill="clear" (click)="addRemoveZoom('a')">
+        <ion-icon slot="icon-only" name="add-circle-outline"  size='small'></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" class="toolbar-end">
+      <ion-button color="secondary" (click)="guardarPDF()">
+        <ion-icon slot="icon-only" name="download-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="!pdf64||pdf64==null" class="cargando">Cargando..!!</div>
+  <div class="content-pdf">
+    <pdf-viewer *ngIf="pdf64" [src]="pdf64" [original-size]="true" [zoom]="zoomPage"
+    [show-borders]="true" [rotation]="rotatePage" (error)="onError($event)"></pdf-viewer>
+  </div>
+</ion-content>

@@ -1,0 +1,54 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>Usuarios Disponibles</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+
+<ion-content>
+<div class="contenido">
+<ion-card class="ion-text-center">
+  <ion-button  color="medium" expand="full" large (click)="back()"  shape='' size='small'><ion-icon name="arrow-back"></ion-icon></ion-button>
+
+  <div *ngIf="usuario.nombre">
+    <h2>{{ 'simple.Bienvenido' | translate }}</h2>
+    <p *ngIf="usuario.nombre">{{usuario.nombre}}</p>
+  </div>
+  <h2 *ngIf="!usuario.nombre">{{ 'complex.usr_dis_select' | translate }}:</h2>
+ <ion-list lines="none">
+  <ion-radio-group [(ngModel)]="select_user" (ionChange)="resultados()">
+    <ion-list-header *ngIf="usuario.nombre">
+      <ion-label>{{ 'complex.usr_dis_select' | translate }}: </ion-label>
+    </ion-list-header>
+
+    <ion-item *ngFor="let entidad of entidades" >
+      <!-- <ion-icon slot="start" name="person-outline"></ion-icon> -->
+      <ion-label>{{entidad.nombre}}</ion-label>
+      <ion-radio slot="end" [value]="entidad" ></ion-radio>
+    </ion-item>
+<!--
+    <ion-item>
+      <ion-label>Anthony Patricio Valverde Quispe</ion-label>
+      <ion-radio slot="end" value="griff"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Mario Castañeda Palacios</ion-label>
+      <ion-radio slot="end" value="buford"></ion-radio>
+    </ion-item>
+    -->
+  </ion-radio-group>
+ </ion-list>
+
+ <ion-item lines="none">
+   
+
+   <!--<ion-back-button defaultHref=""></ion-back-button> -->
+  <!-- <ion-button slot="end" size="default" color="secondary" (click)="resultados()" >VER RESULTADOS</ion-button>-->
+ </ion-item>
+  
+
+      </ion-card>
+    </div>
+
+</ion-content>

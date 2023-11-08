@@ -1,0 +1,143 @@
+
+
+<ion-content [fullscreen]="true">
+
+  
+  <div class="franja_usr">
+    <ion-icon name="person-circle-outline" *ngIf="tipo_user=='pat'"></ion-icon> 
+    <ion-icon src="assets/icon/doctor3.svg" *ngIf="tipo_user=='med'"></ion-icon> 
+    <ion-icon name="business" *ngIf="tipo_user=='ref'"></ion-icon> 
+    {{des_usr}}
+  </div>
+
+
+  <ion-card>
+  
+    <ion-card-content>
+
+      <ion-toolbar>
+
+        <ion-row class="fechas">
+          <ion-col size="6" *ngIf="!mobile">
+            <ion-item lines="none" >
+              <ion-label position="stacked">Desde</ion-label>
+              <ion-input type="date" position="stacked" [value]="fecha_desde| date: 'yyyy-MM-dd'" [(ngModel)]="fecha_desde"
+                (ionChange)="validaFecha()"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6" *ngIf="!mobile">
+            <ion-item lines="none" >
+              <ion-label position="stacked">Hasta</ion-label>
+              <ion-input type="date" position="stacked" [value]="fecha_hasta| date: 'yyyy-MM-dd'" [(ngModel)]="fecha_hasta"
+                (ionChange)="validaFecha()"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col >
+            <ion-item  lines="none"  button>
+              <ion-label position="stacked">Orden</ion-label>
+              <ion-input  type="text"  class="ion-text-start "[value]="input_orden" [(ngModel)]="input_orden" ></ion-input>
+            </ion-item>
+          </ion-col>
+          
+          <ion-col>
+            <ion-item lines="none"  button (click)="presentPopoverList($event,'ref')">
+              <ion-label position="stacked">Referencia</ion-label>
+              <ion-input type="text" [readonly]="true"  class="ion-text-center "> {{this.filtro_ref.des}}</ion-input>
+    
+              
+            </ion-item>
+          </ion-col>
+       
+          <ion-col >
+            <ion-item  lines="none"  button (click)="presentPopoverList($event,'plan')">
+              <ion-label position="stacked">Plan</ion-label>
+              <ion-input  type="text" [readonly]="true" class="ion-text-center "> {{this.filtro_plan.des}}</ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col >
+            <ion-item  lines="none"  button (click)="presentPopoverList($event,'uni')">
+              <ion-label position="stacked">Unidad</ion-label>
+              <ion-input  type="text" [readonly]="true" class="ion-text-center "> {{this.filtro_uni.des}}</ion-input>
+            </ion-item>
+          </ion-col>
+          
+        </ion-row>
+        <ion-row>
+            <ion-col class="ion-text-end">
+            <ion-button (click)="buscaxFiltro()"><ion-icon slot="start" name="search-outline"></ion-icon> Buscar </ion-button>
+          </ion-col>
+        </ion-row>
+    
+        <ion-item *ngIf="mobile" (click)="openModalPeriodo()">
+          <div class="fechas_mob">
+            <small position="stacked">Desde / Hasta</small>
+            <br>
+            <div> {{fecha_desde}} / {{fecha_hasta}}</div>
+          </div>
+    
+        </ion-item>
+      </ion-toolbar>
+      <ion-item>
+        <ion-row>
+          <ion-col  class="ion-text-start">
+           <ion-card-title *ngIf="!mobile">{{ 'complex.lista_titulo' | translate }}</ion-card-title>
+           <div *ngIf="lista_ordenes.length>=1000" class="info_size">
+             Se estan mostrando los primeros 1000 registros de su búsqueda, por favor ser más específico en el filtro
+           </div>
+           <div *ngIf="lista_ordenes.length<1000" class="info_size"> {{lista_ordenes.length}} registro(s) encontrados</div>
+         </ion-col>
+          </ion-row>
+      </ion-item>
+
+      <ion-list>
+        <ion-item *ngIf="!lista_filtrar||lista_filtrar.length<1" class="no_results">
+          <div>
+            {{ 'complex.lista_no_resultados' | translate }}
+          </div>
+        </ion-item>
+
+
+        <div *ngIf="infoText!=''" class="info-text">{{infoText}}</div>
+        <ion-item *ngFor="let orden of lista_filtrar;let index =index; ">
+          <!--   <ion-checkbox slot="end" [checked]="!orden.checked" (ionChange)="updateListPrint($event,orden)"></ion-checkbox>
+     
+            <div class="indice">
+              {{index+1}}
+            </div>
+                 -->
+          <ion-text>
+            <ion-row class="ion-text-left ">
+              <ion-col size="10" class="ion-text-start">
+                {{orden.nro_ord}} &nbsp; {{orden.nombre_completo}} &nbsp; <ion-badge>{{orden.des_sts}}</ion-badge>
+              </ion-col>
+              <ion-col size="2" class="ion-text-start">
+                <ion-button fill="clear" color="secondary" (click)="cargaPDF(orden.nro_ord)"><ion-icon slot="start"
+                    name="eye-outline"></ion-icon>Ver Pdf</ion-button>
+              </ion-col>
+           </ion-row>
+     
+          </ion-text>
+
+        </ion-item>
+
+      </ion-list>
+
+      <ion-infinite-scroll threshold="100px" (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" [loadingText]="'complex.lista_cargando_mas' | translate">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+      <ion-button fill="clear" (click)="doInfinite($event)"
+        *ngIf="lista_filtrar.length != lista_ordenes.length && cargando&&!infiniteScroll.disabled&&digitosBusqueda.length==0">
+        {{ 'complex.lista_cargar_mas' | translate }}
+      </ion-button>
+    
+
+    </ion-card-content>
+  </ion-card>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button (click)="presentAlertConfirmDescargar()" color="tertiary"><ion-icon name="download-outline"></ion-icon></ion-fab-button>
+  </ion-fab>
+</ion-content>

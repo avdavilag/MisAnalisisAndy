@@ -1,0 +1,75 @@
+<div class="contenido">
+  
+  <ion-button color="danger" expand="full" (click)="cerrar()" class="btn_cerrar" shape='' size='small'>
+    <ion-icon name="close" ></ion-icon>
+  </ion-button>
+    <div class="titulo">
+      <h2>Porque reimprime estos resultados</h2>
+    </div>
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none">
+          <ion-label class="item-name" position="stacked">Orden</ion-label>
+          <ion-input [(ngModel)]="nroOrden" readonly="true"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col class="pac-data">
+        <ion-item lines="none">
+          <ion-label class="item-name" position="stacked">Responsable directo</ion-label>
+          <ion-input [(ngModel)]="sesion_usuario_des" readonly="true"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="row-select">
+      <ion-col class="txt-select item-name">Escoja una opción porfavor</ion-col>
+      <ion-col>
+        <ion-select interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}" [(ngModel)]="itemDetalleSgc"  (ionDismiss)="$event.stopPropagation()">
+          <ion-select-option *ngFor="let item of detalleSgc" [value]="item">{{item.det_eve}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <div *ngIf="itemDetalleSgc&&itemDetalleSgc.id!=0" class="det-item">
+    <ion-row>
+      <ion-col class="det-txt">{{itemDetalleSgc.tip_eve}}</ion-col>
+      <ion-col class="det-txt">{{itemDetalleSgc.det_eve}}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="item-name" >Tipo de proceso que generó el registro</ion-col>
+      <ion-col class="det-txt">{{itemDetalleSgc.tip_pro}}</ion-col>
+    </ion-row>
+    
+  </div>
+    <ion-row>
+      <ion-item class="item-observacion item-name" lines="none">
+        <ion-label position="stacked">Observaciones</ion-label>
+        <ion-textarea [(ngModel)]="this.observacion" [value]="this.observacion"></ion-textarea>
+      </ion-item>
+    </ion-row>
+   
+    <div class="btn-action">
+      <ion-row>
+        <ion-col>
+        </ion-col>
+        <ion-col>
+          <!-- 
+          <ion-button fill="outline" color="secondary" (click)="cerrar()" >Cancelar</ion-button>
+
+          -->
+          <ion-button fill="solid" color="secondary" (click)="saveEventSgc()">Aceptar</ion-button>
+        </ion-col>
+      </ion-row>
+    </div>
+  <!-- 
+  
+  <div class="alert-buttons" *ngIf="select_pdf">
+  
+    <ion-button fill="outline" color="secondary" (click)="modificar()">{{ 'simple.Modificar' | translate }}</ion-button>
+    <ion-button fill="solid" color="secondary" (click)="imprimir()">{{ 'simple.Imprimir' | translate }}</ion-button>
+  
+  </div>
+  
+  -->
+  
+  
+  </div>
+  

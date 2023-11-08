@@ -1,0 +1,273 @@
+.item_custom{
+    --min-height: 10px;
+    padding: 0;
+      border: solid 1.3px #dbdadf;
+      margin: -1px -2px;
+      border-radius: 5px;
+      --background: #fbfbfb;
+      color: black;
+  }
+  .toast-wrapper {
+    width: 40%;
+  }
+  
+  .item_custom ion-icon{
+    color: black;
+    font-size: unset;
+    margin: auto;
+    margin-right: 10px;
+  }
+  .item_custom ion-input{
+   text-transform: uppercase;
+    font-size: revert;
+    color: black;
+      --min-height:30px !important;
+     min-height: 30px !important;
+  }
+  
+  .item_custom:hover{
+    border-bottom: solid 2px #4268ec;
+    
+     ion-icon{
+      color: #4268ec !important;
+    }
+    
+  }
+  .custom-header {
+    background-color: blue; /* Cambia "blue" al color deseado */
+    color: white; /* Cambia el color del texto si es necesario */
+  }
+  .ion-color-light {
+    --ion-color-base: #3a6dcb !important;
+  }
+  
+  .white-text {
+    color: white !important; /* Cambia el color del texto a blanco */
+  }
+  .ionicon {
+    color: white;
+    stroke: currentcolor;
+  }
+  ion-accordion-group ion-accordion ion-item[slot="header"] ion-icon {
+    color: red !important; /* Reemplaza "red" con el color que desees */
+  }
+  //////////////////////////Anderson css mensaje cedulacion valida o no val
+  .label_custom
+  {
+    color: #6d6d6d;
+    font-weight: 600;
+    font-size: small;
+    padding-left: 9px;
+  }
+   ////////////////////Boton para email//////////////////////////////
+   .item_custom1{
+    --min-height: -1px;
+    padding: 0px;
+      border: solid 1.3px #dbdadf;
+      margin: -1px -2px;
+      border-radius: 5px;
+      --background: #fbfbfb;
+      color: black;
+    }
+  
+  .item_custom1 ion-icon{
+    color: black;
+    font-size: unset;
+    margin: auto;
+    margin-right: 10px;
+  }
+  .item_custom1 ion-input{
+    text-transform: lowercase;
+    font-size: revert;
+    color: black;
+      --min-height:30px !important;
+     min-height: 30px !important;
+  }
+  .item_custom1{
+    --min-height: 10px;
+   } 
+   //////////////////////////////////
+   /// //////////////////////////////////
+  .item_custom{
+    --min-height: 10px;
+   }
+  
+   
+   //////////////////fin de boton para email/////////////////////////
+   /// 
+   /// 
+   /// /////////////////Boton input select//////////////////////////
+   .item_custom_select{
+    --min-height: 10px;
+    padding: 0px;
+      border: solid 2px #dbdadf;
+      margin: -9px 0px;
+      border-radius: 6px;
+      --background: #fbfbfb;
+      color: black;
+      height: 33px;
+      font-size: 10px; 
+  }
+  .item_custom_select ion-input{
+   text-transform: uppercase;
+    font-size: 5px;
+    color: red;
+      --min-height:10px !important;
+     min-height: 10px !important;
+  } 
+  .item_custom_select{
+    --min-height: 10px;
+   }
+  
+  //////////////////Select civil////////////////
+  
+  .item_custom_select-civil{
+    --min-height: 10px;
+    padding: 0px;
+      border: solid 2px #dbdadf;
+      margin: -9px 0px;
+      border-radius: 6px;
+      --background: #fbfbfb;
+      color: black;
+      width: 262px;
+      height: 33px;
+      font-size: 10px; 
+  }
+  .item_custom_select-civil ion-input{
+   text-transform: uppercase;
+    font-size: 5px;
+    color: red;
+      --min-height:10px !important;
+     min-height: 10px !important;
+  } 
+  .item_custom_select-civil{
+    --min-height: 10px;
+   }
+  
+   .custom-label_label1 {
+    color: #3db9b3;
+    padding-left: 185px;
+  }
+   ///////////////LUGAR DE NACIMIENTO////////////////////////////
+  .item_custom_lugar-naciemiento{
+    --min-height: 10px;
+    padding: 0px;
+      border: solid 2px #dbdadf;
+      margin: -9px 0px;
+      border-radius: 6px;
+      --background: #fbfbfb;
+      color: black;
+      width: 262px;
+      height: 47px;
+      font-size: 10px; 
+  }
+  .item_custom_lugar-naciemiento ion-input{
+   text-transform: uppercase;
+    font-size: 5px;
+    color: red;
+      --min-height:10px !important;
+     min-height: 10px !important;
+  } 
+  .item_custom_lugar-naciemiento{
+    --min-height: 10px;
+   }
+  
+   /// //////////////////////////////////////////////////////////
+   .cedula-valida-label {
+    padding: 4px;
+  }
+   .cedula-valida-verde {
+    padding-left: 1px;
+    background-color: #126208;
+    color: white;
+  }
+  .cedula-invalida-rojo {
+    padding-left: 1px;
+    background-color: #ff6666;
+    color: white;
+  }
+  .cedula-no-existe {
+    padding-left: 1px;
+    font-size: 13px;
+    background-color: #3a6dcb;
+    color: white;
+  }
+  .pasaporte-valida-verde {
+    padding-left: 8px;
+    background-color: #692e34;
+    color: white;
+  }
+  .pasaporte-invalida-rojo {
+    padding-left: 1px;
+    background-color: #692e34;
+    color: white;
+  }
+  .ruc-valida-verde {
+    padding-left: 8px;
+    background-color: #1b2d55;
+    color: white;
+  }
+    .mail_input{
+      text-transform: initial !important;
+    }
+    
+    .item_custom:hover{
+      border-bottom: solid 2px #4268ec;
+      
+       ion-icon{
+        color: #4268ec !important;
+      }
+      
+    }
+    
+    .label_custom
+  {
+      color: #6d6d6d;
+      font-weight: 800;
+      font-size: small;
+      padding-left: 0px;
+      font-size: 10px;
+     
+  }
+  .icono-azul {
+    color: blue;
+    background: blue;
+  }
+  .item-azul {
+    --background-hover: aqua;
+  }
+  .item-rosado {
+    --background-hover: HotPink;
+  }
+  .small-font {
+    font-size: 12px;
+  }
+  .inputdate{
+    height: 32px;
+        width: 101.1%;
+        font-size: 14px;
+        font-weight: 900;
+        padding-left: 11px ;
+        border: solid 1.8px #cacaca;
+        border-bottom: solid 2px #929191;
+        border-right: solid 2px #929191;
+        margin: -1px -2px;
+        border-radius: 5px;
+        background: #fbfbfb;
+        color: black;
+  }
+  
+  .inputdate:hover{
+    border-bottom: solid 2px #4268ec;
+  
+      border-right: solid 2px #4268ec;
+    
+     ion-icon{
+      color: #4268ec !important;
+    }
+    
+  }
+  
+  .tamanio-letra-pequena {
+    font-size: 12px;
+  }

@@ -1,0 +1,20 @@
+
+<ion-content>
+<div class="cabecera">
+  <h1>ANÁLISIS</h1>
+</div>
+  <ion-list>
+    <ion-item (click)="todos()" button detail="true">TODOS</ion-item>
+    <ion-item *ngFor="let val of listaAnalisisOrigen">
+      <ion-label>{{val.descripcion_analisis}}</ion-label>
+      <ion-checkbox slot="end" [(ngModel)]="val.isChecked"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+  
+  <div class="alert-buttons">
+
+    <ion-button fill="outline" color="secondary" (click)="cerrar()">Cancelar</ion-button>
+    <ion-button fill="solid" color="secondary" (click)="buscar()">Buscar</ion-button>
+
+</div>
+</ion-content>

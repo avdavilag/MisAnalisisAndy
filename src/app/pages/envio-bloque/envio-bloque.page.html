@@ -1,0 +1,284 @@
+<ion-content>
+
+  <div class="franja_usr">
+    <ion-icon name="person-circle-outline" *ngIf="tipo_user=='pat'"></ion-icon>
+    <ion-icon src="assets/icon/doctor3.svg" *ngIf="tipo_user=='med'"></ion-icon>
+    <ion-icon name="business" *ngIf="tipo_user=='ref'"></ion-icon>
+    {{des_usr}}
+  </div>
+
+
+
+
+  <ion-card>
+
+    <ion-card-content>
+
+        <ion-accordion-group #accordionGroup value="first">
+          <ion-accordion value="first">
+            <ion-item slot="header">
+              <ion-label>Filtros</ion-label>
+            </ion-item>
+            <div slot="content">
+              <ion-row class="fechas">
+                <ion-col size="12"  size-sm="12" size-xm="12" size-md="6" size-lg="6" size-xl="6" >
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Desde</ion-label>
+                    <ion-input type="date" position="stacked" [value]="fecha_desde| date: 'yyyy-MM-dd'"
+                      [(ngModel)]="fecha_desde" (ionChange)="validaFecha()"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12"  size-sm="12" size-xm="12" size-md="6" size-lg="6" size-xl="6">
+                  <ion-item lines="none">
+                    <ion-label position="stacked">Hasta</ion-label>
+                    <ion-input type="date" position="stacked" [value]="fecha_hasta| date: 'yyyy-MM-dd'"
+                      [(ngModel)]="fecha_hasta" (ionChange)="validaFecha()"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <!--
+                  <ion-col size="12" size-sm="12" size-xm="12" size-md="6" size-lg="6" size-xl="6">
+                    <ion-item lines="none" button (click)="presentAlertSelect()">
+                      <ion-label position="stacked">Seleccione un filtro</ion-label>
+                      <ion-input type="text" class="ion-text-center "> {{this.filtro_select.des}}</ion-input>
+            
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12" size-sm="12" size-xm="12" size-md="6" size-lg="6" size-xl="6">
+                    <ion-item lines="none" (click)="presentPopoverList($event)">
+                      <ion-label position="stacked">Cod.{{filtro_select.des}}</ion-label>
+                      <ion-input *ngIf="input_filtro" class="ion-text-center" type="text">&nbsp; {{(input_filtro.cod)?input_filtro.cod:''}} &nbsp;
+                        {{(input_filtro.des)?' - '+input_filtro.des:''}}</ion-input>
+                    </ion-item>
+            
+                  </ion-col>
+                  -->
+                <ion-col size="12"  size-sm="12" size-xm="12" size-md="3" size-lg="3" size-xl="3">
+                  <ion-item lines="none" button (click)="presentPopoverList($event,'ref')">
+                    <ion-label position="stacked">Referencia</ion-label>
+                    <ion-input type="text" [readonly]="true" class="ion-text-center "> {{this.filtro_ref.des}}</ion-input>
+      
+      
+                  </ion-item>
+                </ion-col>
+                <ion-col  size="12"  size-sm="12" size-xm="12" size-md="3" size-lg="3" size-xl="3">
+                  <ion-item lines="none" button (click)="presentPopoverList($event,'med')">
+                    <ion-label position="stacked">Médico</ion-label>
+                    <ion-input type="text" [readonly]="true" class="ion-text-center "> {{this.filtro_med.des}}</ion-input>
+                  </ion-item>
+                </ion-col>
+      
+      
+                <ion-col  size="12"  size-sm="12" size-xm="12" size-md="3" size-lg="3" size-xl="3">
+                  <ion-item lines="none" button (click)="presentPopoverList($event,'plan')">
+                    <ion-label position="stacked">Plan</ion-label>
+                    <ion-input type="text" [readonly]="true" class="ion-text-center "> {{this.filtro_plan.des}}</ion-input>
+                  </ion-item>
+                </ion-col>
+                
+                <ion-col  size="12"  size-sm="12" size-xm="12" size-md="3" size-lg="3" size-xl="3">
+                  <ion-item lines="none" button  (click)="presentPopoverList($event,'sts')">
+                    <ion-label position="stacked">Estado</ion-label>
+                    <ion-input type="text" [readonly]="true" class="ion-text-center ">{{this.filtro_sts.des}}</ion-input>
+                  </ion-item>
+                </ion-col>
+      
+              </ion-row>
+              <ion-row>
+                <ion-col class="ion-text-start">
+                  <ion-label>Envio de correo</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                  <ion-col size="12"  size-sm="12" size-xm="12" size-md="7" size-lg="7" size-xl="7"   class="ion-text-start">
+                  <ion-item lines="none">
+                    <ion-chip  *ngFor="let item of filtro_correos " [color]="(item.checked)?'success':'dark'" (click)="changeMailFilter(item)">
+                      <ion-label >{{item.des}}</ion-label>
+                      <ion-icon  [name]="(item.checked)?'checkmark':'close'"></ion-icon>
+                    </ion-chip>
+                
+                  </ion-item>
+                </ion-col>
+                <ion-col *ngIf="filtro_correos[3].checked" class="ion-text-start" size="12"  size-sm="12" size-xm="12" size-md="5" size-lg="5" size-xl="5"  >
+                  <ion-item class="item_btn" lines="none">
+
+                    <ion-input type="text" [value]="inputMailOtro" [(ngModel)]="inputMailOtro"
+                      placeholder="Añadir correo"></ion-input>
+                    <ion-button fill="clear" class="button"  ><ion-icon
+                        name="mail-outline"></ion-icon></ion-button>
+                  </ion-item>
+          
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <!--
+                  <ion-col >
+                    <ion-item lines="none" >
+                      <ion-checkbox slot="end" ></ion-checkbox>
+                      <ion-label>Mostrar con correos </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  -->
+                <ion-col class="ion-text-end">
+                  <ion-button (click)="buscaxFiltro()"><ion-icon slot="start" name="search-outline"></ion-icon> Buscar
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+      
+           
+              <!--
+                   <ion-item *ngIf="mobile" (click)="openModalPeriodo()">
+                <div class="fechas_mob">
+                  <small position="stacked">Desde / Hasta</small>
+                  <br>
+                  <div> {{fecha_desde}} / {{fecha_hasta}}</div>
+                </div>
+      
+              </ion-item>
+                <ion-row>
+                  <ion-col>
+                    <ion-button size="small" (click)="presentAlertSendResults()">
+                      Enviar correo
+                    </ion-button>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item lines="none"> 
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              -->
+      
+              
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+
+
+
+
+
+
+
+        
+
+      <ion-item>
+        <ion-row>
+          <ion-col class="ion-text-start">
+            <ion-card-title *ngIf="!mobile">{{ 'complex.lista_titulo' | translate }}</ion-card-title>
+            <div *ngIf="lista_ordenes.length>=1000" class="info_size">
+              Se estan mostrando los primeros 1000 registros de su búsqueda, por favor ser más específico en el filtro
+            </div>
+            <div *ngIf="lista_ordenes.length<1000" class="info_size"> {{lista_ordenes.length}} registro(s) encontrados
+            </div>
+          </ion-col>
+          <!--
+           <ion-col class="col_custom">
+             <ion-item lines="none">
+               Seleccionar todo <ion-checkbox [checked]="!checked_all" slot="end"
+                 (ionChange)="updateListPrint($event,null)"></ion-checkbox>
+             </ion-item>
+           </ion-col>
+           -->
+        </ion-row>
+      </ion-item>
+      <ion-list>
+        <ion-item *ngIf="!lista_filtrar||lista_filtrar.length<1" class="no_results">
+          <div>
+            {{ 'complex.lista_no_resultados' | translate }}
+          </div>
+        </ion-item>
+
+
+        <div *ngIf="infoText!=''" class="info-text">{{infoText}}</div>
+        <ion-item *ngFor="let orden of lista_filtrar;let index =index; ">
+          <!--   <ion-checkbox slot="end" [checked]="!orden.checked" (ionChange)="updateListPrint($event,orden)"></ion-checkbox>
+     
+            <div class="indice">
+              {{index+1}}
+            </div>
+                 -->
+          <ion-text>
+            <ion-row class="ion-text-left ">
+              <ion-col size="10" class="ion-text-start">
+                {{orden.nro_ord}} &nbsp; {{orden.nombre_completo}} &nbsp; <ion-badge>{{orden.des_sts}}</ion-badge>
+              </ion-col>
+              <ion-col size="2" class="ion-text-start">
+                <ion-button fill="clear" color="secondary" (click)="cargaPDF(orden.nro_ord)"><ion-icon slot="start"
+                    name="eye-outline"></ion-icon>Ver Pdf</ion-button>
+              </ion-col>
+
+
+              <!--
+                <ion-col>
+                  E-mail <br><small><ion-text
+                      [color]="(orden.mail_pac)?'primary':'warning'">{{(orden.mail_pac)?orden.mail_pac:'Sin Mail'}}</ion-text></small>
+                </ion-col>
+                <ion-col>
+                  E-mail Ref <br><small><ion-text
+                      [color]="(orden.mail_ref)?'primary':'warning'">{{(orden.mail_ref)?orden.mail_ref:'Sin Mail'}}</ion-text></small>
+                </ion-col>
+                -->
+            </ion-row>
+            <ion-row>
+              <ion-col *ngIf="orden.correos.length>0">
+                <ion-chip *ngFor="let item of orden.correos; let i= index" size="small" color="tertiary"
+                  (click)="delete_mail(orden.correos,i)">
+                  <ion-label>{{item}}</ion-label>
+                  <ion-icon name="close"></ion-icon>
+                </ion-chip>
+              </ion-col>
+              <ion-col *ngIf="orden.correos.length==0">
+                <ion-chip size="small" color="warning">
+                  <ion-label>No existe correo</ion-label>
+                </ion-chip>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="6">
+                <ion-item class="item_btn" lines="none">
+
+                  <ion-input type="text" [value]="orden.text_correo" [(ngModel)]="orden.text_correo"
+                    placeholder="Añadir correo"></ion-input>
+                  <ion-button class="button" (click)="add_mail(orden)"><ion-icon
+                      name="add-outline"></ion-icon></ion-button>
+                </ion-item>
+              </ion-col>
+
+
+
+            </ion-row>
+          </ion-text>
+
+        </ion-item>
+
+      </ion-list>
+
+      <ion-infinite-scroll threshold="100px" (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" [loadingText]="'complex.lista_cargando_mas' | translate">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+      <ion-button fill="clear" (click)="doInfinite($event)"
+        *ngIf="lista_filtrar.length != lista_ordenes.length && cargando&&!infiniteScroll.disabled&&digitosBusqueda.length==0">
+        {{ 'complex.lista_cargar_mas' | translate }}
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+<ion-fab *ngIf="lista_filtrar && lista_filtrar.length" horizontal="end" vertical="bottom" slot="fixed" activated="true">
+  <ion-fab-button>
+    <ion-icon name="chevron-down-circle"></ion-icon>
+  </ion-fab-button>
+
+  <ion-fab-list side="top">
+   
+      <ion-fab-button size="bigger" color="tertiary" (click)="presentAlertDownloadResults()" >
+        <ion-icon name="download-outline"></ion-icon>
+      </ion-fab-button>
+      
+    <ion-fab-button size="big" color="tertiary" (click)="presentAlertSendResults()">
+      <ion-icon name="mail-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>

@@ -1,0 +1,105 @@
+<div class="contenido">
+  
+  <ion-button color="danger" expand="full" (click)="cerrar()" class="btn_cerrar" shape='' size='small'>
+    <ion-icon name="close" ></ion-icon>
+  </ion-button>
+  <ion-content>
+    <div class="titulo">
+      <h2>{{ 'ENTREGA DE RESULTADOS' | translate }}</h2>
+    </div>
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none">
+          <ion-label position="stacked">Orden</ion-label>
+          <ion-input [(ngModel)]="nroOrden"  (keyup.enter)="getDataPaciente()"></ion-input>
+          <ion-button class="btn-buscar" color="primary" slot="end" (click)="getDataPaciente()">Buscar</ion-button>
+        </ion-item>
+      </ion-col>
+      <ion-col class="pac-data"  [class]="dataPac.class">
+        <ion-row><ion-col><b>Paciente:</b></ion-col><ion-col><div class="cut-name">{{dataPac.name_pac}}</div></ion-col></ion-row>
+        <ion-row><ion-col><b>Saldo Acumulado</b></ion-col>
+          <ion-col *ngIf="dataPac.saldo>0" class="ord-saldo">-${{dataPac.saldo}}</ion-col>
+          <ion-col *ngIf="dataPac.saldo<=0">$0</ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row class="sub-title">ENTREGA FISICA EN LABORATORIO</ion-row>
+    <ion-row class="row-select">
+      <ion-col>A quien se entrega?</ion-col>
+      <ion-col>
+        <ion-select interface="popover" [(ngModel)]="nameEntrega">
+          <ion-select-option value="Familiar">Familiar</ion-select-option>
+          <ion-select-option value="Madre">Madre</ion-select-option>
+          <ion-select-option value="Paciente">Paciente</ion-select-option>
+          <ion-select-option value="Padre">Padre</ion-select-option>
+          <ion-select-option *ngIf="nuevaOption!=''" [value]="nuevaOption">{{nuevaOption}}</ion-select-option>
+        </ion-select>
+        <ion-button (click)="alertEditSelect()" fill="clear" size="small" color="success"><ion-icon name="pencil"></ion-icon></ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="no-ana" *ngIf="!analisis||analisis.length==0">
+      NO SE HA CARGADO NINGUN ANALISIS
+    </ion-row>
+    <ion-grid *ngIf="analisis&&analisis.length>0"> 
+      <ion-row>
+        <ion-col class="grid-label" size="2">Codigo</ion-col>
+        <ion-col class="grid-label">Análisis</ion-col>
+        <ion-col class="grid-label" size="1">Estado</ion-col>
+        <ion-col class="grid-label" size="1">Entrega Fisica</ion-col>
+        <!-- 
+        <ion-col class="grid-label" size="1">Tareas Adicionales</ion-col>
+        -->
+      </ion-row>
+      
+      <ion-row *ngFor="let item of analisis">
+        <ion-col size="2">{{item.cod_ana}}</ion-col>
+        <ion-col>{{item.des_ana}}</ion-col>
+        <ion-col size="1">{{item.sts_pet}}</ion-col>
+        <ion-col size="1"><ion-checkbox color="primary" [checked]="item.activeFisica" (click)="valideCheckFisica(item)" ></ion-checkbox></ion-col>
+        <!-- 
+        <ion-col size="1"><ion-checkbox [checked]="item.activeTask" (click)="valideCheckTask(item)" ></ion-checkbox></ion-col>
+        -->
+        
+      </ion-row>
+    </ion-grid>
+
+    <div class="container-task" *ngIf="false">
+      <ion-row class="sub-title">TAREAS ADICIONALES (OTRAS FORMAS DE ENTREGA)</ion-row>
+      <ion-row class="stripe-name" [class]="dataPac.class">{{dataPac.name_pac}}</ion-row>
+      <ion-row>Registra tareas adicionales:</ion-row>
+      <ion-row>
+        <ion-col *ngFor="let item of listAdicional"><ion-button (click)="activaAdicional(item)" [color]="item.color" fill="outline"><ion-icon slot="icon-only" [name]="item.logo"></ion-icon></ion-button><div class="lbl-adicional" *ngIf="item.active==1">{{item.txtActive}}</div></ion-col>
+       <!-- 
+        <ion-col><ion-button color="success" fill="outline"><ion-icon slot="icon-only" name="logo-whatsapp"></ion-icon></ion-button></ion-col>
+        <ion-col><ion-button color="primary" fill="outline"><ion-icon slot="icon-only" name="home"></ion-icon></ion-button></ion-col>
+        <ion-col><ion-button color="tertiary" fill="outline"><ion-icon slot="icon-only" name="documents"></ion-icon></ion-button></ion-col>
+        <ion-col><ion-button color="secondary" fill="outline" ><ion-icon slot="icon-only" name="create"></ion-icon></ion-button></ion-col>
+       -->
+      </ion-row>
+      <ion-row><small>(Haga click en boton de la tarea correspondiente para registrarla)</small></ion-row>
+    </div>
+    <div class="btn-action">
+      <ion-row>
+        <ion-col>
+        </ion-col>
+        <ion-col>
+          <ion-button fill="outline" color="secondary" (click)="cerrar()" >Cancelar</ion-button>
+          <ion-button fill="solid" color="secondary" (click)="guardaAnalisis()">Aceptar</ion-button>
+        </ion-col>
+      </ion-row>
+    </div>
+  <!-- 
+  
+  <div class="alert-buttons" *ngIf="select_pdf">
+  
+    <ion-button fill="outline" color="secondary" (click)="modificar()">{{ 'simple.Modificar' | translate }}</ion-button>
+    <ion-button fill="solid" color="secondary" (click)="imprimir()">{{ 'simple.Imprimir' | translate }}</ion-button>
+  
+  </div>
+  
+  -->
+  </ion-content>
+  
+  
+  </div>
+  

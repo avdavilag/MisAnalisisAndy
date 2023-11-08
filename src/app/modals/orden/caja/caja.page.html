@@ -1,0 +1,158 @@
+<ion-toolbar>
+  <ion-title>Caja</ion-title>
+</ion-toolbar>
+<ion-button size="small" class="btn_cerrar" color="danger" (click)="dismiss()"> <ion-icon name="close-outline"></ion-icon></ion-button>
+
+<ion-content>
+  <ion-row>
+    <ion-col size="12"  sizeLg="6" sizeXl="6" class="ion-text-center">
+      <ion-card class="card_custom">
+        <!--
+        <ion-card-header>
+          Valores
+        </ion-card-header>
+        -->
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col class="ion-text-end">
+                <ion-icon class="icon_usd" name="logo-usd"></ion-icon>
+              </ion-col>
+              <ion-col class="text_precio ion-text-start">
+                {{val_ord}}
+              </ion-col>
+            </ion-row>         
+           <ion-row>
+          <ion-col>
+            Valor
+          </ion-col>
+          <ion-col>
+            {{pre_ord}}    
+          </ion-col>
+          </ion-row>
+          
+          <ion-row>
+          <ion-col>
+            Pagos
+          </ion-col>
+          <ion-col>
+            {{variable_pago_modal}}
+          </ion-col>
+          </ion-row>                   
+          <ion-row>
+          <ion-col>
+            Saldo
+          </ion-col>
+          <ion-col>
+            {{variable_saldo_modal}}
+          </ion-col>
+          </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col size="12"  sizeLg="6" sizeXl="6" class="ion-text-center">
+     <ion-card class="card_custom_detalle">
+        <ion-card-header>
+          Agregar pago
+        </ion-card-header>
+        <ion-item *ngIf="listtdp.length>0" >
+          <ion-select placeholder="Tipo de Pago" [(ngModel)]="tdp_select" [value]="tdp_select" >
+            <ion-select-option *ngFor="let item of listtdp" [value]="item">{{item.des_pag}} </ion-select-option>
+          </ion-select>
+        </ion-item>        
+        <ion-card-header>
+          Datos
+        </ion-card-header>
+        
+        <ion-list *ngIf="tdp_select && tdp_select.tip_tdp=='E'"><!-- Efectivo-->
+          <ion-item lines="none">
+            <ion-label position="stacked">Paga con</ion-label>
+            <ion-input type="number" [(ngModel)]="cantidadPaga" (keyup.enter)="calcularVuelto()"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Vuelto</ion-label>
+            <ion-input [(ngModel)]="vuelto_efectivo" disabled></ion-input>
+          </ion-item>
+        </ion-list>
+
+
+        <ion-list *ngIf="tdp_select && tdp_select.tip_tdp=='T'"><!--Tarjeta de credito-->
+          <ion-item>
+            <ion-label  position="stacked">Nro /Nombre tarjeta</ion-label>
+            <ion-input [value]="this.input_doc_pag"  [(ngModel)]="this.input_doc_pag" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  position="stacked">Voucher/Lote</ion-label>
+            <ion-input  [value]="this.input_ins_pag" [(ngModel)]="this.input_ins_pag" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  position="stacked">Propietario Tarjeta</ion-label>
+            <ion-input [value]="this.input_res_pag"  [(ngModel)]="this.input_res_pag" type="text"></ion-input>
+          </ion-item>
+        </ion-list>
+
+        <ion-list *ngIf="tdp_select && tdp_select.tip_tdp=='C'"><!--Cheuue-->
+          <ion-item>
+            <ion-label position="stacked">Banco</ion-label>
+            <ion-input [value]="this.input_ins_pag"  [(ngModel)]="this.input_ins_pag" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Nro Cheque</ion-label>
+            <ion-input [value]="this.input_doc_pag" [(ngModel)]="this.input_doc_pag" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Propietario Cheque</ion-label>
+            <ion-input [value]="this.input_res_pag"  [(ngModel)]="this.input_res_pag" type="text"></ion-input>
+          </ion-item>
+        </ion-list>
+
+
+        <ion-list *ngIf="tdp_select && tdp_select.tip_tdp=='O' || tdp_select.tip_tdp=='P'"><!--Otro o Papeles-->
+          <ion-item>
+            <ion-label position="stacked">Institucion</ion-label>
+            <ion-input [value]="this.input_ins_pag"   [(ngModel)]="this.input_ins_pag" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  position="stacked">Documento</ion-label>
+            <ion-input [value]="this.input_doc_pag" [(ngModel)]="this.input_doc_pag" type="text"></ion-input>            
+          </ion-item>
+          <ion-item>
+            <ion-label  position="stacked">Responsable</ion-label>
+            <ion-input [value]="this.input_res_pag"  [(ngModel)]="this.input_res_pag" type="text"></ion-input>
+          </ion-item>
+        </ion-list>
+        <!-- <ion-button (click)="CancelarPago()">Agregar el Pago</ion-button> -->
+        <ion-button (click)="CancelarPago()" [disabled]="bandera_pago_botton === false">Agregar el Pago</ion-button>
+    </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-grid>
+    <ion-row class="header_tbl">
+      <ion-col>T. Pago</ion-col>
+      <ion-col>Pago</ion-col>
+      <ion-col>Total</ion-col>
+      <ion-col>Opc</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let fila of tabla_Pagos">
+      <ion-col>{{ fila.cod_tdp }}</ion-col>
+      <ion-col>{{ fila.val_pag }}</ion-col>
+      <ion-col>{{fila.valor_pago_unico}}</ion-col>    
+      <ion-col size="2" ><ion-button size="small" color="danger" (click)="delete_Pago(fila.fec_upd)"><ion-icon
+        name="close-outline"></ion-icon></ion-button></ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- <ion-grid>
+    <ion-row class="header_tbl">
+      <ion-col>T. Pago</ion-col>
+      <ion-col>Valor</ion-col>
+      <ion-col>Opc</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col>2</ion-col>
+      <ion-col>3</ion-col>
+    </ion-row>
+  </ion-grid> -->
+</ion-content>

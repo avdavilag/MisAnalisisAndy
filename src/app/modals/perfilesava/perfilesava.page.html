@@ -1,0 +1,78 @@
+<!--
+<ion-toolbar class="ion-text-center toolbar-modal">
+  {{'tags.profiles'|translate}} General
+  <ion-button color="danger" fill="clean" lines="none" (click)="dismiss()" slot="end">
+    <ion-icon name="close" color="danger"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+-->
+<ion-toolbar >
+  <ion-searchbar  (ionChange)="filtro($event)" animated="true" placeholder="Ingrese nombre o parte del analisis a buscar en el siguiente listado de Análisis"></ion-searchbar>
+  <ion-button color="danger" fill="clean" lines="none" (click)="dismiss()" slot="end">
+    <ion-icon name="close" color="danger"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+<ion-content>
+  
+
+  <ion-segment value="{{grupos[0]}}" (ionChange)="cambio($event)">
+    <ion-segment-button *ngFor="let item of grupos; let i=index" value="{{item}}">
+      {{item}}
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let item of ListPerfilesactive " size="12"  size-xm="12" size-sm="12" size-md="12" size-lg="3" size-xl="3" [class]="item.style" >
+
+        <ion-row *ngIf="item.Analisisfiltro.length>0" >
+          <ion-col>
+            <ion-item class="item_title_list" id="{{item.des_per}}">
+              <ion-label > {{item.des_perfiltro}} </ion-label>
+
+              <ion-checkbox (ionChange)="cambiocheckboxG($event,item)" [checked]="item.checked" value="{{item.checked}}"
+                type="checkbox"></ion-checkbox>
+              <!--
+          <input (change)="cambiocheckboxG($event,item)" [checked]="item.checked" value="{{item.checked}}"  type="checkbox">
+      -->
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="item.Analisisfiltro.length>0" >
+
+          <ion-list class="item_list ion-text-wrap">
+            <ion-item *ngFor="let item2 of item.Analisisfiltro ; let i2=index " lines="none" id="{{item2.des_ana}}">
+              <ion-label class="ion-text-wrap" >{{item2.des_anafiltro}}</ion-label>
+
+              <ion-checkbox [checked]="item2.checked" [value]="item2.checked" [(ngModel)]="item2.checked">
+              </ion-checkbox>
+
+              <!--
+       <input type="checkbox"  [checked]="item2.checked" [value]="item2.checked" [(ngModel)]="item2.checked">
+       -->
+            </ion-item>
+          </ion-list>
+        </ion-row>
+       
+      </ion-col>
+      
+    </ion-row>
+    <ion-row *ngIf="show_sinresultados">
+      <ion-col class="no_results">
+        <ion-text> No se han encontrado resultados para "{{textofiltro}}", revisar si se encuentra en otro grupo de pedidos o buscarlo desde la pantalla principal</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col>
+      <small class="nota ion-text-center" >
+       Los Análisis que se muestran a continuación pertenecen al grupo de pedidos ingresados en el Sistema Avalab,
+        Análisis que no pertenecen a estos grupos buscarlos desde la pantalla principal
+      </small>
+    </ion-col>
+  </ion-row>
+  <ion-button expand="full" type="submit" (click)="AgregarAnalisis()">Aceptar</ion-button>
+</ion-footer>

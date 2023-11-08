@@ -1,0 +1,21 @@
+<ion-content  (keyup.enter)="aceptar()">
+  <div class="cabecera">
+    <div class="title">Ingrese el número</div>
+    <ion-badge (dblclick)="actualizaEstado()" class="ion-text-wrap alert-info-wzp" [class]="wzpStatus==''?'listo':'alert'" color="success">
+      {{wzpStatus}}
+    </ion-badge>
+    <div *ngIf="wzpStatusDetail&&wzpStatusDetail!=''&&wzpStatusDetail!=null">
+      <ion-icon class="btn-icon" (click)="openImage()" name='qr-code-outline'></ion-icon>
+    </div>
+  </div>
+  <ion-item>
+    <ion-input [(ngModel)]="number"></ion-input>
+  </ion-item>
+
+
+
+  <div class="alert-buttons">
+    <ion-button fill="outline" color="secondary" (click)="cerrar()">Cancelar</ion-button>
+    <ion-button fill="solid" color="secondary" (click)="aceptar()">Aceptar</ion-button>
+  </div>
+</ion-content>

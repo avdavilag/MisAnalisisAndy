@@ -1,0 +1,36 @@
+.alert-buttons {
+  text-align: end;
+  margin: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+}
+ion-list {
+  max-height: 8;
+  position: relative;
+  max-height: 197px;
+  border-top: 1px solid var(--ion-color-step-150, #d9d9d9);
+  border-bottom: 1px solid var(--ion-color-step-150, #d9d9d9);
+  overflow: auto;
+  ion-item {
+    font-size: small;
+  }
+}
+
+.cabecera {
+  padding: 16px 22px;
+  text-align: start;
+  display: inline-flex;
+  width: 100%;
+  .title {
+    //float: left;
+  }
+  .success {
+    height: 9px;
+    align-self: center;
+  }
+
+  .btn-icon {
+    cursor: pointer;
+  }
+}

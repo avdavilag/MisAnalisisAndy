@@ -1,0 +1,252 @@
+* {
+  //color: rgb(102, 102, 102);
+}
+.contenido {
+  height: 100%;
+  padding: 10px;
+}
+.titulo {
+  padding-top: 10px;
+  padding-left: 10px;
+  p {
+    padding-left: 5px;
+    font-size: small;
+    color: #7e7e7e;
+    margin-bottom: 0;
+  }
+  h2{
+    margin-top: 0;
+  }
+}
+ion-list {
+  // padding-top: 30px;
+
+  ion-item {
+    .fecha {
+      color: #a2a2a2;
+      font-size: x-small;
+    }
+    span {
+      padding-left: 20px;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+  }
+}
+
+.btn_cerrar {
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  ion-icon {
+    color: #fff;
+  }
+}
+
+.alert-buttons {
+  text-align: end;
+  margin: 10px;
+}
+
+.contenedor_select {
+  color: #626262;
+  padding-bottom: 8px;
+}
+.version-right {
+  position: absolute;
+  right: 3%;
+  top: 0;
+  font-size: large;
+  opacity: 0.6;
+}
+
+.version {
+  float: left;
+  color: #417c93;
+  padding-right: 7px;
+  small {
+    color: #417c93;
+  }
+}
+
+h5 {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 0;
+}
+ion-item {
+  max-height: fit-content;
+  ion-icon {
+    font-size: 14px;
+    float: left;
+    padding-right: 4px;
+  }
+  .sub {
+    font-size: 14px;
+    float: left;
+  }
+  .accion {
+    color: #858585;
+  }
+}
+.even {
+  --background: #f0f0f0;
+}
+.odd {
+  --background: #fff;
+  //--background: #000000fa;
+}
+
+ion-input {
+  border: solid 1.8px #cacaca;
+  border-bottom: solid 2px #929191;
+  border-right: solid 2px #929191;
+  margin: 5px 0px;
+  border-radius: 5px;
+  --padding-start: 5px!important;
+}
+
+ion-input:hover {
+  border-bottom: solid 2px #4268ec;
+  border-right: solid 2px #4268ec;
+  ion-icon {
+    color: #4268ec !important;
+  }
+}
+.btn-buscar {
+  align-self: end;
+  height: 36px;
+  margin-left: 8px;
+}
+.pac-data {
+  background: #f6f6f6;
+  padding: 0px 10px;
+  &.rut{
+    background: #cfffc7;
+  //  color: #000;
+  }
+  &.prio{
+    background: #ffe9b3;
+    //color: #000;
+  }
+  &.urg{
+    background: #ff9898;
+  }
+  .ord-saldo{
+    color: #c40000;
+  }
+}
+.sub-title {
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  font-weight: bold;
+  justify-content: center;
+  padding-top: 15px;
+  padding-bottom: 10px;
+}
+.row-select {
+  text-align: center;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+  font-size: small;
+  font-weight: bold;
+  ion-col{
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+  }
+  ion-select { 
+    min-width: 164px;
+    color: #7d7d7d;
+    padding-bottom: 10px;
+    background: #fdffd2;
+    /* z-index: 9999; */
+    //padding: 1px;
+    box-shadow: 0px 2px 4px -1px RGB(0 0 0 / 20%);
+  }
+}
+
+ion-grid {
+  //border: solid 1px black;
+  margin-top: 10px;
+  box-shadow: 0 2px 9px 1px RGB(0 0 0 / 20%);
+  font-size: x-small;
+  height: 30%;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+    height: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+  }
+  ion-row {
+    border-bottom: solid 1px #e8e8e8;
+    .grid-label{
+        font-weight: bold;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    ion-col {
+      min-width: 68px;
+      border-right: solid 1px #e8e8e8;
+      ion-checkbox {
+    //    --background-checked: #a9c8ff;
+     //   --border-color-checked: #a9c8ff;
+      }
+    }
+  }
+}
+.container-task{
+  background: #f8fff4;
+  padding: 10px;
+}
+.stripe-name{
+  text-align: center;
+  justify-content: center;
+  padding: 5px;
+  background: #6cff55;
+  &.prio{
+    background: #ffb700;
+    color: #000;
+  }
+  &.urg{
+    background: #ff3b3b;
+    color: #fff;
+  }
+}
+.dis-cut-name{
+  max-height: 36px;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lbl-adicional{
+
+  font-size: 12px;
+  font-weight: bold;
+}
+.btn-action{
+  padding-top: 14px;
+  text-align: right;
+}
+.no-ana{
+  height: 30%;
+  text-align: center;
+  place-content: center;
+  font-size: x-large;
+  background: #f4f4f4;
+  color: #5a5a5a;
+}

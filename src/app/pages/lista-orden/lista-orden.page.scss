@@ -1,0 +1,321 @@
+.nombre_usuario {
+  color: gray;
+}
+ion-list {
+  padding: 0px 100px 30px 30px;
+  ion-item {
+    padding: 10px 0;
+  }
+  ion-text {
+    width: 100%;
+    .val_orden {
+      opacity: 0.2;
+      font-size: small;
+      ion-icon {
+        opacity: 1;
+        color: rgb(189, 173, 0);
+        padding-right: 10px;
+      }
+    }
+    .orden_values {
+      max-width: 600px;
+      white-space: break-spaces;
+      .val_fecha {
+        ion-icon {
+          color: rgb(255, 94, 0);
+          padding-right: 10px;
+        }
+      }
+
+      .val_ced {
+        ion-icon {
+          color: rgb(0, 164, 219);
+          padding-right: 10px;
+        }
+        .val_ced_dis {
+          display: contents;
+        }
+      }
+
+      ion-col {
+        display: flex;
+        align-items: center;
+        color: rgb(121, 121, 121);
+        //  color: rgb(255, 122, 122);
+      }
+    }
+  }
+}
+.val_doc {
+  ion-icon {
+    padding-right: 10px;
+  }
+  color: #004d81;
+  //font-size: medium;
+  //padding: 5px;
+}
+.disable_val {
+  //    color:#1a5369;
+  opacity: 0.3;
+}
+
+ion-toolbar {
+  ion-searchbar {
+    width: 35%;
+    min-width: 180px;
+    margin-right: 2%;
+  }
+  ion-buttons {
+    padding-left: 1vw;
+    ion-button {
+      margin-right: 10px;
+      ion-icon {
+        font-size: xx-large;
+      }
+    }
+  }
+}
+
+.id_orden {
+  color: #686868;
+}
+.nombres_orden {
+  padding-left: 0px;
+  font-size: large;
+  font-weight: 600;
+}
+.btn_listas {
+  // padding-right: 100px;
+  color: #686868;
+  .btn_orden {
+    margin: 0;
+    font-size: small;
+    text-transform: none;
+    color: #686868;
+  }
+  .btn_filtro {
+    margin: 0;
+    font-size: small;
+    text-transform: none;
+    color: #686868;
+  }
+}
+
+ion-card {
+  //width: 95%;
+  margin: 2%;
+  margin-top: 20px;
+  max-width: 1080px;
+  ion-card-title {
+    font-weight: bold;
+  }
+  ion-card-content {
+    padding-left: 0px;
+  }
+}
+ion-content {
+  align-items: center;
+  text-align: center;
+  text-align: -webkit-center;
+  text-align: -moz-center;
+  --background: #fdfdfd;
+}
+
+.no_results {
+  opacity: 0.3;
+  // background-color: rgb(54, 54, 54);
+  // --background: rgb(22, 22, 22);
+  text-align: center;
+  font-weight: bold;
+  font-size: xx-large;
+  div {
+    width: 100%;
+  }
+}
+
+.indice {
+  // font-stretch: condensed;
+  font-size: x-large;
+  opacity: 0.3;
+  // color: #0089ff;
+}
+
+ion-icon {
+  //DESABILITA LA INSCRIPCION DEL HOVER
+  pointer-events: none;
+}
+ion-toolbar {
+  contain: initial !important;
+  overflow: initial !important;
+  img {
+    max-height: 90px;
+  }
+  ion-button {
+    --overflow: initial;
+  }
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  // border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: auto;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px;
+  position: absolute;
+  z-index: 9999 !important;
+  top: 140%;
+  // left: 10%;
+  margin-left: -15px;
+  white-space: break-spaces;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #555 transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.search-input {
+  text-align: -webkit-right;
+  ion-searchbar {
+    width: 35%;
+    min-width: 180px;
+    margin-right: 2%;
+  }
+}
+
+//CSS PARA MOVILES
+@media only screen and (max-width: 600px) {
+  .btn_listas {
+    padding-right: 0;
+    margin-left: 0;
+  }
+  ion-card-header {
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  ion-list {
+    padding: 0;
+    ion-buttons {
+      flex-flow: column;
+      height: 100%;
+      justify-content: center;
+      margin-left: 0;
+      ion-button {
+        margin-bottom: 10px;
+        margin-top: 30%;
+      }
+    }
+  }
+
+  ion-toolbar {
+    img {
+      width: 60%;
+    }
+    ion-searchbar {
+      width: 100%;
+      position: absolute;
+      z-index: 99999;
+      // display: none;
+    }
+    .nombre_usuario {
+      display: none;
+    }
+    ion-buttons {
+      padding: 0;
+    }
+  }
+  .indice {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: medium;
+  }
+  .val_orden {
+    opacity: 1 !important;
+    color: #686868 !important;
+    font-size: inherit !important;
+  }
+
+  .no_results {
+    font-size: large;
+  }
+  .franja_usr {
+    right: 0;
+  }
+  .fechas {
+    margin-top: 10px;
+  }
+} //FIN MOVILES
+
+.franja_usr {
+  width: fit-content;
+  position: fixed;
+  z-index: 9999;
+  background: #ebebeb;
+  padding: 10px;
+  border-bottom-right-radius: 10px;
+  color: #414141;
+  box-shadow: 3px 2px 2px #d9d9d9;
+}
+.fechas {
+  width: fit-content;
+  padding: 0;
+  width: 100%;
+}
+.fechas_mob {
+  text-align: center;
+  color: dodgerblue;
+  width: 100%;
+  background: #fff5f5;
+  //font-weight: bold;
+  small {
+    font-weight: bold;
+  }
+}
+
+.search-input {
+  ion-searchbar {
+    width: 100%;
+  }
+}
+
+.saldo_pen {
+  background: #fc65ff;
+}
+
+.info-search {
+  float: right;
+  padding-right: 17px;
+  color: #ff8b7f;
+}
+.info_size {
+  padding-left: 30px;
+  font-size: xx-small;
+  color: #a4a4a4;
+}
+.info-text {
+  font-weight: bold;
+  font-size: large;
+}

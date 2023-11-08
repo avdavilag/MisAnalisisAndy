@@ -1,0 +1,74 @@
+
+
+    <ion-tabs >
+      
+
+      <ion-tab-bar slot="top">
+        <div class="contenedor_img_toolbar">
+          <img class="fondo_logo" [src]="mobile?'assets/img/icono_lab.png':'assets/img/logo.png'" alt="logo" height="50">
+        </div>
+        <div class="tabs-buttons">
+      <!--
+          <ion-tab-button tab="ingreso-orden">
+            <ion-icon name="document-text-outline"></ion-icon>
+            <ion-label *ngIf="!mobile">Nueva Orden</ion-label>
+          </ion-tab-button>
+          
+  
+      -->   
+      
+        <ion-tab-button tab="lista-ordenes">
+          <ion-icon name="newspaper-outline"></ion-icon>
+          <ion-label *ngIf="!mobile">Resultados</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button *ngIf="ingreso_orden_c" tab="ingreso-orden-completa">
+          <ion-icon name="document-text-outline"></ion-icon>
+          <ion-label *ngIf="!mobile">Nueva Orden</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button *ngIf="enable_envio_iess" tab="envio-iess">
+          <img src="assets/icon/iess_logo.png" alt="logo" height="35">
+          <ion-label *ngIf="!mobile">IESS envio</ion-label>
+        </ion-tab-button>
+
+       
+   
+<!--
+        <ion-tab-button (click)="presentPopover($event)" class="btn-user" >
+          <ion-icon color="secondary" name="person-circle-outline"></ion-icon>
+          <ion-label *ngIf="!mobile" color="secondary">{{sesion_usuario_des}}</ion-label >
+        </ion-tab-button>
+      -->
+
+      <ion-tab-button tab="envio-bloque" *ngIf="envio_bloque" >
+        <ion-icon name="layers-outline" ></ion-icon>
+       <ion-label  *ngIf="!mobile">Envio en bloque</ion-label> </ion-tab-button>
+
+       <ion-tab-button (click)="openModalEntrega()">
+        <ion-icon name="checkbox-outline" ></ion-icon>
+       <ion-label  *ngIf="!mobile">Entrega</ion-label> </ion-tab-button>
+       <ion-tab-button (click)="returnPDF()">
+        <ion-icon name="clipboard-outline" ></ion-icon>
+       <ion-label  *ngIf="!mobile">Impresión</ion-label> </ion-tab-button>
+       <ion-tab-button (click)="openCalcPresupuesto()">
+        <ion-icon name="cash-outline" ></ion-icon>
+       <ion-label  *ngIf="!mobile">Presupuesto</ion-label> </ion-tab-button>
+       
+
+       <ion-tab-button class="btn-user" (click)="cerrarSesion()"  color="danger">
+        <ion-icon name="exit-outline"  color="danger"></ion-icon>
+       <ion-label   color="danger" *ngIf="!mobile">{{ 'complex.lista_cerrar_sesion' | translate }}</ion-label> </ion-tab-button>
+      </div>
+    
+<!-- 
+      <ion-buttons class="btn-end">
+        <ion-button fill="clear" color="primary" (click)="presentPopover($event)" class="btn_user">
+          <ion-label *ngIf="!mobile">{{sesion_usuario_des}}</ion-label>
+          <ion-icon size="large" name="person-circle-outline">
+          </ion-icon>
+        </ion-button>
+      </ion-buttons>
+  -->
+      </ion-tab-bar>
+    </ion-tabs>

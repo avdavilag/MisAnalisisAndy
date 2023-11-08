@@ -1,0 +1,28 @@
+<ion-button color="danger" expand="full" (click)="cerrar()" class="btn_cerrar" shape='' size='small'>
+  <ion-icon name="close"></ion-icon>
+</ion-button>
+<div class="alert-custom">
+  <div class="alert-head">
+    <h2>{{ 'complex.m_filtro_periodo_titulo' | translate }}</h2>
+  </div>
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">{{ 'simple.Desde' | translate }}</ion-label>
+      <ion-input type="date" max="2050-01-01" [(ngModel)]="f_desde" ></ion-input>
+  
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">{{ 'simple.Hasta' | translate }}</ion-label>
+      <ion-input type="date" [(ngModel)]="f_hasta" ></ion-input>
+    </ion-item>
+
+
+  </ion-list>
+  <div class="alert-buttons">
+
+    <ion-button fill="outline" color="secondary" (click)="cerrar()">{{ 'simple.Cancelar' | translate }}</ion-button>
+    <ion-button fill="solid" color="secondary" (click)="filtrar()">Filtrar</ion-button>
+
+</div>
+</div>

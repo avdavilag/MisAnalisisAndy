@@ -1,0 +1,111 @@
+<ion-button color="danger" expand="full" (click)="cerrar()" class="btn_cerrar" shape='' size='small'>
+  <ion-icon name="close"></ion-icon>
+</ion-button>
+<ion-header>
+  <ion-toolbar>
+    <ion-grid class="page_header">
+
+      <ion-row>
+        <ion-col>
+          <p>
+            <b>{{ 'simple.Paciente' | translate }}: </b>
+            {{orden.paciente.nombres}} {{orden.paciente.apellidos}}</p>
+        </ion-col>
+        <ion-col class="nombreMedico">
+          <b>{{ 'simple.Doctor' | translate }}: </b>
+          <div *ngIf=" orden.doctor.nombres">Dr. {{orden.doctor.nombres}} {{orden.doctor.apellidos}}</div>
+          <div *ngIf="!orden.doctor.nombres">{{ 'complex.lista_sin_medico' | translate }}</div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <p><b>{{ 'simple.Fecha' | translate }}: </b>{{orden.fecha}}</p>
+        </ion-col>
+        <ion-col>
+          <p><b>{{ 'simple.Orden' | translate }}: </b>{{orden.idOrden}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div class="btn_accion">
+      <ion-button (click)="funcionesComunes.openPDF(orden)" color="secondary" fill="clear">
+        <ion-icon slot="icon-only" name="print-outline" size=""></ion-icon>
+      </ion-button>
+      <ion-button (click)="funcionesComunes.enviarMail(orden,'web','')" color="tertiary" fill="clear">
+        <ion-icon slot="icon-only" name="mail-outline" size=""></ion-icon>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+
+
+</ion-header>
+
+<ion-content>
+  <ion-grid class="mat-table">
+    <ion-row class="etiquetas" [ngStyle]="{'backgroundColor':configDetalle.colorEtiqueta }">
+      <ion-col size="4" [resizeColumn]="true" [index]="0" class="mat-header-cell" onTouchMove>
+        <b>{{ 'simple.Analisis' | translate }}</b>
+      </ion-col>
+      <ion-col size="3" [resizeColumn]="true" [index]="1" class="mat-header-cell">
+        <span>
+          <b>{{ 'simple.Resultado' | translate }}</b>
+        </span>
+      </ion-col>
+
+      <ion-col size="1.4" [resizeColumn]="true" [index]="2" class="mat-header-cell unidad">
+        <b>{{ 'simple.Unidad' | translate }}</b>
+      </ion-col>
+
+      <ion-col size="3.6">
+        <b> {{ 'complex.m_detalle_rangos_ref' | translate }}</b>
+      </ion-col>
+
+
+    </ion-row>
+    <div *ngFor="let titulo of orden.titulos">
+      <ion-row class="titulos" [ngStyle]="{'backgroundColor':configDetalle.colorTitulo }">
+        <ion-col size="" class="titulo_examen mat-cell">
+          <b>{{titulo.nombre| txtBreakLine}}</b>
+        </ion-col>
+        <!-- 
+        <ion-col size="3" class="mat-cell"></ion-col>
+        <ion-col size="1.4" class="mat-cell"></ion-col>
+        <ion-col size="3.6"></ion-col>
+        -->
+       
+      </ion-row>
+
+      <ion-row *ngIf="titulo.rngRef&&titulo.rngRef!=''" class="resultados_examen mat-cell" [ngStyle]="{'backgroundColor':configDetalle.colorTitulo }">
+        <ion-col class="valorRef_examen">{{titulo.rngRef | txtBreakLine}}</ion-col>
+      </ion-row>
+      
+      <div *ngFor="let subtitulo of titulo.subTitulos">
+        <ion-row class="subtitulos mat-row" [ngStyle]="{'backgroundColor':configDetalle.colorSubTitulo }">
+          <ion-col size="4" class="subtitulo_examen mat-cell">{{subtitulo.nombre | txtBreakLine}}</ion-col>
+          <ion-col size="3" class="mat-cell"></ion-col>
+          <ion-col size="1.4" class="mat-cell"></ion-col>
+          <ion-col size="3.6"></ion-col>
+        </ion-row>
+
+        <div *ngFor="let examen of subtitulo.examenes;let index =index;
+        let isOdd=odd;
+        let isEven=even;">
+          <ion-row class="resultados_examen mat-row" [class.odd]="isOdd" [class.even]="isEven"
+            [ngStyle]="{'backgroundColor': isOdd ? configDetalle.colorExamenOdd: configDetalle.colorExamenEven }">
+            <ion-col size="4" class="mat-cell">{{examen.nombre| txtBreakLine}}</ion-col>
+        
+            <ion-col size="3" class="mat-cell">{{examen.resultado | txtBreakLine}}</ion-col>
+            <ion-col size="1.4" class="mat-cell unidad">{{examen.unidad | txtBreakLine}}</ion-col>
+            <ion-col size="3.6">{{examen.rngRef | txtBreakLine}}</ion-col>
+  
+          </ion-row>
+          <ion-row *ngIf="examen.valRef&&examen.valRef!=''" class="resultados_examen mat-row" [class.odd]="isOdd" [class.even]="isEven"
+          [ngStyle]="{'backgroundColor': isOdd ? configDetalle.colorExamenOdd: configDetalle.colorExamenEven }">
+
+            <ion-col class="valorRef_examen">{{examen.valRef | txtBreakLine}}</ion-col>
+          </ion-row>
+        </div>
+      </div>
+    </div>
+  </ion-grid>
+</ion-content>

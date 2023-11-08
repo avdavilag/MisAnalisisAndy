@@ -1,0 +1,83 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>Usuarios Disponibles</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+
+<ion-content>
+  <div class="contenido">
+  <ion-card class="ion-text-center">
+    <ion-button  color="danger" expand="full" class="close" (click)="back()" shape='' size='small'><ion-icon name="close"></ion-icon></ion-button>
+  
+    <div >
+      <!--
+      <h2>{{ 'simple.Bienvenido' | translate }}</h2>
+      <p >sss</p>
+      -->
+      <div class="icono">
+        <img src="assets/img/logo.png"  width="284" height="81" alt="logo">
+      </div>
+    </div>
+   <ion-list lines="none">
+
+      <ion-item *ngIf="orden.paciente.nombres!=''||orden.paciente.apellidos!=''">
+        <ion-icon name="person-outline" slot="start" size="large"></ion-icon>
+        <ion-text>
+          <small>{{ 'complex.result_ord_nombres_paciente' | translate |uppercase}}</small>
+          <p>{{orden.paciente.nombres}} {{orden.paciente.apellidos}}</p>
+        </ion-text>
+      </ion-item>
+
+      <ion-item *ngIf="orden.paciente.identificacion!=''">
+        <ion-icon  src="assets/icon/id-card.svg" slot="start" size="large"></ion-icon>
+        <ion-text>
+          <small>{{ 'complex.result_ord_doc_paciente' | translate |uppercase}}</small>
+          <p>{{orden.paciente.identificacion}}</p>
+        </ion-text>
+      </ion-item>
+
+      <ion-item *ngIf="orden.fecha!=''">
+        <ion-icon name="calendar-outline" slot="start" size="large"></ion-icon>
+        <ion-text>
+          <small>{{ 'simple.Fecha' | translate |uppercase}}</small>
+          <p>{{orden.fecha}}</p>
+        </ion-text>
+      </ion-item>
+      
+      <ion-item  *ngIf="orden.empresa.nombre!=''">
+        <ion-icon name="business-outline" slot="start" size="large"></ion-icon>
+        <ion-text>
+          <small>{{ 'simple.Empresa' | translate |uppercase }}</small>
+          <p>{{orden.empresa.nombre}}</p>
+        </ion-text>
+      </ion-item>
+  <!--  
+      <ion-item *ngFor="let entidad of entidades" >
+        <ion-label>{{entidad.nombre}}</ion-label>
+        <ion-radio slot="end" [value]="entidad" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Anthony Patricio Valverde Quispe</ion-label>
+        <ion-radio slot="end" value="griff"></ion-radio>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Mario Castañeda Palacios</ion-label>
+        <ion-radio slot="end" value="buford"></ion-radio>
+      </ion-item>
+      -->
+   </ion-list>
+  
+   <ion-item lines="none" class="btns_end">
+     
+  
+     <!--<ion-back-button defaultHref=""></ion-back-button> -->
+     <ion-button slot="start" size="default" color="secondary" fill="outline" (click)="validaEnvio()" class="btn_enviar" >{{ 'complex.result_ord_enviar_mail' | translate |uppercase }}</ion-button>
+     <ion-button slot="end" size="default" color="secondary" (click)="presentModalOrden()" class="btn_ver" >{{ 'complex.result_ord_ver_result' | translate |uppercase }}</ion-button>
+   </ion-item>
+        </ion-card>
+      </div>
+  
+  </ion-content>
+  
