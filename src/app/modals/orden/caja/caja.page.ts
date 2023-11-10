@@ -42,6 +42,10 @@ nombre:any;
 public numeroAnalisisAntes: number;
 pagos_arreglo:any=[];
 bandera_limpia_vector_caja;
+variable_nombre_pago_arreglo;
+input_pagar_no_efectivo:any;
+
+
 pago:any={
   cod_cli:null,
   cod_ori:null,
@@ -58,6 +62,7 @@ pago:any={
   res_pag:null,
   val_pag:null,
   valor_pago_unico:null,
+ variable_nombre_pago_arreglo_ap:null,
 }
 constructor(
     private modalController :ModalController,
@@ -78,11 +83,18 @@ constructor(
       console.log(error);
 
     });
+
+    console.log('-----Anderson Iniciado Metodo:-------- ');
+
     this.val_ord = parseFloat(this.val_ord).toFixed(2);
     if (this.val_ord !== 0) {
       if (this.tabla_Pagos !== undefined && this.tabla_Pagos.length !== 0) {
         this.pre_ord = (this.pre_ord - this.tabla_Pagos[0].valor_pago).toFixed(2);
         this.variable_saldo_modal = this.val_ord;
+        console.log('-----Prueba:-------- ');
+        this.input_pagar_no_efectivo=this.variable_saldo_modal;
+        console.log('-----Anderson input_pagar:-------- ',this.input_pagar_no_efectivo);
+        
         if (Math.abs(this.pre_ord - 0.00) < 0.001) {
           this.pre_ord = this.tabla_Pagos[0].valor_pago;
         }
@@ -97,12 +109,18 @@ constructor(
     } else {
       this.bandera_pago_botton = false;
     }
+    console.log('tabla Pagos revisar : ',this.tabla_Pagos);
     this.variable_saldo_modal = this.tabla_Pagos[this.tabla_Pagos.length - 1].valor_pago_unico;
     this.variable_pago_modal = 0;
     this.pre_ord = this.tabla_Pagos[this.tabla_Pagos.length - 1].val_pag;
+    this.input_pagar_no_efectivo=this.pre_ord;
+console.log('-----Anderson input_pagar en:-------- ',this.input_pagar_no_efectivo);
+
     if (this.variable_saldo_modal === 0) {
       this.bandera_pago_botton = false;
     }
+    console.log('-----Anderson terminado metodo en:-------- ');
+
   }
 
 
@@ -111,41 +129,66 @@ constructor(
   CancelarPago(){
     let pago_arreglo:any;
     this.pago.cod_tdp=this.tdp_select.cod_tdp;
+
+
+
     if(this.tdp_select.cod_tdp==='CASH'){
+      
       console.log('CASH');
       this.pago.doc_pag=null;
       this.pago.ins_pag=null;
     this.pago.res_pag=null;
-
-    }else  if(this.tdp_select.cod_tdp==='ANC'){
+    this.variable_nombre_pago_arreglo='Efectivo';
+    this.pago.variable_nombre_pago_arreglo_ap=this.variable_nombre_pago_arreglo;
+    
+  }else  if(this.tdp_select.cod_tdp==='ANC'){
       console.log('ANC');
       this.pago.doc_pag=this.input_doc_pag;
       this.pago.ins_pag=this.input_ins_pag;
       this.pago.res_pag=this.input_res_pag;
+      this.variable_pago_modal=this.pre_ord;
+      this.variable_nombre_pago_arreglo='Dr. Archundia';
+      this.pago.variable_nombre_pago_arreglo_ap=this.variable_nombre_pago_arreglo;
+   
     }
     else  if(this.tdp_select.cod_tdp==='CHECK'){
       console.log('CHECK');
       this.pago.doc_pag=this.input_doc_pag;
       this.pago.ins_pag=this.input_ins_pag;
       this.pago.res_pag=this.input_res_pag;
+      this.variable_pago_modal=this.pre_ord;
+      this.variable_nombre_pago_arreglo='Cheque';
+      this.pago.variable_nombre_pago_arreglo_ap=this.variable_nombre_pago_arreglo;
     }
     else  if(this.tdp_select.cod_tdp==='TAR'){
       console.log('TAR');
       this.pago.doc_pag=this.input_doc_pag;
       this.pago.ins_pag=this.input_ins_pag;
       this.pago.res_pag=this.input_res_pag;
+      this.variable_pago_modal=this.pre_ord;
+      this.variable_nombre_pago_arreglo='Tarjeta de Credito';
+      this.pago.variable_nombre_pago_arreglo_ap=this.variable_nombre_pago_arreglo;
+
     }
     else  if(this.tdp_select.cod_tdp==='TRA'){
       console.log('TRA');
       this.pago.doc_pag=this.input_doc_pag;
       this.pago.ins_pag=this.input_ins_pag;
       this.pago.res_pag=this.input_res_pag;
+      this.variable_pago_modal=this.pre_ord;
+      this.variable_nombre_pago_arreglo='Transferencia';
+      this.pago.variable_nombre_pago_arreglo_ap=this.variable_nombre_pago_arreglo;
+
     }
     else  if(this.tdp_select.cod_tdp==='RET'){
       console.log('RET');
       this.pago.doc_pag=this.input_doc_pag;
       this.pago.ins_pag=this.input_ins_pag;
       this.pago.res_pag=this.input_res_pag;
+      this.variable_pago_modal=this.pre_ord;
+      this.variable_nombre_pago_arreglo='X Retención en la Fuente';
+      this.pago.variable_nombre_pago_arreglo_ap=this.variable_nombre_pago_arreglo;
+      
     }
 
     // //Fecha para Update
@@ -153,16 +196,6 @@ constructor(
      var fecha_update_bdd=this.FormatoParaBaseDeDatosFechaUpdate(fecha_update);
     this.pago.fec_upd=fecha_update_bdd;
    this.pago.val_pag=this.variable_pago_modal;
-/////////////////////////////////////////
-
-
-// const nuevaFila = {
-//   variable_pago_modal:this.variable_pago_modal,
-//   variable_saldo_modal:this.variable_saldo_modal,
-//   fec_upd:this.pago.fec_upd,
-//   tipo_pago: this.tdp_select.cod_tdp,
-//   valor_pago: this.pre_ord,
-// };
 this.pago.valor_pago_unico=this.variable_saldo_modal;
 
 this.tabla_Pagos.push(Object.assign({}, this.pago));
@@ -235,12 +268,13 @@ if (indexToRemove !== -1) {
     // this.modalController.dismiss()
   }
 
+calcularVueltoNoEfectivo(){
+  console.log('Por favor revisa input_pagar_no_efectivo: ',this.input_pagar_no_efectivo);
+}
+
 calcularVuelto(){
   this.variable_pago_modal=0;
 console.log('variable_saldo_modal:----->calcular vuelto: ',this.variable_saldo_modal)
-  
-
-
 if(this.variable_saldo_modal===0){
   this.bandera_pago_botton=false;
   this.toastservice.presentToast({ message: "Tu pago esta totalmento completo", position: "bottom", color: "warning", duration: 1500});
