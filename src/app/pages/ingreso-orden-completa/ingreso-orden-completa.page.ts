@@ -173,6 +173,8 @@ text1: string = "";
 text2: string = "";
 paciente_completo:any;
 paciente_completo_bolean:boolean=false;
+paciente_completo_bolean_eliminar:boolean=false;
+
 numero_antes:number;
 bandera_limpia_vector_caja=0
 
@@ -504,6 +506,8 @@ getPaciente() {
 //////////////////get Paciente_a_terceros///////////////////////////////////
 getPaciente_terceros() {
   console.log(" this.inputPaciente_terceros", this.input_paciente_terceros);
+  console.log('Antes del graphql this.paciente_completo: ',this.paciente_completo);
+
   if (this.input_paciente_terceros === '') {
     let toastconf =
     {
@@ -1446,6 +1450,56 @@ facturarPaciente() {
     console.log('El this.paciente_completo se encuentra vacion: ',this.paciente_completo);
   }
 }
+
+
+
+Eliminar_Paciente_Tercero(){
+  this.advertecia_Eliminar_Paciente_Tercero();  
+  const nativeEl = this.accordionGroup; 
+  if (nativeEl.value === 'first') {
+    nativeEl.value = undefined;
+  } else {
+    nativeEl.value = 'first';
+  }
+}
+
+
+async advertecia_Eliminar_Paciente_Tercero() {
+  const alert = await this.alertController.create({
+    header: 'Estás seguro',
+    message: '¿De elimanar el paciente de facturacion a tercero?',
+    buttons: [
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Operación cancelada.');
+        }
+      },
+      {
+        text: 'Aceptar',
+        handler: () => {
+          if(this.paciente_completo){
+            if(this.paciente_completo.cod_pac===undefined){    
+            }else{
+            if (this.paciente_completo_bolean_eliminar) {      
+              this.paciente_completo=this.paciente;
+            } 
+          }
+          }else{
+            this.paciente_completo=this.paciente;
+          }
+          this.input_paciente_terceros=' ';
+          console.log('El Eliminar_Paciente_Tercero verificar: ',this.paciente_completo);
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+}
+
 
 async presentModalFactura() {
   console.log('Entra ala modal de factura');

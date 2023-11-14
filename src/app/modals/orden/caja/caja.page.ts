@@ -73,6 +73,7 @@ constructor(
 
   ngOnInit() {
 
+ 
     if (this.bandera_limpia_vector_caja === 1) {
       this.tabla_Pagos = [];
     }
@@ -84,7 +85,7 @@ constructor(
 
     });
 
-    console.log('-----Anderson Iniciado Metodo:-------- ');
+    console.log(' Iniciado Metodo:-------- ');
 
     this.val_ord = parseFloat(this.val_ord).toFixed(2);
     if (this.val_ord !== 0) {
@@ -113,20 +114,33 @@ constructor(
     this.variable_saldo_modal = this.tabla_Pagos[this.tabla_Pagos.length - 1].valor_pago_unico;
     this.variable_pago_modal = 0;
     this.pre_ord = this.tabla_Pagos[this.tabla_Pagos.length - 1].val_pag;
-    this.input_pagar_no_efectivo=this.pre_ord;
+    this.input_pagar_no_efectivo=this.variable_saldo_modal;
 console.log('-----Anderson input_pagar en:-------- ',this.input_pagar_no_efectivo);
 
     if (this.variable_saldo_modal === 0) {
       this.bandera_pago_botton = false;
     }
     console.log('-----Anderson terminado metodo en:-------- ');
+    console.log('tdp_select abajo: ', this.tdp_select)
 
   }
 
 
 
+  onTipoPagoChange() {
+    console.log('Se ha cambiado el tipo de pago. Nuevo valor:', this.tdp_select);
+    console.log('pagos onTipoPagoChange:  ',this.pago);
+    if(this.pago.length>0){
+      this.input_pagar_no_efectivo=this.pago[this.pago.length-1].valor_pago_unico;
+    }else{
+      this.input_pagar_no_efectivo=this.pre_ord;
+    }
     
-  CancelarPago(){
+    console.log('onTipoPagoChange input_pagar_no_efectivo: ',this.input_pagar_no_efectivo);
+    // Aquí puedes agregar cualquier lógica adicional que desees realizar al cambiar la selección.
+  }
+
+  Enviar_Pago(){
     let pago_arreglo:any;
     this.pago.cod_tdp=this.tdp_select.cod_tdp;
 
@@ -146,7 +160,7 @@ console.log('-----Anderson input_pagar en:-------- ',this.input_pagar_no_efectiv
       this.pago.doc_pag=this.input_doc_pag;
       this.pago.ins_pag=this.input_ins_pag;
       this.pago.res_pag=this.input_res_pag;
-      this.variable_pago_modal=this.pre_ord;
+      // this.variable_pago_modal=this.pre_ord;
       this.variable_nombre_pago_arreglo='Dr. Archundia';
       this.pago.variable_nombre_pago_arreglo_ap=this.variable_nombre_pago_arreglo;
    
@@ -156,7 +170,7 @@ console.log('-----Anderson input_pagar en:-------- ',this.input_pagar_no_efectiv
       this.pago.doc_pag=this.input_doc_pag;
       this.pago.ins_pag=this.input_ins_pag;
       this.pago.res_pag=this.input_res_pag;
-      this.variable_pago_modal=this.pre_ord;
+      // this.variable_pago_modal=this.pre_ord;
       this.variable_nombre_pago_arreglo='Cheque';
       this.pago.variable_nombre_pago_arreglo_ap=this.variable_nombre_pago_arreglo;
     }
@@ -165,7 +179,7 @@ console.log('-----Anderson input_pagar en:-------- ',this.input_pagar_no_efectiv
       this.pago.doc_pag=this.input_doc_pag;
       this.pago.ins_pag=this.input_ins_pag;
       this.pago.res_pag=this.input_res_pag;
-      this.variable_pago_modal=this.pre_ord;
+      // this.variable_pago_modal=this.pre_ord;
       this.variable_nombre_pago_arreglo='Tarjeta de Credito';
       this.pago.variable_nombre_pago_arreglo_ap=this.variable_nombre_pago_arreglo;
 
@@ -175,7 +189,7 @@ console.log('-----Anderson input_pagar en:-------- ',this.input_pagar_no_efectiv
       this.pago.doc_pag=this.input_doc_pag;
       this.pago.ins_pag=this.input_ins_pag;
       this.pago.res_pag=this.input_res_pag;
-      this.variable_pago_modal=this.pre_ord;
+      // this.variable_pago_modal=this.pre_ord;
       this.variable_nombre_pago_arreglo='Transferencia';
       this.pago.variable_nombre_pago_arreglo_ap=this.variable_nombre_pago_arreglo;
 
@@ -185,7 +199,7 @@ console.log('-----Anderson input_pagar en:-------- ',this.input_pagar_no_efectiv
       this.pago.doc_pag=this.input_doc_pag;
       this.pago.ins_pag=this.input_ins_pag;
       this.pago.res_pag=this.input_res_pag;
-      this.variable_pago_modal=this.pre_ord;
+      // this.variable_pago_modal=this.pre_ord;
       this.variable_nombre_pago_arreglo='X Retención en la Fuente';
       this.pago.variable_nombre_pago_arreglo_ap=this.variable_nombre_pago_arreglo;
       
@@ -217,9 +231,9 @@ this.vuelto_efectivo='';
 this.pagos_arreglo.push(Object.assign({}, this.pago));
 console.log('<-----this.pago:----> ',this.pago);
 console.log('pago_arreglo:-*------>: ',this.pagos_arreglo);
-
-
 this.bandera_limpia_vector_caja=0;
+this.input_pagar_no_efectivo=this.pago.valor_pago_unico;
+
   }
 
 delete_Pago(pago:String){
@@ -269,8 +283,60 @@ if (indexToRemove !== -1) {
   }
 
 calcularVueltoNoEfectivo(){
-  console.log('Por favor revisa input_pagar_no_efectivo: ',this.input_pagar_no_efectivo);
+
+
+  this.variable_pago_modal=0;
+if(this.variable_saldo_modal===0){
+  this.bandera_pago_botton=false;
+  this.toastservice.presentToast({ message: "Tu pago esta totalmento completo", position: "bottom", color: "warning", duration: 1500});
+}else{ 
+  ////aqui cambio:
+   if(this.input_pagar_no_efectivo<this.pre_ord){
+  // this.vuelto = (this.input_pagar_no_efectivo - this.pre_ord).toFixed(2);
+  this.vuelto = (this.pre_ord - this.input_pagar_no_efectivo).toFixed(2);
+
+
+     if(parseFloat(this.vuelto)<=0){
+      console.log('Entra al vuelto de no completo el pago: ',this.vuelto);
+      this.vuelto_efectivo='0.00';
+    }
+
+    console.log('Let de pre_ord: ',this.pre_ord);
+    console.log('Let de input_pagar_no_efectivo: ',this.input_pagar_no_efectivo);
+
+
+
+  let resultado_calcular_vuelto=this.pre_ord-this.input_pagar_no_efectivo;
+
+  console.log('Let de resultado_calcular_vuelto: ',resultado_calcular_vuelto);
+  // this.variable_pago_modal=resultado_calcular_vuelto;
+  this.variable_pago_modal=this.input_pagar_no_efectivo;
+  this.variable_saldo_modal=(resultado_calcular_vuelto).toFixed(2);
+  }else{
+this.vuelto = (this.input_pagar_no_efectivo - this.pre_ord).toFixed(2);
+this.vuelto_efectivo=(this.input_pagar_no_efectivo - this.pre_ord).toFixed(2);
+this.variable_pago_modal=this.input_pagar_no_efectivo-parseFloat(this.vuelto);
+
+if (isNaN(this.variable_pago_modal)) {
+  this.variable_pago_modal = 0;
 }
+    this.variable_saldo_modal=this.pre_ord-this.variable_pago_modal;
+    console.log('this.variable_pago_modal: ',this.variable_pago_modal);
+    console.log('this.pre_ord: dddd ',this.pre_ord);
+    console.log('this.variable_pago_modal: ',this.variable_saldo_modal);
+
+  }
+  this.bandera_pago_botton=true;
+  }
+  console.log('variable_pago_modal:----verifica hoy ',this.variable_pago_modal);
+}
+
+
+
+
+
+
+
 
 calcularVuelto(){
   this.variable_pago_modal=0;

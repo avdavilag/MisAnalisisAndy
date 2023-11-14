@@ -251,8 +251,8 @@
         
               <ion-row>
                 <ion-col size="12">
-                  <ion-item lines="none" *ngIf="!paciente_completo || paciente_completo==null">          
-                  </ion-item>
+                  <!-- <ion-item lines="none" *ngIf="!paciente_completo || paciente_completo==null">          
+                  </ion-item> -->
                  <ion-item #itemPac lines="none" *ngIf="paciente_completo || paciente_completo!=null">
                     <ion-row class="full_width" style="padding: 0px 1px;">
                       <ion-col size="12" class="ion-text-center">
@@ -266,8 +266,15 @@
 
                           <ion-list style="margin: -8px -17px; padding: 2px 0px;">                                               
                             <ion-item>
-                    <ion-checkbox [(ngModel)]="paciente_completo_bolean" (ionChange)="facturarPaciente()" justify="end" style="font-size: small; color: #3880ff;" >
+                              <pre></pre>
+                      <ion-checkbox [(ngModel)]="paciente_completo_bolean_eliminar" (ionChange)="Eliminar_Paciente_Tercero()" justify="start" style="font-size: small; color: #fa899f;" >
+                               Limpiar datos de facturación a terceros</ion-checkbox>
+                       <ion-checkbox [(ngModel)]="paciente_completo_bolean" (ionChange)="facturarPaciente()" justify="end" style="font-size: small; color: #3880ff;" >
                       Deseas facturar a este paciente</ion-checkbox>
+
+                
+
+
                             </ion-item>                                                      
                           </ion-list>
                         </ion-text>
@@ -279,25 +286,25 @@
               </ion-row>
                 </div>
           </ion-accordion>
-          
-          <ion-accordion value="second">
-            <ion-item slot="header" color="light">
-              <ion-label>Peticiones</ion-label>              
-                <ion-row>
-             <ion-col class="ion-text-end">
-            <ion-badge *ngIf="this.listMuestras.length>0" class="badge_notification" color="danger">{{this.listMuestras.length}}</ion-badge>
-            <ion-button size="small" color="tertiary" fill="clear" (click)="presentModalMuestras()">
-              <ion-icon slot="start" src="../../../assets/icon/pruebas.svg"></ion-icon> Muestras</ion-button>
-          </ion-col>
-                </ion-row>
-                </ion-item>
-          </ion-accordion>
-
-          
         </ion-accordion-group>
 
-
-
+          <ion-row>
+            <ion-col size="12"  class="sin-padding">
+              <ion-item color="light">
+                <ion-label>Peticiones</ion-label>
+                <ion-row>
+                  <ion-col class="ion-text-end">
+                    <ion-badge *ngIf="this.listMuestras.length > 0" class="badge_notification" color="danger">{{this.listMuestras.length}}</ion-badge>
+                    <ion-button size="small" color="tertiary" fill="clear" (click)="presentModalMuestras()">
+                      <ion-icon slot="start" src="../../../assets/icon/pruebas.svg"></ion-icon> Muestras
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+    
+        
 
 
 
@@ -339,7 +346,7 @@
                     <ion-col size="3" *ngIf="!this.mobile"> {{item.des_ana}}</ion-col>
                     <ion-col size="2" *ngIf="!this.mobile"> {{item.fechaFinal| date:'EE d MMM y'}}</ion-col>
                     <ion-col size="2" *ngIf="!this.mobile"> <ion-badge color="primary">{{item.des_sts}}</ion-badge></ion-col>
-                    <ion-col [size]="(this.mobile)?5:2">$ {{item.totalPac}}</ion-col>
+                    <ion-col [size]="(this.mobile)?5:2">{{item.totalPac| currency }}</ion-col>
                     <ion-col size="1" ><ion-button size="small" style="margin: -9px;" color="danger" (click)="removeAnalisis(item)"><ion-icon
                           name="close-outline"></ion-icon></ion-button></ion-col>
                     <ion-col size="1" ><ion-button size="small" style="margin: -3px;" (click)="getAnalisisIndividual(item)"  color="light"><ion-icon name="list-outline"></ion-icon></ion-button></ion-col>

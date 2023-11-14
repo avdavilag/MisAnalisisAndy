@@ -44,7 +44,7 @@
                   <br>
                   <ion-item *ngIf="listtdp.length>0" >
                     <ion-label position="floating" style="--color: #c2c2c2;">AGREGAR UN PAGO:</ion-label>
-                    <ion-select placeholder="Tipo de Pago" [(ngModel)]="tdp_select" [value]="tdp_select" style="text-align: center;">
+                    <ion-select placeholder="Tipo de Pago" [(ngModel)]="tdp_select" [value]="tdp_select" style="text-align: center;" (ionChange)="onTipoPagoChange()">
                       <ion-select-option *ngFor="let item of listtdp" [value]="item">{{item.des_pag}} </ion-select-option>
                     </ion-select>
                     <ion-icon slot="end" name="add-circle-outline" style="border-radius: 50%; color: gray; padding: 1px;"></ion-icon>
@@ -69,6 +69,14 @@
 
 
         <ion-list *ngIf="tdp_select && tdp_select.tip_tdp=='T'"><!--Tarjeta de credito-->
+          <ion-item style="border-radius: 6px;padding: 1px;">
+            <ion-label position="floating">VALOR A PAGAR:</ion-label>
+
+            <ion-input [(ngModel)]="input_pagar_no_efectivo" (keyup.enter)="calcularVueltoNoEfectivo()" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input>
+              <!-- <ion-input  [(ngModel)]="pre_ord" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input> -->
+              <ion-icon slot="end" name="logo-usd" style="border-radius: 50%; color: gray; padding: 1px;"></ion-icon>
+            </ion-item>
+
           <ion-item>
             <ion-label  position="stacked">Nro /Nombre tarjeta</ion-label>
             <ion-input [value]="this.input_doc_pag"  [(ngModel)]="this.input_doc_pag" type="text"></ion-input>
@@ -84,6 +92,16 @@
         </ion-list>
 
         <ion-list *ngIf="tdp_select && tdp_select.tip_tdp=='C'"><!--Cheuue-->
+
+          <ion-item style="border-radius: 6px;padding: 1px;">
+            <ion-label position="floating">VALOR A PAGAR:</ion-label>
+
+            <ion-input [(ngModel)]="input_pagar_no_efectivo" (keyup.enter)="calcularVueltoNoEfectivo()" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input>
+              <!-- <ion-input  [(ngModel)]="pre_ord" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input> -->
+              <ion-icon slot="end" name="logo-usd" style="border-radius: 50%; color: gray; padding: 1px;"></ion-icon>
+            </ion-item>
+
+
           <ion-item>
             <ion-label position="stacked">Banco</ion-label>
             <ion-input [value]="this.input_ins_pag"  [(ngModel)]="this.input_ins_pag" type="text"></ion-input>
@@ -105,7 +123,7 @@
           <ion-item style="border-radius: 6px;padding: 1px;">
             <ion-label position="floating">VALOR A PAGAR:</ion-label>
 
-            <ion-input disable [(ngModel)]="input_pagar_no_efectivo" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input>
+            <ion-input [(ngModel)]="input_pagar_no_efectivo" (keyup.enter)="calcularVueltoNoEfectivo()" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input>
               <!-- <ion-input  [(ngModel)]="pre_ord" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input> -->
               <ion-icon slot="end" name="logo-usd" style="border-radius: 50%; color: gray; padding: 1px;"></ion-icon>
             </ion-item>
@@ -125,14 +143,14 @@
         </ion-list>
 
 
-                <ion-button expand="full" color="primary" (click)="CancelarPago()">Confirmar Pago</ion-button>
+                <ion-button expand="full" color="primary" (click)="Enviar_Pago()">Confirmar Pago</ion-button>
                                               
           </ion-col>                        
         </ion-row>
         </ion-grid>
 
 
-        <ion-grid >
+        <ion-grid style="overflow: auto;">
           <ion-row >            
             <ion-col class="header_tbl" size="3">Tipo. Pago</ion-col>
             <ion-col class="header_tbl" size="3">Detalles</ion-col>
@@ -176,7 +194,7 @@
             </ion-col>
             
             
-            <ion-col size="3" style="color: #a7a7a7;">{{ fila.val_pag }}</ion-col>    
+            <ion-col size="3" style="color: #a7a7a7;">{{ fila.valor_pago_unico }}</ion-col>    
             <ion-col size="3" style="color: #a7a7a7;"><ion-button size="small" color="danger" (click)="delete_Pago(fila.fec_upd)"><ion-icon
               name="close-outline"></ion-icon></ion-button></ion-col>
           </ion-row>
