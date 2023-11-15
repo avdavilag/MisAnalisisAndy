@@ -177,7 +177,8 @@ paciente_completo_bolean_eliminar:boolean=false;
 
 numero_antes:number;
 bandera_limpia_vector_caja=0
-
+////bloquea la facturacion a tercero
+public bloquearIonItem: boolean = true;
 
   constructor(
     private varGlobal: VariablesGlobalesService,
@@ -260,6 +261,8 @@ bandera_limpia_vector_caja=0
 
       if (r.data) {
         this.paciente = r.data.paciente
+        this.inputPaciente=this.paciente.id_pac;
+        console.log('this.paciente: -Modal: ',this.inputPaciente);
       }
     })
   }
@@ -279,7 +282,8 @@ bandera_limpia_vector_caja=0
 
       if (r.data) {
         this.medico = r.data.medico
-        console.log('this.medico: ', this.medico);
+        this.inputMedico=this.medico.cod_med;
+        console.log('this.medico: ', this.inputMedico);
       }
     })
   }
@@ -506,8 +510,7 @@ getPaciente() {
 //////////////////get Paciente_a_terceros///////////////////////////////////
 getPaciente_terceros() {
   console.log(" this.inputPaciente_terceros", this.input_paciente_terceros);
-  console.log('Antes del graphql this.paciente_completo: ',this.paciente_completo);
-
+  
   if (this.input_paciente_terceros === '') {
     let toastconf =
     {
@@ -518,17 +521,31 @@ getPaciente_terceros() {
     this.toastservice.presentToast(toastconf);
     return
   }
-  this.queryservice.getPacientesbyId(this.input_paciente_terceros).then((r: any) => {
+
+  const cedula_paciente_tercero=this.input_paciente_terceros.trim();
+
+console.log('Const cedula_paciente_tercera: ',cedula_paciente_tercero);
+  this.queryservice.getPacientesbyId(cedula_paciente_tercero)
+  .then((r: any) => {
     console.log(r);
     if (r.data.getPaciente.id_pac !== null) {
       this.paciente_completo = r.data.getPaciente;
-      console.log('this.paciente*----> Verificar: ',this.paciente_completo);
-    }
-    else {
+      console.log('this.paciente*----> Verificar: ', this.paciente_completo);
+      this.bloquearIonItem=true;
+      this.paciente_completo_bolean_eliminar=false;
+      this.paciente_completo_bolean=false;
+    } else {
       this.toastservice.presentToast({ message: "No se encuentra Paciente", position: "top", color: "warning", duration: 1500 });
     }
   })
+  .catch(error => {
+    console.error("Error al obtener pacientes: ", error);
+  });
 }
+
+
+
+
 
 ///////////////////////////////////////////
 ///////////////////////////////////////////
@@ -1327,8 +1344,20 @@ saveComplete() {
     muestras: Muestras_final,
     analisis: Analisis_final
   }
-  console.log('Json Data: <------------------>: ', this.json_data)
-  console.log('paciente_completo----paciente completo revisa antes del dataJson: ',this.paciente_completo);
+  console.log('Json Data: <------------------>: ', this.json_data);
+  
+  if(this.paciente_completo){
+    this.dataOrden.cod_pac2=this.paciente_completo.cod_pac;   
+  }else{    
+    this.dataOrden.cod_pac2=null;
+    const nativeEl = this.accordionGroup; 
+    if (nativeEl.value === 'first') {
+      nativeEl.value = undefined;
+    } else {
+      nativeEl.value = 'first';
+    }
+    this.bloquearIonItem=false;
+  }
   this.facturarPaciente();
   this.loadingservice.present("Ingresando Orden");
 //   this.queryservice.insertOrden({
@@ -1420,7 +1449,7 @@ saveComplete() {
 //         //this.loading.dismiss();
 //       }
 
-//       this.presentModalFactura();
+     this.presentModalFactura();
 
 //     }).catch(error => {
 //       console.log('Error en la promesa: ', error);
@@ -1467,7 +1496,7 @@ Eliminar_Paciente_Tercero(){
 async advertecia_Eliminar_Paciente_Tercero() {
   const alert = await this.alertController.create({
     header: 'Estás seguro',
-    message: '¿De elimanar el paciente de facturacion a tercero?',
+    message: '¿De eliminar el paciente de facturacion a tercero?',
     buttons: [
       {
         text: 'Cancelar',
@@ -1481,17 +1510,22 @@ async advertecia_Eliminar_Paciente_Tercero() {
         text: 'Aceptar',
         handler: () => {
           if(this.paciente_completo){
+
             if(this.paciente_completo.cod_pac===undefined){    
             }else{
             if (this.paciente_completo_bolean_eliminar) {      
               this.paciente_completo=this.paciente;
+              this.bloquearIonItem=false;
             } 
           }
           }else{
             this.paciente_completo=this.paciente;
+            this.bloquearIonItem=false;
           }
           this.input_paciente_terceros=' ';
           console.log('El Eliminar_Paciente_Tercero verificar: ',this.paciente_completo);
+          this.paciente_completo=undefined;
+
         }
       }
     ]
@@ -1500,9 +1534,8 @@ async advertecia_Eliminar_Paciente_Tercero() {
   await alert.present();
 }
 
-
 async presentModalFactura() {
-  console.log('Entra ala modal de factura');
+  console.log('Entra ala modal de factura json_data verifica modal PresentFacura: ',this.json_data);
   const modal = await this.modalController.create({
     component: IngresoFacturaPage,
     componentProps: {

@@ -1,91 +1,108 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Información del Analisis</ion-title>
-  </ion-toolbar>
-  <ion-button size="small" class="btn_cerrar" color="danger" (click)="dismiss()"> <ion-icon name="close-outline"></ion-icon></ion-button>
-
-</ion-header>
-
+  <ion-button size="small" class="btn_cerrar" color="danger" (click)="dismiss()" shape='' size='small' expand="full" > <ion-icon name="close-outline"></ion-icon></ion-button>
+  
 <ion-content [fullscreen]="true">
+
+  <div>
+    <h2>&nbsp; &nbsp; &nbsp;INFORMACIÓN DEL ANÁLISIS</h2>
+  </div>
+
+
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">get-analisis-individual-orden</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-card class="modal-card">
-    <ion-card-header class="custom-header">
-      <ion-card-title>{{ item.des_ana }}</ion-card-title>
-    </ion-card-header>
+  <ion-grid>
     <ion-row>
-      <ion-col size="4" style="background-color: #20b2aa; color: white; text-align:left;" >
-        Código: {{ item.cod_ana }}<br>         
-        </ion-col>
-
-        <ion-col size="4" style="background-color: #20b2aa; color: white; text-align:center;">
-          Entrega: {{ item.fechaFinal }}<br>          
-        </ion-col>    
-
-      <ion-col size="4" style="background-color: #20b2aa; color: yellow; text-align:right;">
-          Estado: {{ item.des_sts }}<br>         
-      </ion-col>               
-   </ion-row>
-
-   <ion-row>
-      <ion-col size="12">      
-        <ion-label class="label_custom stacked-center">
-          Descuento Petición
-        </ion-label>
-        <ion-item class="label_custom" >
-          <ion-input disabled value="{{ item.dcto_pet }}" class="center-input"></ion-input>
-        </ion-item>
-      </ion-col>
       <ion-col size="12">
-        <ion-label class="label_custom stacked-center">
-              Descuento Valor
-        </ion-label>
-        <ion-item class="label_custom">
-          <ion-input disabled value="{{ item.dcto_val }}" class="center-input"></ion-input>
-        </ion-item>
+        <ion-card-header class="custom-header">
+          <ion-card-title>{{ item.des_ana }}</ion-card-title>
+        </ion-card-header>
       </ion-col>
     </ion-row>
-    
+  
+    <ion-row style="margin: -5px 5px;">
+      
+      <ion-col size="4" style="background-color: #20b2aa; color: white; text-align: left;">
+        Código: {{ item.cod_ana }}<br>
+      </ion-col>
+  
+      <ion-col size="4" style="background-color: #20b2aa; color: white; text-align: center;">
+        Entrega: {{ item.fechaFinal }}<br>
+      </ion-col>
+  
+      <ion-col size="4" style="background-color: #20b2aa; color: yellow; text-align: right;">
+        Estado: {{ item.des_sts }}<br>
+      </ion-col>
+    </ion-row>
+  
     <ion-row>
-
       <ion-col size="12">
-        <ion-label class="label_custom stacked-center">
-          Pospago
-        </ion-label>
+        <ion-card-header class="custom-header_filas_row_analisis_indivudual_primera_fila">        
+          <ion-item class="label_custom">
+          <ion-label class="label_custom stacked-center">
+            Descuento Petición:
+          </ion-label>
+
+          <ion-input disabled value="{{ item.dcto_pet }}" class="center-input"></ion-input>
+        </ion-item>
+      </ion-card-header>
+      </ion-col>
+    </ion-row>
+
+  <ion-row>
+      <ion-col size="12">
+        <ion-card-header class="custom-header_filas_row_analisis_indivudual">          
         <ion-item class="label_custom">
+          <ion-label class="label_custom stacked-center">
+            Descuento Valor:
+          </ion-label>
+          <ion-input disabled value="{{ item.dcto_val }}" class="center-input"></ion-input>
+        </ion-item>
+      </ion-card-header>
+      </ion-col>
+    </ion-row> 
+  
+    <ion-row>
+      <ion-col size="12">
+        <ion-card-header class="custom-header_filas_row_analisis_indivudual">          
+        <ion-item class="label_custom">
+          <ion-label class="label_custom stacked-center">
+            Pospago:
+          </ion-label>
           <ion-input disabled value="{{ item.pospago}}" class="center-input"></ion-input>
         </ion-item>
+      </ion-card-header>
+
       </ion-col>
+    </ion-row>
 
-
-
+  <ion-row>
       <ion-col size="12">
-        <ion-label class="label_custom stacked-center">
-          Subtotal
-        </ion-label>
+        <ion-card-header class="custom-header_filas_row_analisis_indivudual">              
         <ion-item class="label_custom">
+          <ion-label class="label_custom stacked-center">
+            Subtotal
+          </ion-label>
           <ion-input disabled value="{{ item.subtotal }}" class="center-input"></ion-input>
-        </ion-item>
+        </ion-item>        
+      </ion-card-header>
       </ion-col>
+    </ion-row>
 
+  <ion-row>
       <ion-col size="12">
-        <ion-label class="label_custom stacked-center">
+        <ion-card-header class="custom-header_filas_row_analisis_indivudual">              
+        <ion-item class="label_custom">          
+        <ion-label class="label_custom stacked-center" >
           Total
         </ion-label>
-        <ion-item class="label_custom">
-          <ion-input disabled value="{{ item.total_vista }}"></ion-input>
+          <ion-input disabled value="{{ item.total_vista }}" class="center-input"></ion-input>
         </ion-item>
+      </ion-card-header>
       </ion-col>
-
-      <ion-col size="12">
-        <ion-label class="label_custom stacked-center">
-          
-        </ion-label>
-        </ion-col>
-    </ion-row>    
-  </ion-card>
+        </ion-row>        
+  </ion-grid>
+  
 </ion-content>

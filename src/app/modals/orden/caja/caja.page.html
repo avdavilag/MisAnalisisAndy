@@ -1,12 +1,10 @@
-<ion-toolbar>
-  <ion-title>Caja</ion-title>
-</ion-toolbar>
-<ion-button size="small" class="btn_cerrar" color="danger" (click)="dismiss()"> <ion-icon name="close-outline"></ion-icon></ion-button>
-
-
+<ion-button size="small" class="btn_cerrar" color="danger" (click)="dismiss()" shape='' size='small' expand="full" > <ion-icon name="close-outline"></ion-icon></ion-button>
 
     <ion-content>
       
+      <div>
+        <h2>&nbsp; &nbsp;CAJA</h2>
+      </div>
 
       <ion-grid [fixed]="true">
         <ion-row>
@@ -28,10 +26,10 @@
           </ion-item>
           
           <ion-item style="border-radius: 6px;padding: 1px;">
-          <ion-label position="floating" style="font-size: 12px;" >PAGOS:</ion-label>
-            <ion-input disabled [(ngModel)]="variable_pago_modal" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input>
-            <ion-icon slot="end" name="swap-horizontal-outline" style="border-radius: 50%; color: gray; padding: 1px;"></ion-icon>            
-          </ion-item>
+            <ion-label position="floating" style="font-size: 12px;" >PAGOS:</ion-label>
+              <ion-input disabled [(ngModel)]="variable_pago_modal" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input>
+              <ion-icon slot="end" name="swap-horizontal-outline" style="border-radius: 50%; color: gray; padding: 1px;"></ion-icon>            
+            </ion-item>
           
           <ion-item style="border-radius: 6px;padding: 1px;">
           <ion-label position="floating" style="font-size: 12px;">SALDO:</ion-label>
@@ -56,25 +54,29 @@
 
                 
         <ion-list *ngIf="tdp_select && tdp_select.tip_tdp=='E'"><!-- Efectivo-->
+          <span class="mensaje-cambio">Debe presionar la tecla "Enter" para calcular su cambio</span>
           <ion-item  style="border-radius: 6px;padding: 1px;">
             <ion-label position="floating" style="font-size: 12px;">PAGO CON:</ion-label>
-             <ion-input type="number" [(ngModel)]="cantidadPaga" (keyup.enter)="calcularVuelto()" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input>
+          <ion-input type="number" [(ngModel)]="cantidadPaga" debounce=1500 (ionInput)="onInputChange" (ionChange)="onInputChange()" (keyup.enter)="calcularVuelto()" style="border-radius: 2px; text-align: end; font-size: 20px;"></ion-input>
+          <ion-icon name="enter-outline" slot="end"></ion-icon>
           </ion-item>
+
 
           <ion-item  style="border-radius: 6px;padding: 1px;">
             <ion-label position="floating" style="font-size: 12px;">VUELTO:</ion-label>            
             <ion-input [(ngModel)]="vuelto_efectivo" disabled style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input>            
           </ion-item>
         </ion-list>
-
+        
 
         <ion-list *ngIf="tdp_select && tdp_select.tip_tdp=='T'"><!--Tarjeta de credito-->
+          <span class="mensaje-cambio">Debe presionar la tecla "Enter" para calcular su cambio</span>
           <ion-item style="border-radius: 6px;padding: 1px;">
             <ion-label position="floating">VALOR A PAGAR:</ion-label>
 
-            <ion-input [(ngModel)]="input_pagar_no_efectivo" (keyup.enter)="calcularVueltoNoEfectivo()" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input>
+            <ion-input [(ngModel)]="input_pagar_no_efectivo" (ionChange)="onInputChange_resto_de_pagos()" (keyup.enter)="calcularVueltoNoEfectivo()" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input>
               <!-- <ion-input  [(ngModel)]="pre_ord" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input> -->
-              <ion-icon slot="end" name="logo-usd" style="border-radius: 50%; color: gray; padding: 1px;"></ion-icon>
+              <ion-icon slot="end" name="enter-outline" style="border-radius: 50%; color: gray; padding: 1px;"></ion-icon>
             </ion-item>
 
           <ion-item>
@@ -92,13 +94,13 @@
         </ion-list>
 
         <ion-list *ngIf="tdp_select && tdp_select.tip_tdp=='C'"><!--Cheuue-->
-
+          <span class="mensaje-cambio">Debe presionar la tecla "Enter" para calcular su cambio</span>
           <ion-item style="border-radius: 6px;padding: 1px;">
             <ion-label position="floating">VALOR A PAGAR:</ion-label>
 
-            <ion-input [(ngModel)]="input_pagar_no_efectivo" (keyup.enter)="calcularVueltoNoEfectivo()" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input>
+            <ion-input [(ngModel)]="input_pagar_no_efectivo" (ionChange)="onInputChange_resto_de_pagos()" (keyup.enter)="calcularVueltoNoEfectivo()" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input>
               <!-- <ion-input  [(ngModel)]="pre_ord" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input> -->
-              <ion-icon slot="end" name="logo-usd" style="border-radius: 50%; color: gray; padding: 1px;"></ion-icon>
+              <ion-icon slot="end" name="enter-outline" style="border-radius: 50%; color: gray; padding: 1px;"></ion-icon>
             </ion-item>
 
 
@@ -121,11 +123,12 @@
 
         
           <ion-item style="border-radius: 6px;padding: 1px;">
+            <span class="mensaje-cambio">Debe presionar la tecla "Enter" para calcular su cambio</span>
             <ion-label position="floating">VALOR A PAGAR:</ion-label>
 
-            <ion-input [(ngModel)]="input_pagar_no_efectivo" (keyup.enter)="calcularVueltoNoEfectivo()" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input>
+            <ion-input [(ngModel)]="input_pagar_no_efectivo" (ionChange)="onInputChange_resto_de_pagos()" (keyup.enter)="calcularVueltoNoEfectivo()" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input>
               <!-- <ion-input  [(ngModel)]="pre_ord" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input> -->
-              <ion-icon slot="end" name="logo-usd" style="border-radius: 50%; color: gray; padding: 1px;"></ion-icon>
+              <ion-icon slot="end" name="enter-outline" style="border-radius: 50%; color: gray; padding: 1px;"></ion-icon>
             </ion-item>
 
           <ion-item>

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonInput, ModalController, ToastController } from '@ionic/angular';
 import { QueryService } from 'src/app/servicios/gql/query.service';
 import { ToastService } from 'src/app/servicios/toast.service';
 
@@ -9,6 +9,9 @@ import { ToastService } from 'src/app/servicios/toast.service';
   styleUrls: ['./caja.page.scss'],
 })
 export class CajaPage implements OnInit {
+  @ViewChild('myInput') myInput: IonInput;
+  private timeout: any; 
+
 
 dcto_ord:any=""
 dcto_val:any=""
@@ -68,6 +71,7 @@ constructor(
     private modalController :ModalController,
     private queryservice:QueryService,
     private toastservice:ToastService,
+    private toastController: ToastController
   ) { }
 
 
@@ -281,6 +285,25 @@ if (indexToRemove !== -1) {
 
     // this.modalController.dismiss()
   }
+////Metodo de calcular automaticaticamente el cambio
+  onInputChange() {
+    console.log('Entra al IonInputChange');
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.calcularVuelto();
+    }, 1000);
+  }
+
+////Metodo de calcular automaticaticamente el cambio del resto de pagos CHE,ARCH,TAR,TRANS
+onInputChange_resto_de_pagos() {
+  console.log('Entra al onInputChange_resto_de_pagos');
+  clearTimeout(this.timeout);
+  this.timeout = setTimeout(() => {
+    this.calcularVueltoNoEfectivo();
+  }, 1000);
+}
+
+
 
 calcularVueltoNoEfectivo(){
 
@@ -335,9 +358,6 @@ if (isNaN(this.variable_pago_modal)) {
 
 
 
-
-
-
 calcularVuelto(){
   this.variable_pago_modal=0;
 console.log('variable_saldo_modal:----->calcular vuelto: ',this.variable_saldo_modal)
@@ -353,10 +373,11 @@ if(this.variable_saldo_modal===0){
     }
 
   let resultado_calcular_vuelto=this.pre_ord-this.cantidadPaga;
-  this.variable_pago_modal=this.cantidadPaga;
+  this.variable_pago_modal=(this.cantidadPaga).toFixed(2);
   this.variable_saldo_modal=(resultado_calcular_vuelto).toFixed(2);
   }else{
 this.vuelto = (this.cantidadPaga - this.pre_ord).toFixed(2);
+console.log('pthis.vuelto mira por favor la bandera: ',this.vuelto_efectivo);
 this.vuelto_efectivo=(this.cantidadPaga - this.pre_ord).toFixed(2);
 
 

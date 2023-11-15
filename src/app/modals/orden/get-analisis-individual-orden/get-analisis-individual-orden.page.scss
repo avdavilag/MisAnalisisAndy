@@ -1,12 +1,32 @@
 .custom-header {
     background-color: #35d2d0; 
     text-align: center;
+
   }
   
   .custom-header ion-card-title {
    color: white;
   }
   
+  .custom-header_filas_row_analisis_indivudual {
+    background-color: #1ca099; 
+    text-align: center;
+    padding-left: 0px;
+    padding-right: 12px;
+    margin: -4px 0px;
+  }
+
+  .custom-header_filas_row_analisis_indivudual_primera_fila{
+    background-color: #1ca099; 
+    text-align: center;
+    padding-left: 0px;
+    padding-right: 12px;
+    margin: 4px 0px -4px 0px;
+  }
+  
+  .custom-header ion-card-title {
+   color: white;
+  } 
 .label_custom
 {
     color: #6d6d6d;
@@ -16,7 +36,9 @@
     text-align: center;
 }
 .center-input {
-    text-align: center;
+    text-align: end;
+    font-size: 22px;
+ 
   }
   .stacked-center {
     display: flex;
@@ -26,3 +48,6 @@
   ion-content {
     height: 40%;
   }
+
+  // padding-left: 0px;
+  //   padding-right: 10px;

@@ -57,11 +57,12 @@
                   color="danger">*</ion-text></ion-label>
               <ion-item class="item_custom2" lines="none">
                 <ion-icon (click)="this.getPaciente()" name="search" slot="end"></ion-icon>
-                <ion-input type="text" [value]="this.inputPaciente"
+                <ion-input type="text" [value]="this.inputPaciente" 
                   [(ngModel)]="this.inputPaciente" (keyup.enter)="this.getPaciente()">
                 </ion-input>
               </ion-item>
           </ion-col>
+
    <ion-col size="12" size-lg="12" size-xl="12" size-md="12" size-sm="12" size-xs="12" class="ion-text-center ion-justify-content-center ion-align-items-center">
             <ng-container *ngIf="paciente || paciente != null; else showButton">
               <ion-button (click)="presentModalNewPaciente()" class="ion-text-right" fill="outline" style="width: 92%; height: 75%;">
@@ -76,6 +77,8 @@
               </ion-button>
             </ng-template>
           </ion-col>
+
+
         </ion-row>
       </ion-card-header>
 
@@ -123,7 +126,7 @@
       <ion-card-content>
         <ion-row>
           <ion-col size="12" size-lg="12" size-xl="12" size-md="12" size-sm="12" size-xs="12">
-            <ion-label class="label_custom" position="stacked">Codigo: <ion-text
+            <ion-label class="label_custom" position="stacked">Código de Médico: <ion-text
                 color="danger">*</ion-text></ion-label>
             <ion-item class="item_custom2" lines="none">
               <ion-icon (click)="this.getMedico()" name="search" slot="end"></ion-icon>
@@ -144,12 +147,27 @@
             </ion-item>
           </ion-col>
 
-          <ion-col size="12" size-lg="12" size-xl="12" size-md="12" size-sm="12"
+          <!-- <ion-col size="12" size-lg="12" size-xl="12" size-md="12" size-sm="12"
           size-xs="12" class="ion-text-end">
           <a (click)="presentModalNewMedico()" class="ion-text-right" style="text-decoration: underline;">
             <ion-icon name="person-outline" slot="end"></ion-icon>Buscar Medico
           </a>
-        </ion-col>
+        </ion-col> -->
+        
+   <ion-col size="12" size-lg="12" size-xl="12" size-md="12" size-sm="12" size-xs="12" class="ion-text-center ion-justify-content-center ion-align-items-center">
+    <ng-container *ngIf="this.medico || this.medico != null; else showButton2">
+      <ion-button (click)="presentModalNewMedico()" class="ion-text-right" fill="outline" style="width: 92%; height: 75%;">
+        <ion-icon name="person-outline" slot="start" style="font-size: 14px;"></ion-icon>
+        <span style="text-transform: capitalize; font-family: 'Roboto', sans-serif; letter-spacing: -0px;">Cambiar Médico</span>
+      </ion-button>
+    </ng-container>
+    <ng-template #showButton2>
+      <ion-button (click)="presentModalNewMedico()" class="ion-text-right" fill="outline" style="width: 92%; height: 75%;">
+        <ion-icon name="person-outline" slot="start" style="font-size: 14px;"></ion-icon>
+        <span style="text-transform: capitalize; font-family: 'Roboto', sans-serif; letter-spacing: -0px;">Buscar Médico</span>
+      </ion-button>
+    </ng-template>
+  </ion-col>
 
 
         </ion-row>
@@ -253,7 +271,8 @@
                 <ion-col size="12">
                   <!-- <ion-item lines="none" *ngIf="!paciente_completo || paciente_completo==null">          
                   </ion-item> -->
-                 <ion-item #itemPac lines="none" *ngIf="paciente_completo || paciente_completo!=null">
+                 <!-- <ion-item #itemPac lines="none" *ngIf="paciente_completo || paciente_completo!=null"> -->
+            <ion-item #itemPac lines="none" *ngIf="(paciente_completo || paciente_completo!=null) && bloquearIonItem" >
                     <ion-row class="full_width" style="padding: 0px 1px;">
                       <ion-col size="12" class="ion-text-center">
                         <ion-text>
@@ -270,10 +289,7 @@
                       <ion-checkbox [(ngModel)]="paciente_completo_bolean_eliminar" (ionChange)="Eliminar_Paciente_Tercero()" justify="start" style="font-size: small; color: #fa899f;" >
                                Limpiar datos de facturación a terceros</ion-checkbox>
                        <ion-checkbox [(ngModel)]="paciente_completo_bolean" (ionChange)="facturarPaciente()" justify="end" style="font-size: small; color: #3880ff;" >
-                      Deseas facturar a este paciente</ion-checkbox>
-
-                
-
+                      Deseas facturar a este paciente</ion-checkbox>                
 
                             </ion-item>                                                      
                           </ion-list>
@@ -347,11 +363,10 @@
                     <ion-col size="2" *ngIf="!this.mobile"> {{item.fechaFinal| date:'EE d MMM y'}}</ion-col>
                     <ion-col size="2" *ngIf="!this.mobile"> <ion-badge color="primary">{{item.des_sts}}</ion-badge></ion-col>
                     <ion-col [size]="(this.mobile)?5:2">{{item.totalPac| currency }}</ion-col>
-                    <ion-col size="1" ><ion-button size="small" style="margin: -9px;" color="danger" (click)="removeAnalisis(item)"><ion-icon
-                          name="close-outline"></ion-icon></ion-button></ion-col>
-                    <ion-col size="1" ><ion-button size="small" style="margin: -3px;" (click)="getAnalisisIndividual(item)"  color="light"><ion-icon name="list-outline"></ion-icon></ion-button></ion-col>
-                    <!-- <ion-col size="2" ><ion-button size="small" color="light" (click)="removeAnalisis(item)"><ion-icon
-                          name="list-outline"></ion-icon></ion-button></ion-col> -->
+                    <ion-col size="1" ><ion-button size="small" style="margin: -9px;" color="light" (click)="getAnalisisIndividual(item)"><ion-icon
+                          name="list-outline"></ion-icon></ion-button></ion-col>
+                    <ion-col size="1" ><ion-button size="small" style="margin: -3px;" (click)="removeAnalisis(item)" color="danger"><ion-icon name="close-outline"></ion-icon></ion-button></ion-col>
+
                   </ion-row>
                 </div>
               </div>
