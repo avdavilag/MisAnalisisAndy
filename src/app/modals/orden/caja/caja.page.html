@@ -197,7 +197,16 @@
             </ion-col>
             
             
-            <ion-col size="3" style="color: #a7a7a7;">{{ fila.valor_pago_unico }}</ion-col>    
+            <ion-col size="3" style="color: #a7a7a7;">
+                                       
+              <div style="color: #a7a7a7; margin-bottom: 5px;">{{ fila.valor_pago_unico }}</div>
+              <div style="color: #4CAF50; font-size: 12px;">({{this.variable_global.getVarUsuario()}})</div>
+              <div style="color: #4CAF50; font-size: 8px;">({{this.fecha_pago_individual}})</div>
+              
+            
+            
+            
+            </ion-col>    
             <ion-col size="3" style="color: #a7a7a7;"><ion-button size="small" color="danger" (click)="delete_Pago(fila.fec_upd)"><ion-icon
               name="close-outline"></ion-icon></ion-button></ion-col>
           </ion-row>

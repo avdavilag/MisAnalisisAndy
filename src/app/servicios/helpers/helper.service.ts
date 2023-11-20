@@ -159,12 +159,12 @@ else{ return f.getFullYear() + '-' + mes + '-' + dia + ' ' + f.toLocaleTimeStrin
         case "Vie":
           diasnum.push(5);
           break;
-        case "Sab":
-          diasnum.push(6);
-          break;
-        case "Dom":
-          diasnum.push(7);
-          break;
+        // case "Sab":
+        //   diasnum.push(6);
+        //   break;
+        // case "Dom":
+        //   diasnum.push(7);
+        //   break;
       }
     }
     while (flag) {

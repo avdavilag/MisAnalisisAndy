@@ -37,7 +37,7 @@
   --min-height: 35px;
 }
 .full_width{
-    width: 100%;
+    width: 200%;
     
 }
 .full_width1{
@@ -415,4 +415,73 @@ ion-col.ion-text-center.ion-justify-content-center.ion-align-items-center {
  .sin-padding {
   padding: 0;
   margin: 2px 0px;
+}
+
+
+.item_custom2{
+  --height: 19px !important;
+  --border-width: 0.5px;
+  --max-height: 19px !important;
+  --min-height: 19px !important;
+  margin: 5px 5px;
+  --border-radius: 7px;
+}
+.input_no_border{
+  border: initial;
+}
+
+.mi-ion-segment {
+  background-color: #e8eaef;;
+  color: #000; /* Color de texto deseado */
+  border: 1px solid #ccc;
+  font-size: 14px; 
+}
+.mi-ion-segment {
+  background-color: #e8eaef;;
+  color: #000; /* Color de texto deseado */
+  padding: 5px 10px;
+
+  // Otros estilos si es necesario
+}
+////Es el css de ion-bagde me permite hacer mas ancho el ion-badge linea ---335---
+ion-badge[slot="start"].mi-clase-personalizada {
+  margin-inline-end: -5px;
+  
+}
+
+/* Opcional: Estilo específico para el ion-segment-button con color "success" */
+.mi-ion-segment ion-segment-button[color="success"] {
+  font-weight: bold; /* Puedes agregar otros estilos según sea necesario */
+}
+#mi-componente .mi-ion-segment {
+  --padding-start: 0; /* Ajusta según sea necesario */
+  --padding-end: 0; /* Ajusta según sea necesario */
+}
+
+.mi-clase-personalizada div {
+  margin-bottom: 5px; /* Ajusta el espacio vertical según tus necesidades */
+}
+
+.mi-clase-personalizada .hora-entrega {
+  margin-top: 10px !important;
+  font-size: 18px !important;
+}
+
+.mi-clase-personalizada span.hora-entrega {
+  margin-top: 8px !important;
+  font-size: 20px !important;
+}
+
+::ng-deep .alert-title {
+  text-align: center !important;
+  color: darkgoldenrod !important;
+}
+
+::ng-deep .alert-head {
+  background-color: antiquewhite !important;
+}  
+
+button.alert-button.alert-button-confirm {
+  background-color: var(--ion-color-success);
+  color: var(--ion-color-success-contrast);
 }

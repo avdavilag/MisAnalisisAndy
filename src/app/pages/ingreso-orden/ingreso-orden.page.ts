@@ -108,7 +108,7 @@ export class IngresoOrdenPage implements OnInit {
     user_code:null
     
 
-   };
+   }
 
   medico: any = null;
   analisisbuscar: any = '';

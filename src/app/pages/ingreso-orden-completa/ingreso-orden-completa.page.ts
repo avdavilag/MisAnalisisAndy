@@ -19,10 +19,11 @@ import { ToastService } from 'src/app/servicios/toast.service';
 import { VariablesGlobalesService } from 'src/app/servicios/variables/variables-globales.service';
 import { FuncionesComunesIntra } from 'src/app/utils/funciones-comunes-intra';
 
+
 @Component({
   selector: 'app-ingreso-orden-completa',
   templateUrl: './ingreso-orden-completa.page.html',
-  styleUrls: ['./ingreso-orden-completa.page.scss'],
+  styleUrls: ['./ingreso-orden-completa.page.scss'] 
 })
 export class IngresoOrdenCompletaPage implements OnInit {
   //@ViewChild('Orden')  orden_slides: IonSlides;
@@ -179,6 +180,11 @@ numero_antes:number;
 bandera_limpia_vector_caja=0
 ////bloquea la facturacion a tercero
 public bloquearIonItem: boolean = true;
+///variable hora_entrega_resultados;
+hora_entrega_resultados: String = "00:00";
+////variable fecha_entrega_resultados;
+fecha_entrega_resultados:String;
+
 
   constructor(
     private varGlobal: VariablesGlobalesService,
@@ -193,6 +199,7 @@ public bloquearIonItem: boolean = true;
   ) { }
 
   ngOnInit() {
+
 
     if (window.screen.width < 600 || window.innerWidth < 600) { // 768px portrait
       this.mobile = true;
@@ -218,8 +225,12 @@ public bloquearIonItem: boolean = true;
     this.getOrigen();
     this.getSeguro();
     this.getReferencia();
-    this.getUnidad()
-  }
+    this.getUnidad();
+    const fecha_actualss: Date = new Date();
+    const variable_fecha_datos_entrega: string = this.fecha_actual.toString();
+    this.fecha_entrega_resultados=this.formatearFecha(variable_fecha_datos_entrega);
+    }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ServicePage');
 
@@ -298,52 +309,32 @@ public bloquearIonItem: boolean = true;
   }
 
   getOrigen() {
+ 
   const origenNombre = localStorage.getItem('origen_nombre');
     console.log('origenNombre: ',origenNombre);
   if (origenNombre) {
     const origenLabInfo = JSON.parse(origenNombre);
-console.log('origenLabInfo: ',origenLabInfo)
+    console.log('origenLabInfo: ',origenLabInfo);
+    console.log('origenNombre.arreglo Veriicar: ',origenLabInfo.arreglo);
     this.origen_lab = origenLabInfo.name;
     this.cod_orden = origenLabInfo.value;
 
-  } else {
-  }
-    // this.origen_lab = this.varGlobal.getOrigenOrden();
-    // if(this.origen_lab==null){
-    //   this.presentAlertOrigen();
-    // }else{
-    //   // this.origen_lab = this.varGlobal.getOrigenOrden();
-    //   // console.log("this.origen_lab", this.origen_lab.des_ori);
-    //   // this.dataOrden.cod_ori = this.origen_lab.cod_ori;
-    //   // this.hora_entrega = this.origen_lab.hora_ori;
+    origenLabInfo.arreglo.forEach(element => {      
+      const varible_cod_ori=element.value.cod_ori;
+        console.log('Elemento: Foreach ',element);
+        console.log('varible_cod_ori: ',varible_cod_ori);
+        console.log('origen_lab verifica 2 veces: ',this.origen_lab);
 
-    //   const origenNombre = localStorage.getItem('origen_nombre');
-
-    //   if (origenNombre) {
-    //     this.vector_cod_name_ori = JSON.parse(origenNombre);
-    //     console.log('Valor recuperado de localStorage:', this.vector_cod_name_ori);
-    //     this.origen_lab = this.vector_cod_name_ori.name;
-    //     console.log("this.origen_lab", this.origen_lab.des_ori);
-    //     this.dataOrden.cod_ori = this.origen_lab.cod_ori;
-    //     this.hora_entrega = this.origen_lab.hora_ori;
-    //   }
-      // this.origen_lab = this.varGlobal.getOrigenOrden()
-      // console.log("this.origen_lab", this.origen_lab);
-      // this.dataOrden.cod_ori = this.origen_lab.cod_ori
-      // this.hora_entrega = this.origen_lab.hora_ori
-      // const origenNombre = localStorage.getItem('origen_nombre');
-
-      // if (origenNombre) {
-      //   this.vector_cod_name_ori = JSON.parse(origenNombre);
-      //   console.log('Valor recuperado de localStorage:', this.vector_cod_name_ori);
-      // }
+      if(this.cod_orden === varible_cod_ori ){
+        this.hora_entrega_resultados=element.value.hora_ori
+      }
+      console.log('varible_cod_ori2: ',this.hora_entrega_resultados);
+      
+    });
+      } 
     }
 
-
-
   getSeguro() {
-
-
     this.queryservice.getListSeguro().then((r: any) => {
       console.log('planes', r);
       this.listSeguro = r.data.ListSeguro;
@@ -377,6 +368,22 @@ console.log('origenLabInfo: ',origenLabInfo)
 
     }
   }
+
+
+    getFormattedCurrentDate(): string {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth() + 1; // Months are zero-based
+      const day = today.getDate();
+  
+      // Ensure leading zeros for months and days
+      const formattedMonth = month < 10 ? `0${month}` : `${month}`;
+      const formattedDay = day < 10 ? `0${day}` : `${day}`;
+  
+      return `${year}-${formattedMonth}-${formattedDay}`;
+    }
+  
+
   async presentAlertOrigen() {
     const r = await this.queryservice.getListOrigen();
     let inputs = [];
@@ -421,21 +428,34 @@ console.log('origenLabInfo: ',origenLabInfo)
       console.log('No se encontraron datos de Orígenes.');
     }
   }
+
   getMostrarCodOrigenLab(inputs, contador) {
-    //console.log('Inputs........: ',inputs);
-    // let variable_contador=inputs.cont;
-     //console.log('Revisar los Inputssss aqui getMostrarCondOrigenLab: ',variable_contador);
-console.log('nombre de origen: ',contador.des_ori);
-console.log('id de origen: ',contador.cod_ori);
-
-
+  
+    console.log('nombre de origen: ',contador.des_ori);
+    console.log('id de origen: ',contador.cod_ori);
+    console.log('Vector de origen verificar: ',inputs);
     this.cod_orden = contador.cod_ori;
     this.origen_lab = contador.des_ori;
-
     this.vector_cod_name_ori = {
       name: this.origen_lab,
-      value: this.cod_orden
+      value: this.cod_orden,
+      arreglo:inputs
     }
+
+
+    inputs.forEach(element => {      
+      const varible_cod_ori=element.value.cod_ori;
+        console.log('Elemento: Foreach eeee',element);
+        console.log('varible_cod_ori:eeee',varible_cod_ori);
+        console.log('origen_lab verifica 2 veces: ',this.origen_lab);
+
+      if(this.cod_orden === varible_cod_ori ){
+        this.hora_entrega_resultados=element.value.hora_ori
+      }
+      console.log('varible_cod_ori2: ',this.hora_entrega_resultados);
+      
+    });
+
     console.log('this.vectocodigoname: ',this.vector_cod_name_ori);
   localStorage.setItem('origen_nombre', JSON.stringify(this.vector_cod_name_ori));
   }
@@ -558,7 +578,6 @@ searchAnalisisList() {
 
     return
   }
-
   let data = this.queryservice.SearchAnalisxMstrs2(this.analisisbuscar);
   data.then((result: any) => {
     this.hiddenlistSearchAnalisis = false;
@@ -571,6 +590,7 @@ console.log('Aqui aumenta el analisis debe en primera');
       this.listSearchAnalisis.push({ 'mayor': true, 'message': 'Buscar mas ' })
     }
   });
+  
 }
 
 close_analisis() {
@@ -589,8 +609,6 @@ selectAnalisis(item) {
     this.searchAnalisis()
   }
   if (item.mayor) {
-    //  this.flagAnalaisisSearch=true;
-    //  this.presentModalAnalisis();
   }
  if(this.tabla_Pagos.length>0){
   this.pago=[];
@@ -598,20 +616,16 @@ selectAnalisis(item) {
   this.toastservice.presentToast({ message: "Aumento un analisis tus pagos se volveran a recargar", position: "buttom", duration: "1500", color: "warning" });
  
 }
+console.log('Select Analisis: Verifiarrrrrr',item);
 }
 
 searchAnalisis() {
+  const vector_fecha_entrega=[];
   if (this.planSelected == null || this.planSelected == undefined) {
     this.toastservice.presentToast({ message: "Debe seleccionar un tipo de plan", position: "top", duration: 1500, color: "warning" });
     return
   }
-
   let message;
-  /*
-  this.translate.get('message.missfield').subscribe((res: string) => {
-    message = res;
-  });
-  */
   if (this.analisisbuscar == '' || this.analisisbuscar == null) {
     let toastconf =
     {
@@ -634,11 +648,7 @@ searchAnalisis() {
     }
   });
   if (repetido) {
-    /*
-    this.translate.get('message.repeatAnalisis').subscribe((res: string) => {
-      message = res;
-    });
-    */
+
     let toastconf =
     {
       message: "Análisis repetido",
@@ -690,9 +700,12 @@ searchAnalisis() {
         this.analisis.des_sts = "Pendiente";
         this.analisis.cant_pet = 1;
         if (this.analisis.dias_proceso) {
-          console.log('fechasss', this.fechaEntrega.fecha1);
           let fechaCal: any = this.helper.calcDemora(this.analisis.demora, this.analisis.dias_proceso);
-          console.log('fechaCal', fechaCal);
+          console.log('fechaCal-----', fechaCal);
+          
+      
+
+
 
           this.analisis.fechaFinal = fechaCal;
           if (this.fechaEntrega.fecha1 == '') {
@@ -705,6 +718,10 @@ searchAnalisis() {
               this.fechaEntrega.fecha1 = this.helper.soloFecha(fechaCal);
             }
           }
+
+
+
+          
           this.analisis.fec_ent = this.analisis.fechaFinal;
 
           //   const lang = this.translate.getDefaultLang();
@@ -712,12 +729,25 @@ searchAnalisis() {
           var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
 
           this.analisis.fechaFinal = this.analisis.fechaFinal.toLocaleString(undefined, options);
+          console.log('this.analisis.fechaFinal verificar: ',this.analisis.fechaFinal);
 
         } else {
-          this.analisis.fechaFinal = "";
+          this.analisis.fechaFinal = ' ';
           this.analisis.fecha_ent = null;
         }
         this.listAnalisis.push(this.analisis);
+        if (this.listAnalisis.length > 0) {
+          const ultimoElemento = this.listAnalisis[this.listAnalisis.length - 1].fechaFinal;
+          this.listAnalisis.forEach(element => {
+            vector_fecha_entrega.push(new Date(this.formatearFecha(element.fechaFinal)));
+          });
+          const fechaMaxima = new Date(Math.max.apply(null, vector_fecha_entrega));          
+          const fechaFinalDate = new Date(fechaMaxima);
+          const fechaFinalFormateada = fechaFinalDate.toISOString().split('T')[0];
+          this.fecha_entrega_resultados = fechaFinalFormateada;          
+        } else {
+          console.log('La lista está vacía.');
+        }
         this.analisisbuscar = ""
        }
       else {
@@ -767,6 +797,30 @@ searchAnalisis() {
     }, 1000)
 
   });
+}
+
+
+formatearFecha(fechaString: string): string {
+  const partesFecha = fechaString.split(' ');
+  const diaSemana = partesFecha[0];
+  const diaMes = partesFecha[1];
+  const mes = partesFecha[2];
+  const año = partesFecha[3];
+  const mesesEnIngles = {
+    'ene': 'Jan',
+    'feb': 'Feb',
+    'mar': 'Mar',
+    'abr': 'Apr',
+    'may': 'May',
+    'jun': 'Jun',
+    'jul': 'Jul',
+    'ago': 'Aug',
+    'sep': 'Sep',
+    'oct': 'Oct',
+    'nov': 'Nov',
+    'dic': 'Dec'
+  };
+  return `${diaSemana} ${diaMes} ${mesesEnIngles[mes]} ${año}`;
 }
 
 updatePreciosbyPlan(tipo, data) {
@@ -934,6 +988,69 @@ console.log('this.pago.length: ',this.pago.length);
 this.limpiar_pagos();
 
 }
+/////////////////Desde aqui va los cambios en get analisis Individual///////////////////////
+
+
+
+
+async presentAlertaaa(item) {
+
+  console.log('Itemmmmmm: ',item);
+  const alert = await this.alertController.create({
+    header: item.des_ana,
+    cssClass: 'custom-alert',
+    buttons: ['Regresar'],
+    inputs: [
+      {    
+        type: 'text',
+        value: `Código de análisis:     ${item.cod_ana}`,        
+        disabled: true, 
+      },
+      {        
+        type: 'text',
+        value: `Estado de análisis:     ${item.des_sts}`,        
+        disabled: true, 
+      },
+      {
+        type: 'text',
+        value: `Descuento de petición:      ${item.dcto_pet}`,        
+        disabled: true, 
+      },
+      {
+        type: 'text',
+        label: 'Código de análisis:',
+        value: `Descuento Valor:     ${item.dcto_val}`,
+        disabled: true, //    
+      },
+      {        
+        type: 'text',
+        value: `Pospago:      ${item.pospago}`,        
+        disabled: true, 
+      },
+      {        
+        type: 'text',
+        value: `Subtotal:     ${item.subtotal}`,        
+        disabled: true, 
+      },
+      {        
+        type: 'text',
+        value: `Total:      ${item.subtotal}`,   
+        disabled: true,      
+      },
+      {
+        type: 'text',        
+        value: `Fecha de entrega:   ${item.fechaFinal}`, 
+        disabled: true,
+      },
+     
+    ],
+  });
+
+  await alert.present();
+}
+
+
+
 
 async getAnalisisIndividual(item) {
 console.log('El item que viene de get AnalisisIndividual: ',item);
@@ -956,8 +1073,7 @@ await modal.present();
 
 
 
-
-
+/////////////////Desde aqui va los cambios en get analisis Individual///////////////////////
 getMuestrasbyAnalisis() {
   let cadena = "";
   let temporal = [];
@@ -1190,7 +1306,7 @@ limpiar_pagos(){
 
 async presentModalPago() {
     const numeroAnalisisAntes = this.listAnalisis.length;
-  console.log(`Número de análisis antes de abrir el modal: ${numeroAnalisisAntes}`);
+  console.log(`this.dataOrden ordenaaaaaa: `,this.dataOrden);
   const modal = await this.modalController.create({
     component: CajaPage,
     componentProps: {
@@ -1382,7 +1498,7 @@ saveComplete() {
 //           'position': 'top',
 //           'duration': 1500,
 //         };
-//         this.varGlobal.getVarUsuarioDes();
+        // this.varGlobal.getVarUsuarioDes();
 //         let detalle = "Ingreso de Orden por referencia -Paciente=" + this.paciente.cod_pac + "; Nombre=" + this.paciente.nombre_completo + "; Medico=" + this.medico.cod_med + "; Plan=" + this.dataOrden.id_plan + "; Entrega=" + this.dataOrden.fec_ent + ";Valor=" + this.dataOrden.val_ord.toFixed(2) + "; Pagos=0; Saldo=" + this.dataOrden.val_ord.toFixed(2)
 //         this.funcionesComunes.enviaAuditoria('Ref.' + this.varGlobal.getVarUsuarioDes(), data[0].nro_ord, 'DEMO', detalle)
 //         let detalle_pet = "Ingreso de peticion "

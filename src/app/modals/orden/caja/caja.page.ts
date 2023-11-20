@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+  import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonInput, ModalController, ToastController } from '@ionic/angular';
 import { QueryService } from 'src/app/servicios/gql/query.service';
 import { ToastService } from 'src/app/servicios/toast.service';
+import { VariablesGlobalesService } from 'src/app/servicios/variables/variables-globales.service';
 
 @Component({
   selector: 'app-caja',
@@ -47,6 +48,7 @@ pagos_arreglo:any=[];
 bandera_limpia_vector_caja;
 variable_nombre_pago_arreglo;
 input_pagar_no_efectivo:any;
+fecha_pago_individual:string;
 
 
 pago:any={
@@ -71,13 +73,18 @@ constructor(
     private modalController :ModalController,
     private queryservice:QueryService,
     private toastservice:ToastService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    public variable_global: VariablesGlobalesService
   ) { }
 
 
   ngOnInit() {
 
- 
+
+    console.log('val_ord:----------> Valor de la orden verifica: ',this.val_ord);
+    
+
+
     if (this.bandera_limpia_vector_caja === 1) {
       this.tabla_Pagos = [];
     }
@@ -126,6 +133,8 @@ console.log('-----Anderson input_pagar en:-------- ',this.input_pagar_no_efectiv
     }
     console.log('-----Anderson terminado metodo en:-------- ');
     console.log('tdp_select abajo: ', this.tdp_select)
+
+
 
   }
 
@@ -237,8 +246,29 @@ console.log('<-----this.pago:----> ',this.pago);
 console.log('pago_arreglo:-*------>: ',this.pagos_arreglo);
 this.bandera_limpia_vector_caja=0;
 this.input_pagar_no_efectivo=this.pago.valor_pago_unico;
+///////Fecha y hora de pago para la vista.
+this.fecha_pago_individual=this.getFormattedCurrentDate();
+ }
 
-  }
+ getFormattedCurrentDate(): string {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1; // Months are zero-based
+  const day = today.getDate();
+  const hours = today.getHours();
+  const minutes = today.getMinutes();
+  const seconds = today.getSeconds();
+
+  // Ensure leading zeros for months, days, hours, minutes, and seconds
+  const formattedMonth = month < 10 ? `0${month}` : `${month}`;
+  const formattedDay = day < 10 ? `0${day}` : `${day}`;
+  const formattedHours = hours < 10 ? `0${hours}` : `${hours}`;
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+  const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+
+  return `${formattedDay}/${formattedMonth}/${year} -- ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+}
+
 
 delete_Pago(pago:String){
   const indexToRemove = this.tabla_Pagos.findIndex(fila => fila.fec_upd === pago);

@@ -234,24 +234,7 @@
             </ion-item>
           </ion-col>
         </ion-row>
-
-      </ion-card-content>
-<!------------------------- Facturación a Terceros HTML ------------------------------------>
-      </ion-card>
-  </ion-col>
-
-
-
-  <ion-col size="12" size-lg="7.5" size-xl="8" >
-    <ion-card class="card_form">
-      <ion-grid class="grid_peticiones">
-        <ion-toolbar class="toolbar_container">
-          <ion-title>
-            Detalle
-          </ion-title>
-        </ion-toolbar>
-
-        <ion-accordion-group #accordionGroup>
+        <ion-accordion-group #accordionGroup style="margin-top: 2px;">
           <ion-accordion value="first">
             <ion-item slot="header" color="light">
               <ion-label>Facturación a Tercero</ion-label>
@@ -264,46 +247,141 @@
                     <ion-icon (click)="getPaciente_terceros()" name="search" slot="end"></ion-icon>
                     <ion-input class="centered-input" type="text" [value]="input_paciente_terceros" [(ngModel)]="input_paciente_terceros" (keyup.enter)="getPaciente_terceros()"></ion-input>
                   </ion-item>
-                </ion-col>   
-              </ion-row>
-        
-              <ion-row>
-                <ion-col size="12">
-                  <!-- <ion-item lines="none" *ngIf="!paciente_completo || paciente_completo==null">          
-                  </ion-item> -->
-                 <!-- <ion-item #itemPac lines="none" *ngIf="paciente_completo || paciente_completo!=null"> -->
-            <ion-item #itemPac lines="none" *ngIf="(paciente_completo || paciente_completo!=null) && bloquearIonItem" >
+
+                  <ion-item #itemPac lines="none" *ngIf="(paciente_completo || paciente_completo!=null) && bloquearIonItem" >
                     <ion-row class="full_width" style="padding: 0px 1px;">
-                      <ion-col size="12" class="ion-text-center">
-                        <ion-text>
-                          <!-- <b>{{paciente_completo.cod_pac}} </b> - {{paciente_completo.id_pac}} -   <span style="color: #3db9b3;">{{ paciente_completo.nombre_completo }}</span> -->
-                          <ion-card color="light" style="margin: 1;">
+                 
+                          <ion-card color="light" style="margin: 1; width: 100%;">
                             <ion-card-content>
-                              <b>{{paciente_completo.cod_pac}}</b> - <b>{{paciente_completo.id_pac}}</b> - <b>{{paciente_completo.nombre_completo}}</b>
+                              <b>{{paciente_completo.cod_pac}}</b> - <b>{{paciente_completo.nombre_completo}}</b>
                             </ion-card-content>
                           </ion-card>
 
                           <ion-list style="margin: -8px -17px; padding: 2px 0px;">                                               
                             <ion-item>
                               <pre></pre>
-                      <ion-checkbox [(ngModel)]="paciente_completo_bolean_eliminar" (ionChange)="Eliminar_Paciente_Tercero()" justify="start" style="font-size: small; color: #fa899f;" >
-                               Limpiar datos de facturación a terceros</ion-checkbox>
-                       <ion-checkbox [(ngModel)]="paciente_completo_bolean" (ionChange)="facturarPaciente()" justify="end" style="font-size: small; color: #3880ff;" >
-                      Deseas facturar a este paciente</ion-checkbox>                
-
+                              <ion-checkbox [(ngModel)]="paciente_completo_bolean" (ionChange)="facturarPaciente()" style="font-size: small; color: #3880ff;" >
+                                Deseas facturar a este paciente</ion-checkbox>     
+                                </ion-item>
+                                <ion-item>
+                        <ion-checkbox [(ngModel)]="paciente_completo_bolean_eliminar" (ionChange)="Eliminar_Paciente_Tercero()" style="font-size: small; color: #fa899f;" >
+                               Limpiar datos</ion-checkbox>
+                       
                             </ion-item>                                                      
-                          </ion-list>
-                        </ion-text>
-                      </ion-col>                             
+                          </ion-list>                   
                     </ion-row>
                  </ion-item>
                   <div #referencia></div>
-                </ion-col>
-              </ion-row>
+                </ion-col>   
+              </ion-row>                    
                 </div>
           </ion-accordion>
         </ion-accordion-group>
 
+
+
+
+
+
+      </ion-card-content>
+<!------------------------- Facturación a Terceros HTML ------------------------------------>
+      </ion-card>
+  </ion-col>
+
+
+
+
+
+  <ion-col size="12" size-lg="7.5" size-xl="8" >
+    <ion-card class="card_form">
+      <ion-grid class="grid_peticiones">
+        <ion-toolbar class="toolbar_container">
+          <ion-title>
+            Detalle
+          </ion-title>
+        </ion-toolbar>
+
+
+        <!-- <ion-row>
+          <ion-col size="12"  class="sin-padding">
+
+             <ion-card>
+              <ion-card-header>
+                Datos de entrega
+              </ion-card-header>
+              <ion-card-content> -->
+                <!-- <ion-segment [value]="this.dataOrden.stat_ord"[(ngModel)]="this.dataOrden.stat_ord"  mode="ios" (ionChange)="checkPriority()" [disabled]="(orden_view)"  > -->
+                  <!-- <ion-segment>
+      
+                  <ion-segment-button class="urgent_segment" value="1">
+                    <ion-label>Urgente</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button class="pri_segment" value="2">
+                    <ion-label>Prioridad</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button class="rutina_segment" value="0" color="success">
+                    <ion-label>Rutina</ion-label>
+                  </ion-segment-button>
+                </ion-segment>
+                <ion-item lines="none">
+                  <ion-badge slot="end" color="secondary">Hora de entrega de Resultados: {{this.hora_entrega}}</ion-badge>
+                </ion-item>
+                <ion-item class="item_custom2" lines="none">
+                  <ion-label>1°</ion-label>
+                  <input class="input_no_border" type="date"> -->
+                    <!-- <input class="input_no_border" type="date" [(ngModel)]="fechaEntrega.fecha1"
+                    [value]="fechaEntrega.fecha1" [disabled]="(orden_view)"> -->
+                <!-- </ion-item> -->
+      
+                
+                <!--
+                <ion-item class="item_custom2" lines="none">
+                  <ion-label>2°</ion-label>
+                  <input class="input_no_border" type="date" [(ngModel)]="fechaEntrega.fecha2"
+                    [value]="fechaEntrega.fecha2" [disabled]="(orden_view)">
+                </ion-item>
+                -->
+              <!-- </ion-card-content>
+            </ion-card>        
+           </ion-col>
+            </ion-row> -->
+            
+
+            <ion-accordion-group [multiple]="true" [value]="['first', 'third']">
+              <ion-accordion value="first">
+                <ion-item slot="header" color="light">
+                  <ion-label>Datos de Entrega</ion-label>
+                </ion-item>
+                <div class="padding:0;" slot="content">
+                  <ion-segment mode="ios" style="height: 30px; width: 75%; margin: 0 auto; top: 5px;" [value]="this.dataOrden.stat_ord"[(ngModel)]="this.dataOrden.stat_ord"  mode="ios" (ionChange)="checkPriority()" [disabled]="(orden_view)">
+                    <ion-segment-button class="urgent_segment" value="1">
+                    <ion-label>Urgente</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button class="pri_segment" value="2">
+                    <ion-label>Prioridad</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button class="rutina_segment" value="0" color="success">
+                    <ion-label>Rutina</ion-label>
+                  </ion-segment-button>
+                </ion-segment>      
+                               
+               <ion-row style="background: #fff;margin-top: 10px;">         
+                 <ion-col size="6">
+                   <div class="centered-container" style="height: 110%;">                                              
+                    <ion-input label="Fecha de ingreso de la orden" label-placement="floating" fill="outline" class="small-input"  type="date" [(ngModel)]="fecha_entrega_resultados"
+                       [value]="fecha_entrega_resultados" min="{{getFormattedCurrentDate()}}" ></ion-input>
+                     </div>                   
+                 </ion-col>                 
+                 <ion-col size="6">                                           
+                     <div class="centered-container">
+                      <ion-input  label="Hora de entrega de resultados" label-placement="floating" fill="outline" class="small-input" type="time" [(ngModel)]="this.hora_entrega_resultados"
+                      [value]="this.hora_entrega_resultados"></ion-input>                           
+                    </div>                                        
+                 </ion-col>
+                 </ion-row>
+                </div>
+              </ion-accordion>         
+           </ion-accordion-group>
           <ion-row>
             <ion-col size="12"  class="sin-padding">
               <ion-item color="light">
@@ -360,10 +438,17 @@
                   <ion-row  *ngIf="!item.flag_no_precio" class="row_tbl">
                     <ion-col  [size]="(this.mobile)?5:1"> {{item.cod_ana}}</ion-col>
                     <ion-col size="3" *ngIf="!this.mobile"> {{item.des_ana}}</ion-col>
-                    <ion-col size="2" *ngIf="!this.mobile"> {{item.fechaFinal| date:'EE d MMM y'}}</ion-col>
+                    
+                    <!-- <ion-col size="2" *ng="!this.mobile"> {{item.fechaFinal| date:'EE d MMM y'}}</ion-col> -->
+                    <ion-col size="2" *ngIf="!mobile">
+                      {{ formatearFecha(item.fechaFinal) }}
+                    </ion-col>
+                    
+                    
+                    
                     <ion-col size="2" *ngIf="!this.mobile"> <ion-badge color="primary">{{item.des_sts}}</ion-badge></ion-col>
                     <ion-col [size]="(this.mobile)?5:2">{{item.totalPac| currency }}</ion-col>
-                    <ion-col size="1" ><ion-button size="small" style="margin: -9px;" color="light" (click)="getAnalisisIndividual(item)"><ion-icon
+                    <ion-col size="1" ><ion-button size="small" style="margin:-9px;" color="light" (click)="presentAlertaaa(item)" mode="ios"><ion-icon
                           name="list-outline"></ion-icon></ion-button></ion-col>
                     <ion-col size="1" ><ion-button size="small" style="margin: -3px;" (click)="removeAnalisis(item)" color="danger"><ion-icon name="close-outline"></ion-icon></ion-button></ion-col>
 
