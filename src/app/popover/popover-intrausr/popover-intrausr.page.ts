@@ -89,6 +89,21 @@ export class PopoverIntrausrPage implements OnInit {
     this.popoverController.dismiss();
 
   }
+
+  //////Listado de pacientes y proceso de ingreso....
+  openBusquedaPacientes() {
+    this.varGlobal.setTokenServer(this.varGlobal.getTokenServer());
+//añadido av msp
+    this.varGlobal.setVarUsuarioTipo('int');
+    //GUARDO USUARIO Y DESCRIPCION
+    //Guardar usuario del intra
+    this.varGlobal.setVarUsuario(this.varGlobal.getVarUsuarioIntra());
+    this.varGlobal.setVarUsuarioDes(this.usuario);
+    this.router.navigate(["/home-intranet/busqueda-pacientes"], { replaceUrl: true });
+    this.popoverController.dismiss();
+
+  }
+
   openNewOrden() {
     this.varGlobal.setTokenServer(this.varGlobal.getTokenServer());
 

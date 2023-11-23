@@ -10,6 +10,7 @@ import { VariablesGlobalesService } from 'src/app/servicios/variables/variables-
 import { AppConfigService } from 'src/app/utils/app-config-service';
 import { FuncionesComunes } from 'src/app/utils/funciones-comunes';
 import { PresupuestoPage } from 'src/app/modals/presupuesto/presupuesto.page';
+import { BusquedaPacientesPage } from '../busqueda-pacientes/busqueda-pacientes.page';
 
 @Component({
   selector: 'app-home-intranet',
@@ -35,7 +36,8 @@ export class HomeIntranetPage implements OnInit {
     public alertController: AlertController,
     private config: AppConfigService,
     public funcionesComunes: FuncionesComunes,
-    public appconfigservice:AppConfigService
+    public appconfigservice:AppConfigService,
+    
     
   ){ 
     
@@ -130,9 +132,7 @@ export class HomeIntranetPage implements OnInit {
       componentProps: {
       },
       // leaveAnimation: animationBuilder,
-    });
-
-
+    });   
     modal.onDidDismiss()
       .then((data) => {
         console.log(data['data']);
@@ -144,6 +144,12 @@ export class HomeIntranetPage implements OnInit {
 
     return await modal.present();
   }
+///Cambia de pagina a buscar Paciente con Route Navigate///////..........
+  async openModalBusquedaPacientes(){
+    this.router.navigate(["/busqueda-pacientes"], { replaceUrl: true });
+      }
+
+
 
   async openCalcPresupuesto() {
     

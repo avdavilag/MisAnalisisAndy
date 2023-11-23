@@ -42,7 +42,7 @@
                   <br>
                   <ion-item *ngIf="listtdp.length>0" >
                     <ion-label position="floating" style="--color: #c2c2c2;">AGREGAR UN PAGO:</ion-label>
-                    <ion-select placeholder="Tipo de Pago" [(ngModel)]="tdp_select" [value]="tdp_select" style="text-align: center;" (ionChange)="onTipoPagoChange()">
+                    <ion-select placeholder="Tipo de Pago" [(ngModel)]="tdp_select" [value]="tdp_select" style="text-align: center;" (ionChange)="onTipoPagoChange()" [disabled]="!bandera_pago_botton">
                       <ion-select-option *ngFor="let item of listtdp" [value]="item">{{item.des_pag}} </ion-select-option>
                     </ion-select>
                     <ion-icon slot="end" name="add-circle-outline" style="border-radius: 50%; color: gray; padding: 1px;"></ion-icon>
@@ -57,7 +57,9 @@
           <span class="mensaje-cambio">Debe presionar la tecla "Enter" para calcular su cambio</span>
           <ion-item  style="border-radius: 6px;padding: 1px;">
             <ion-label position="floating" style="font-size: 12px;">PAGO CON:</ion-label>
-          <ion-input type="number" [(ngModel)]="cantidadPaga" debounce=1500 (ionInput)="onInputChange" (ionChange)="onInputChange()" (keyup.enter)="calcularVuelto()" style="border-radius: 2px; text-align: end; font-size: 20px;"></ion-input>
+          <ion-input type="number" [(ngModel)]="cantidadPaga" style="border-radius: 2px; text-align: end; font-size: 20px;" [disabled]="!bandera_pago_botton"></ion-input>
+          <ion-button (click)="calcularVuelto()" [disabled]="bandera_pago_botton_vuelto">Pago</ion-button>
+
           <ion-icon name="enter-outline" slot="end"></ion-icon>
           </ion-item>
 
@@ -98,7 +100,7 @@
           <ion-item style="border-radius: 6px;padding: 1px;">
             <ion-label position="floating">VALOR A PAGAR:</ion-label>
 
-            <ion-input [(ngModel)]="input_pagar_no_efectivo" (ionChange)="onInputChange_resto_de_pagos()" (keyup.enter)="calcularVueltoNoEfectivo()" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input>
+            <ion-input [(ngModel)]="input_pagar_no_efectivo" (ionChange)="onInputChange_resto_de_pagos()" (keyup.enter)="calcularVueltoNoEfectivo()" style="border-radius: 2px; text-align: end;font-size: 20px;" ></ion-input>
               <!-- <ion-input  [(ngModel)]="pre_ord" style="border-radius: 2px; text-align: end;font-size: 20px;"></ion-input> -->
               <ion-icon slot="end" name="enter-outline" style="border-radius: 50%; color: gray; padding: 1px;"></ion-icon>
             </ion-item>
@@ -145,9 +147,7 @@
           </ion-item>
         </ion-list>
 
-
-                <ion-button expand="full" color="primary" (click)="Enviar_Pago()">Confirmar Pago</ion-button>
-                                              
+      <ion-button expand="full" color="primary" (click)="Enviar_Pago()" [disabled]="!bandera_pago_botton">Confirmar Pago</ion-button>                                                    
           </ion-col>                        
         </ion-row>
         </ion-grid>
@@ -199,13 +199,9 @@
             
             <ion-col size="3" style="color: #a7a7a7;">
                                        
-              <div style="color: #a7a7a7; margin-bottom: 5px;">{{ fila.valor_pago_unico }}</div>
+              <div style="color: #a7a7a7; margin-bottom: 5px;">{{ fila.val_pag }}</div>
               <div style="color: #4CAF50; font-size: 12px;">({{this.variable_global.getVarUsuario()}})</div>
-              <div style="color: #4CAF50; font-size: 8px;">({{this.fecha_pago_individual}})</div>
-              
-            
-            
-            
+              <div style="color: #4CAF50; font-size: 8px;">({{this.fecha_pago_individual}})</div>                                                 
             </ion-col>    
             <ion-col size="3" style="color: #a7a7a7;"><ion-button size="small" color="danger" (click)="delete_Pago(fila.fec_upd)"><ion-icon
               name="close-outline"></ion-icon></ion-button></ion-col>

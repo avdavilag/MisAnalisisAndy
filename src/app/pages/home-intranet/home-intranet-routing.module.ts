@@ -32,6 +32,10 @@ const routes: Routes = [
         path: 'envio-iess',
         loadChildren: () => import('../envio-iess/envio-iess.module').then( m => m.EnvioIessPageModule)
       },
+      {
+        path: 'busqueda-pacientes',
+        loadChildren: () => import('../busqueda-pacientes/busqueda-pacientes.module').then( m => m.BusquedaPacientesPageModule)
+      },
     
       {
         path: '',

@@ -1,6 +1,8 @@
 <ion-content> 
   <ion-list lines="none" >
     <ion-item><ion-icon name="person-circle-outline" slot="start"></ion-icon><ion-text slot="end"><p>{{usuario}}</p></ion-text></ion-item>
+    <ion-item button (click)="openBusquedaPacientes()" ><ion-icon name="person-add-outline" color="secondary" slot="start"></ion-icon><ion-button slot="end" color="tertiary" fill="clear">Paciente</ion-button></ion-item>
+
     <ion-item button (click)="openListOrden()" ><ion-icon name="newspaper-outline" color="tertiary" slot="start"></ion-icon><ion-button slot="end"  color="tertiary" fill="clear">Lista Ordenes</ion-button></ion-item>
     <ion-item *ngIf="enable_envio_iess" button (click)="openEnvioIess()" ><img src="assets/icon/iess_logo.png" alt="logo" height="35"><ion-button slot="end"  color="tertiary" fill="clear">IESS envio</ion-button></ion-item>
     <ion-item *ngIf="envio_bloque" button (click)="openEnvioBloque()" ><ion-icon name="layers-outline" color="secondary" slot="start"></ion-icon><ion-button slot="end"  color="tertiary" fill="clear">Envio Resultados</ion-button></ion-item>

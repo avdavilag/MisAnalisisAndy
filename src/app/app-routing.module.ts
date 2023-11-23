@@ -294,9 +294,10 @@ const routes: Routes = [
     path: 'get-analisis-individual-orden',
     loadChildren: () => import('./modals/orden/get-analisis-individual-orden/get-analisis-individual-orden.module').then( m => m.GetAnalisisIndividualOrdenPageModule)
   },
-
-
-
+  {
+    path: 'busqueda-pacientes',
+    loadChildren: () => import('./pages/busqueda-pacientes/busqueda-pacientes.module').then( m => m.BusquedaPacientesPageModule)
+  },
 
 ];
 

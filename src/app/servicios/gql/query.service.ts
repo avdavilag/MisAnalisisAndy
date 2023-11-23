@@ -674,8 +674,7 @@ query  searchUnidad($text:String!){
     sex_pac
     telf_pac
     tip_san
-    ven_card
-    
+    ven_card    
   }
 } `;
     let result = this.apollo.use('api_avalab').query({
@@ -721,7 +720,7 @@ query  searchUnidad($text:String!){
     telf_pac
     tip_san
     ven_card
-    
+    # tit_pac    
   }
 } `;
     let result = this.apollo.use('api_avalab').query({

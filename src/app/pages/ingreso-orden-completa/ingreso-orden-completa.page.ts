@@ -10,6 +10,7 @@ import { MuestrasPage } from 'src/app/modals/orden/muestras/muestras.page';
 import { SearchMedicoPage } from 'src/app/modals/orden/search-medico/search-medico.page';
 
 import { SearchPacientePage } from 'src/app/modals/orden/search-paciente/search-paciente.page';
+import { PerfilesavaPage } from 'src/app/modals/perfilesava/perfilesava.page';
 import { MenuordenPage } from 'src/app/popover/menuorden/menuorden.page';
 import { PopoverPagoPage } from 'src/app/popover/popover-pago/popover-pago.page';
 import { QueryService } from 'src/app/servicios/gql/query.service';
@@ -196,10 +197,12 @@ fecha_entrega_resultados:String;
     private popoverController:PopoverController,
     private loadingservice: LoadingService,
     private funcionesComunes: FuncionesComunesIntra,
+    private modalcontroller: ModalController,
   ) { }
 
   ngOnInit() {
-
+    const paciente = history.state.paciente;
+    console.log('Verifica el paciente por favor en orden ccompleta: ',paciente);
 
     if (window.screen.width < 600 || window.innerWidth < 600) { // 768px portrait
       this.mobile = true;
@@ -998,8 +1001,7 @@ async presentAlertaaa(item) {
   console.log('Itemmmmmm: ',item);
   const alert = await this.alertController.create({
     header: item.des_ana,
-    cssClass: 'custom-alert',
-    buttons: ['Regresar'],
+     buttons: ['Regresar'],
     inputs: [
       {    
         type: 'text',
@@ -1743,8 +1745,35 @@ saveMuestras() {
     });
 
     return muestraCompleta
-  }
-
+ }
 }
+async presentModalPerfilesAva() {
+  const modal = await this.modalcontroller.create({
+    cssClass: 'modal_analisisA',
+    component: PerfilesavaPage,
+    backdropDismiss: false
+  });
+  modal.onDidDismiss().then(async (result: any) => {
+    let data = result.data
+    if (this.orden_view) {
+      return
+    }
+    if (data.analisis) {
+
+      for (let index = 0; index < data.analisis.length; index++) {
+        if (data.analisis[index] != '') {
+          this.analisisbuscar = await data.analisis[index].cod_ana;
+          console.log('this.analisisbuscar', this.analisisbuscar);
+
+          this.searchAnalisis();
+        }
+      }
+
+    }
+  })
+  return await modal.present();
+}
+
+
 
 }

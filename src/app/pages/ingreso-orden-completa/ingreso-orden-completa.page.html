@@ -248,28 +248,29 @@
                     <ion-input class="centered-input" type="text" [value]="input_paciente_terceros" [(ngModel)]="input_paciente_terceros" (keyup.enter)="getPaciente_terceros()"></ion-input>
                   </ion-item>
 
-                  <ion-item #itemPac lines="none" *ngIf="(paciente_completo || paciente_completo!=null) && bloquearIonItem" >
+                  <ion-item #itemPac lines="none" *ngIf="(paciente_completo || paciente_completo!=null) && bloquearIonItem" style="margin: 0px -30px;">
                     <ion-row class="full_width" style="padding: 0px 1px;">
                  
-                          <ion-card color="light" style="margin: 1; width: 100%;">
-                            <ion-card-content>
-                              <b>{{paciente_completo.cod_pac}}</b> - <b>{{paciente_completo.nombre_completo}}</b>
-                            </ion-card-content>
+                          <ion-card color="light" style="margin: 14px; width: 100%;">
+                            <ion-card-content style="margin: -10px;">
+                              <!-- <b> {{paciente_completo.nombre_completo}}</b><br> <span style="color: green; text-align: center;">Codigo pac: ({{paciente_completo.cod_pac}})</span>  -->
+                              <b>{{paciente_completo.nombre_completo}}</b><br>
+                              <div style="color: green; display: flex; align-items: center; justify-content: center;">
+                                    Código pac: ({{paciente_completo.cod_pac}})
+                              </div>
+                             </ion-card-content>
                           </ion-card>
-
-                          <ion-list style="margin: -8px -17px; padding: 2px 0px;">                                               
+                          <ion-list style="margin:-9px 25px;">                                               
                             <ion-item>
                               <pre></pre>
                               <ion-checkbox [(ngModel)]="paciente_completo_bolean" (ionChange)="facturarPaciente()" style="font-size: small; color: #3880ff;" >
                                 Deseas facturar a este paciente</ion-checkbox>     
-                                </ion-item>
-                                <ion-item>
-                        <ion-checkbox [(ngModel)]="paciente_completo_bolean_eliminar" (ionChange)="Eliminar_Paciente_Tercero()" style="font-size: small; color: #fa899f;" >
-                               Limpiar datos</ion-checkbox>
-                       
-                            </ion-item>                                                      
-                          </ion-list>                   
-                    </ion-row>
+                                </ion-item>                                                                             
+                          </ion-list>                                                                                                 
+                          <ion-button expand="full" color="danger" style="width: 100%;" (click)="Eliminar_Paciente_Tercero()">
+                            <ion-icon name="trash"></ion-icon> Limpiar datos
+                          </ion-button>
+                            </ion-row>
                  </ion-item>
                   <div #referencia></div>
                 </ion-col>   
@@ -277,21 +278,10 @@
                 </div>
           </ion-accordion>
         </ion-accordion-group>
-
-
-
-
-
-
-      </ion-card-content>
+    </ion-card-content>
 <!------------------------- Facturación a Terceros HTML ------------------------------------>
       </ion-card>
   </ion-col>
-
-
-
-
-
   <ion-col size="12" size-lg="7.5" size-xl="8" >
     <ion-card class="card_form">
       <ion-grid class="grid_peticiones">
@@ -421,6 +411,14 @@
                   </ion-list>
                 </div>
               </ion-col>
+
+              <ion-col size="12" size-sm="12" size-xm="12" size-md="6" size-lg="6" size-xl="6" class="ion-text-end" style="margin: auto;">
+                <ion-button style="height: 35px; margin: 0px -6px;" size="small" (click)="presentModalPerfilesAva()" [disabled]="(orden_view)">                  
+                  <ion-icon name="clipboard-outline"></ion-icon>
+                  Perfiles
+                </ion-button>
+              </ion-col>
+
             </ion-row>
            
 
@@ -439,7 +437,6 @@
                     <ion-col  [size]="(this.mobile)?5:1"> {{item.cod_ana}}</ion-col>
                     <ion-col size="3" *ngIf="!this.mobile"> {{item.des_ana}}</ion-col>
                     
-                    <!-- <ion-col size="2" *ng="!this.mobile"> {{item.fechaFinal| date:'EE d MMM y'}}</ion-col> -->
                     <ion-col size="2" *ngIf="!mobile">
                       {{ formatearFecha(item.fechaFinal) }}
                     </ion-col>

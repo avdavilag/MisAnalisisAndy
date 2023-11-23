@@ -1,8 +1,11 @@
 import { Component, OnInit} from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { AlertController, ModalController, NavController } from '@ionic/angular';
+import { IngresoOrdenCompletaPage } from 'src/app/pages/ingreso-orden-completa/ingreso-orden-completa.page';
 import { QueryService } from 'src/app/servicios/gql/query.service';
 import { LoadingService } from 'src/app/servicios/loading.service';
 import { ToastService } from 'src/app/servicios/toast.service';
+import { VariablesGlobalesService } from 'src/app/servicios/variables/variables-globales.service';
 
 
 
@@ -71,7 +74,12 @@ poblacion: any ={
   san_pac:null,
   sts_adm:null,
   etnia:null,
-  pat_pac:null
+  pat_pac:null,
+  cod_ori:null,
+  last_user:null,
+  pic_pac:null,
+  profesion:null,
+  tip_san:null,
  }
 
 input_id: string = '';
@@ -112,6 +120,7 @@ input_edad: string='';
 edad_number:number;
 bandera_editar:boolean;
 input_cod_pac;
+
 /////Variables de Poblacion//////
 
 
@@ -133,11 +142,22 @@ esCedulaValida:boolean;
 esCedulaValidaennumero:number;
 esProvincia:string='';
 esCiudad='';
+codigo_origen:any;
 
 
 
 //////////////////
-  constructor(  private modalController:ModalController,private modalcontroller: ModalController,private queryservice: QueryService,private toastservice: ToastService,private loadingservice: LoadingService) {
+  constructor(      
+    private modalcontroller: ModalController,
+    private queryservice: QueryService,
+    private toastservice: ToastService,
+    private loadingservice: LoadingService,
+    private alertController:AlertController,
+    private varGlobal: VariablesGlobalesService,
+    private route: Router
+  
+
+    ) {
     }
 
   ngOnInit() {
@@ -172,9 +192,11 @@ esCiudad='';
       this.queryservice.getPacientesbyCod(this.cod_pac_temp).then((r: any) =>
         {
 
-        console.log('R Paciente: ',r);
+
         this.input_cod_pac=this.cod_pac_temp;
         let data = r.data.getPacientebyCod;
+          console.log('Data para verifiicar por favor: ',data);
+
         this.cedula=data.id_pac;
         this.input_nombre =data.nom_pac;
         this.input_apellido =data.ape_pac;
@@ -185,7 +207,8 @@ esCiudad='';
         this.input_email=data.mail_pac;
         this.input_dir =data.dir_pac;
         this.input_fec_nac =data.fec_nac;        
-        this.input_titulo=data.profesion;
+        // this.input_titulo=data.profesion;
+        this.input_titulo=data.tit_pac;
         this.input_celular=data.cel_pac;
         this.input_telefono=data.telf_pac;
         this.input_pob=data.pais_id;
@@ -201,6 +224,9 @@ esCiudad='';
         // this.input_info_crediticia=data.//////verificar el estado administrativo//////////
         this.input_etnia=data.etnia;
         this.input_patol_pac=data.pat_pac;
+        this.edad=data.edad;
+
+        
         })
      }
   }
@@ -227,6 +253,13 @@ esCiudad='';
     let fechaupd=new Date();
     this.loadingservice.present('Actualizando Perfil');
     let listadostring: string = "";
+
+    console.log('this.input_titulo actualizarPaciente: ',this.input_titulo)
+
+      if(this.input_titulo===undefined){
+        this.input_titulo=null;
+      }
+
      let data = {
       nom_pac:this.input_nombre,
       ape_pac:this.input_apellido,
@@ -235,7 +268,7 @@ esCiudad='';
       fec_nac:this.input_fec_nac,        
       pais_id:this.input_pob,   
       id_pac:this.cedula,
-      TIPO_ID:null,
+      // TIPO_ID:null,
       cod_pob:this.input_pob,
       dir_pac:this.input_direccion,
       cp_pac:this.input_cp,
@@ -248,13 +281,18 @@ esCiudad='';
       estado_civil:this.input_estadoCivil,
       instruccion:this.input_instruccion,
       ocu_pac:this.input_ocupacion,
-      san_pac:this.input_tipo_sangre,
+      tip_san:this.input_tipo_sangre,
       sts_adm:this.input_info_crediticia,
       etnia:this.input_etnia,
       pat_pac:this.input_patol_pac,
-      cod_pac:this.input_cod_pac
+      cod_pac:this.input_cod_pac,
+      cod_ori:this.varGlobal.getOrigenOrden().cod_ori,
+      last_user:this.varGlobal.getVarUsuario(),
+      pic_pac:null,
+      profesion:null,
+      san_pac:null,      
     }
- 
+ console.log('Datosssssss: en update verifica por favor',data);
  this.queryservice.actualizarPaciente(JSON.stringify(data)).then((result: any) => {
       let data = result.data
       console.log('result mutation', result);
@@ -284,31 +322,6 @@ esCiudad='';
   }
 
   CheckPaciente() {
-
-  // this.paciente_completo.nom_pac=this.input_nombre;
-  // this.paciente_completo.ape_pac=this.input_apellido;
-  // this.paciente_completo.tit_pac=this.input_titulo;
-  // this.paciente_completo.sex_pac=this.input_genero;
-  // this.paciente_completo.fec_nac=this.input_fec_nac;
-  // this.paciente_completo.pais_id=this.input_pais_doc;
-  // this.paciente_completo.id_pac=this.cedula;
-  // this.paciente_completo.cod_pob=this.input_pob;
-  // this.paciente_completo.dir_pac=this.input_direccion;
-  // this.paciente_completo.cp_pac=this.input_cp;
-  // this.paciente_completo.mail_pac=this.input_email;
-  // this.paciente_completo.telf_pac=this.input_telefono;
-  // this.paciente_completo.cel_pac=this.input_celular;
-  // this.paciente_completo.pais_nace=this.input_pais_origen;
-  // this.paciente_completo.ciudad_nace=this.input_ciudad;
-  // this.paciente_completo.cod_ref=this.input_referencia;
-  // this.paciente_completo.estado_civil=this.input_estadoCivil;
-  // this.paciente_completo.instruccion=this.input_instruccion;
-  // this.paciente_completo.ocu_pac=this.input_ocupacion;
-  // this.paciente_completo.san_pac=this.input_tipo_sangre;
-  // this.paciente_completo.sts_adm=this.input_info_crediticia;
-  // this.paciente_completo.etnia=this.input_etnia;
-  // this.paciente_completo.pat_pac=this.input_patol_pac;
-
   this.paciente_completo.nom_pac = this.input_nombre ? this.input_nombre : null;
   this.paciente_completo.ape_pac = this.input_apellido ? this.input_apellido : null;
   this.paciente_completo.tit_pac = this.input_titulo ? this.input_titulo : null;
@@ -328,15 +341,23 @@ esCiudad='';
   this.paciente_completo.estado_civil = this.input_estadoCivil ? this.input_estadoCivil : null;
   this.paciente_completo.instruccion = this.input_instruccion ? this.input_instruccion : null;
   this.paciente_completo.ocu_pac = this.input_ocupacion ? this.input_ocupacion : null;
-  this.paciente_completo.san_pac = this.input_tipo_sangre ? this.input_tipo_sangre : null;
+  this.paciente_completo.tip_san = this.input_tipo_sangre ? this.input_tipo_sangre : null;
   this.paciente_completo.sts_adm = this.input_info_crediticia ? this.input_info_crediticia : null;
   this.paciente_completo.etnia = this.input_etnia ? this.input_etnia : null;
-  this.paciente_completo.pat_pac = this.input_patol_pac ? this.input_patol_pac : null;
-    
-
-
-console.log('Anderson Verificar: '+this.paciente_completo);
-
+  this.paciente_completo.pat_pac = this.input_patol_pac ? this.input_patol_pac : null; 
+ 
+  this.codigo_origen=this.varGlobal.getOrigenOrden().cod_ori;
+  if(this.codigo_origen === '' || this.codigo_origen === null){
+    this.paciente_completo.cod_ori=null;
+  }else{
+    this.paciente_completo.cod_ori=this.codigo_origen;
+  }
+this.last_user=this.varGlobal.getVarUsuario();
+  if(this.last_user=== '' || this.last_user === null){
+    this.paciente_completo.last_user=null;
+  }else{
+    this.paciente_completo.last_user=this.last_user;
+  }
 if(this.cedula!==''){
 this.queryservice.getPacientesbyId(this.cedula).then((r: any) => {
   
@@ -369,8 +390,8 @@ this.queryservice.getPacientesbyId(this.cedula).then((r: any) => {
               } else{
                 console.log('Paciente en MAYUSCULAS POR FAVOR: ',this.paciente_completo);
                  this.insertarPacientecomplete(this.paciente_completo); ////AQUI DEBES DESCOMENTAR SSOLO ES PRUEBA;
-                // this.toastservice.presentToast({ message: "Usuario Guardado Correctamente.", position: "middle", color: "success", duration: 2000 });
-                // this.loadingservice.dismiss();  
+                this.toastservice.presentToast({ message: "Usuario Guardado Correctamente.", position: "middle", color: "success", duration: 2000 });
+                this.loadingservice.dismiss();  
                 return
                 }
             }else{
@@ -386,12 +407,66 @@ this.queryservice.getPacientesbyId(this.cedula).then((r: any) => {
       })
     return
 }else{
-  this.toastservice.presentToast({ message: "Deseas guardar el paciente sin cedula.", position: "middle", color: "tertiary", duration: 2000 })
+      // this.toastservice.presentToast({ message: "Deseas guardar el paciente sin cedula.", position: "middle", color: "tertiary", duration: 2000 });
+      //         this.loadingservice.dismiss(); 
+      if (this.paciente_completo.nom_pac === '' && this.paciente_completo.ape_pac === '') {
+        this.toastservice.presentToast2({ message: "Debes ingresar Nombre/Apellido.", position: "middle", color: "danger", duration: 2000 });
+        this.loadingservice.dismiss();
+        return;
+      } else {
+        if (this.paciente_completo.nom_pac === null || this.paciente_completo.ape_pac === null) {
+          console.log('revisa el paciente en null: ', this.paciente_completo.nom_pac);
+          this.toastservice.presentToast2({ message: "Debes ingresar Nombre/Apellido.", position: "middle", color: "danger", duration: 2000 });
           this.loadingservice.dismiss();
-}
- return
-  }
+        } else {
+          this.presentAlert();
+          console.log('revisa el paciente_completo.nom_pac: ', this.paciente_completo.nom_pac);
+        }
+      }
+    }
 
+
+
+  }
+  
+
+
+  
+  
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: '! Deseas guardar !',
+      // subHeader: 'Paciente',
+      message: `Deseas guardar al paciente ${this.paciente_completo.nom_pac} sin cédula `,
+      buttons: [
+        {
+          text: 'No',
+          role: 'Cancelar',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('No clicked');
+            // Puedes agregar acciones adicionales al hacer clic en "No"
+          }
+        },
+        {
+          text: 'Sí',
+          handler: () => {
+            console.log('Sí clicked::: ',this.paciente_completo);
+            this.insertarPacientecomplete(this.paciente_completo); ////AQUI DEBES DESCOMENTAR SSOLO ES PRUEBA;
+            this.toastservice.presentToast({ message: "Usuario Guardado Correctamente.", position: "middle", color: "success", duration: 2000 });
+            this.loadingservice.dismiss();              
+            
+            
+
+            // Puedes agregar acciones adicionales al hacer clic en "Sí"
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
+  }
 
   onDateKeyUp(event: KeyboardEvent) {
     if (event.keyCode === 13) {
@@ -429,7 +504,6 @@ this.queryservice.getPacientesbyId(this.cedula).then((r: any) => {
       
       // this.input_fec_nac=fechaFormateada;
       
-      console.log('this.fecha_date_nacimiento: ',fecha_date_nacimiento);  
       return fecha_date_nacimiento;     
   }
 
@@ -466,12 +540,14 @@ this.queryservice.getPacientesbyId(this.cedula).then((r: any) => {
 
 
   insertarPacientecomplete(data) {
-    console.log(JSON.stringify(data));
+
     this.queryservice.insertPacienteComplete(JSON.stringify(data)).then((result: any) => {
       console.log('Result: ',result);
     let data = result.data.insertPacienteComplete;
     if (data.resultado == 'ok') {
       this.toastservice.presentToast({ message: data.mensaje, color: "success", position: "top" });
+      console.log('Data parse antes del parse: ',data);
+
       this.dismissData(JSON.parse(data.data), "insert");
     }
     this.loadingservice.dismiss()
@@ -480,6 +556,7 @@ this.queryservice.getPacientesbyId(this.cedula).then((r: any) => {
     this.loadingservice.dismiss()
   })
 }
+
  getCedula(cedula:String):boolean{
     if (cedula.length !== 10) {
       return false;

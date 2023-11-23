@@ -1,0 +1,395 @@
+<ion-header *ngIf="tipo_server!=1">
+  <ion-toolbar>
+    <img src="assets/img/logo.png" slot="start" [routerLink]="['/lista-orden']" *ngIf="!filtro&&mobile||!mobile">
+    <!--  <ion-title slot="start">LISTA DE ORDENES</ion-title>-->
+
+
+    <ion-searchbar *ngIf="filtro||!mobile" slot="end"
+      (ionChange)="filterOrdenes()" [(ngModel)]="digitosBusqueda" (ionCancel)="cancelFiltroBusqueda($event)"
+      showCancelButton="focus">
+    </ion-searchbar>
+
+    <ion-text slot="end" class="nombre_usuario">Listado de Pacientes
+    </ion-text>
+
+    <ion-buttons slot="end">
+      <div *ngIf="mobile">
+        <ion-button fill=clear size="large" (click)="abrirFiltro()" color="secondary">
+          <ion-icon name="search-outline"></ion-icon>
+        </ion-button>
+        <ion-button (click)="presentPopover($event)" fill="clear" size="large" color="secondary">
+
+          <ion-icon name="person-circle-outline">
+          </ion-icon>
+        </ion-button>
+      </div>
+      <!--PARA PC-->
+      <div *ngIf="!mobile">
+
+        <ion-button (click)="funcionesComunes.cambiarUsuario()" fill="clear" size="large" color="tertiary"
+          class="tooltip" *ngIf="var_usr.entidades&&var_usr.entidades.length>1">
+          <span class="tooltiptext"></span>
+          <ion-icon name="repeat-outline"></ion-icon>
+        </ion-button>
+        <ion-button (click)="funcionesComunes.cerrarSesion()" fill="clear" size="large" color="danger" class="tooltip">
+          <span class="tooltiptext tooltiptext2"></span>
+          <ion-icon name="exit-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div class="franja_usr">
+    <ion-icon name="person-circle-outline" *ngIf="tipo_user=='pat'"></ion-icon>
+    <ion-icon src="assets/icon/doctor3.svg" *ngIf="tipo_user=='med'"></ion-icon>
+    <ion-icon name="business" *ngIf="tipo_user=='ref'"></ion-icon>
+    <!-- {{des_usr}} -->
+    Listado de Usuarios
+  </div>
+  <ion-card style="height: 95%;">
+    <ion-card-header>
+
+      <ion-row class="fechas">
+        <!-- <ion-col size="3" *ngIf="!mobile">
+          <ion-item>
+            <ion-label position="stacked">Nombres</ion-label>
+            
+
+
+
+
+
+
+          </ion-item>
+        </ion-col> -->
+
+        <!-- <ion-col [size]="mobile?'12':'4'">
+          <ion-label position="stacked">Nombres</ion-label>
+          <div *ngIf="tipo_server==1&&tipo_user!='pat'" class="search-input">            
+            <ion-searchbar *ngIf="filtro||!mobile" [placeholder]="'Buscar: nombre' " [(ngModel)]="dato_find"
+              (ionCancel)="cancelFiltroBusqueda($event)" showCancelButton="focus" debounce="2000"
+              (ionInput)="buscaxFiltro()">
+            </ion-searchbar>
+          </div>
+          <small class="info-search" *ngIf="dato_find!=''&&dato_find.length<4">Debe digitar más de 3 caracteres</small>
+        </ion-col> -->
+
+        <ion-col [size]="mobile?'12':'4'">
+          <ion-label position="stacked">Nombres</ion-label>
+          <div *ngIf="tipo_server==1&&tipo_user!='pat'" class="search-input">            
+            <ion-searchbar *ngIf="filtro||!mobile" [placeholder]="'Buscar: nombre' " [(ngModel)]="dato_find"
+              (ionCancel)="cancelFiltroBusqueda($event)" showCancelButton="focus" debounce="2000"
+              (ionInput)="buscaxFiltro()">
+            </ion-searchbar>
+          </div>
+          <small class="info-search" *ngIf="dato_find!=''&&dato_find.length<4">Debe digitar más de 3 caracteres</small>
+        </ion-col>
+
+        <ion-col [size]="mobile?'12':'4'">
+          <ion-label position="stacked">Apellidos</ion-label>
+          <div *ngIf="tipo_server==1&&tipo_user!='pat'" class="search-input">            
+            <ion-searchbar *ngIf="filtro||!mobile" [placeholder]="'Buscar: apellido' " [(ngModel)]="dato_find"
+              (ionCancel)="cancelFiltroBusqueda($event)" showCancelButton="focus" debounce="2000"
+              (ionInput)="buscaxFiltro()">
+            </ion-searchbar>
+          </div>
+          <small class="info-search" *ngIf="dato_find!=''&&dato_find.length<4">Debe digitar más de 3 caracteres</small>
+        </ion-col>
+
+    
+
+        <ion-col [size]="mobile?'12':'4'">
+          <ion-label position="stacked">Email</ion-label>
+          <div *ngIf="tipo_server==1&&tipo_user!='pat'" class="search-input">
+            <ion-searchbar *ngIf="filtro||!mobile" [placeholder]="'Buscar: email' " [(ngModel)]="dato_find"
+              (ionCancel)="cancelFiltroBusqueda($event)" showCancelButton="focus" debounce="2000"
+              (ionInput)="buscaxFiltro()">
+            </ion-searchbar>
+          </div>
+          <small class="info-search" *ngIf="dato_find!=''&&dato_find.length<4">Debe digitar más de 3 caracteres</small>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-item>
+
+        <!-- <ion-card-title *ngIf="!mobile">{{ 'complex.lista_titulo' | translate }}</ion-card-title> -->
+        <ion-card-title *ngIf="!mobile"></ion-card-title>
+
+        <div *ngIf="lista_ordenes.length>=300" class="info_size">
+          Se estan mostrando los primeros 300 registros de su búsqueda, por favor ser más específico en el filtro
+        </div>
+        <div *ngIf="lista_ordenes.length<300" class="info_size"> {{lista_ordenes.length}} registro(s) encontrados</div>
+
+        <ion-buttons slot="end" class="btn_listas">
+          <!--
+
+          <ion-button (click)="presentPopoverFiltro($event)" fill="clear" size="large" class="btn_filtro"
+            color="secondary">
+            {{ 'simple.Filtrar' | translate }}<ion-icon name="funnel-outline"></ion-icon>
+          </ion-button>
+          -->
+
+          <ion-button class="btn_orden" *ngIf="mobile&&tipo_server==1&&tipo_user!='pat'" fill=clear size="large" (click)="abrirFiltro()" [color]="filtro?'danger':'tertiary'">
+           Buscar
+           <ion-icon name="search" *ngIf="!filtro"></ion-icon>
+           <ion-icon name="close-circle-outline" *ngIf="filtro"></ion-icon>
+          </ion-button>
+          <ion-button (click)="presentPopoverOrden($event)" fill="clear" size="large" class="btn_orden"
+            color="secondary">
+            <!-- {{ 'simple.Ordenar' | translate }}  -->
+            <ion-icon name="filter-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+      </ion-item>
+
+      <ion-item *ngIf="mobile" (click)="openModalPeriodo()">
+        <div class="fechas_mob">
+          <small position="stacked">Desde / Hasta</small>
+          <br>
+          <div> {{fecha_desde}} / {{fecha_hasta}}</div>
+        </div>
+
+      </ion-item>
+    </ion-card-header>
+    <ion-card-content>
+
+      <ion-list>
+        <ion-item *ngIf="!lista_filtrar||lista_filtrar.length<1" class="no_results">
+          <div>
+            <!-- {{ 'complex.lista_no_resultados' | translate }} -->
+          </div>
+        </ion-item>
+
+
+        <div *ngIf="infoText!=''" class="info-text">{{infoText}}</div>
+        <ion-item *ngFor="let orden of lista_filtrar;let index =index;" style="padding: 0px">
+
+          <div class="indice" [slot]="mobile?'':'start'">
+            {{index+1}}
+          </div>
+          <ion-text>
+            <ion-row class="ion-text-left nombres_orden">
+              <ion-col *ngIf="tipo_user!='pat'" [size]="mobile?12:''">              
+                <!-- <div *ngIf=" orden.nombre_medico"> -->                  
+                  <!-- <div *ngIf=" orden.nombre_medico"> -->
+                    <div>
+                      <ion-icon src="assets/icon/signo_hombre.svg" alt="logo" style="height: 100px; width: 33px; margin: -32px 0px -50px 1px;"></ion-icon>                                          
+                      <span style="margin: 3%;">Anderson Vinicio Davila Guerrero</span>
+                    </div>
+              </ion-col>                 
+            </ion-row>
+
+            <!-- <ion-row [class]="orden.nombre_medico ? 'val_doc':'val_doc disable_val'" *ngIf="tipo_user!='med'">
+              <div *ngIf=" orden.nombre_medico">
+                <ion-icon src="assets/icon/doctor2.svg"></ion-icon>Dr. {{orden.nombre_medico}}
+
+              </div>
+              <div *ngIf="!orden.nombre_medico">
+                <ion-icon src="assets/icon/doctor2.svg"></ion-icon>
+                 {{ 'complex.lista_sin_medico' | translate }}
+              </div>
+            </ion-row> -->
+
+            <ion-row class="orden_values">
+              <ion-col class="val_fecha" [size]="mobile?12:''" style="margin: -10px 10% -8px;">
+               <p><span style="color: #9ee1ff; font-size: 14px;"><i>Fecha de nacimiento:</i><br></span></p>
+               <ion-icon name="calendar-outline" style="margin: 2px -4px 5px 7px;"></ion-icon>{{modificaFecha(orden.fec_upd) | date:formato_fecha}}
+              </ion-col>
+
+              <!-- <ion-col *ngIf="!mobile">
+                <ion-buttons *ngIf="orden.saldo<=0.00"  class="ion-text-wrap"> -->
+                  <!--
+
+                  <ion-button (click)="presentModal(orden)" color="danger">
+                    <ion-icon name="eye-outline" size="large"></ion-icon>
+                  </ion-button>
+                  <ion-button (click)="enviaMail(orden.nro_ord)" color="tertiary">
+                    <ion-icon name="mail-outline" size="large"></ion-icon>
+                  </ion-button>
+                -->
+                  <!-- <ion-button *ngIf="orden.saldo<=0.00&&(orden.listo==1||(ativa_progress&&orden.progress>0))" (click)="cargarDatosPaciente(orden.nro_ord)"
+                    color="secondary">
+                    <ion-icon src="assets/icon/download-pdf.svg" size="large"></ion-icon>
+                  </ion-button>
+                  <ion-button *ngIf="tipo_user=='ref'&&formato_pdf_ref&&formato_pdf_ref!=''&&orden.saldo<=0.00&&(orden.listo==1||(ativa_progress&&orden.progress>0))" (click)="cargarDatosPaciente(orden.nro_ord,formato_pdf_ref)"
+                    color="secondary">
+                    <ion-icon src="assets/icon/download-pdf-ref.svg" size="large"></ion-icon>
+                  </ion-button>
+
+                  <ion-button (click)="presentPopoverFacturas(orden)" *ngIf="orden.facturas&&orden.facturas>0" color="secondary">
+                    <ion-icon name="document-text-outline" size="large"></ion-icon>
+                  </ion-button> -->
+              <!--BOTON CHART-->
+                    <!-- <ion-button *ngIf="orden.count_orders_pac&&orden.count_orders_pac>1" (click)="openChartPac(orden)" style="place-self: center;" fill="outline" color="success"> <ion-icon slot="icon-only" name="analytics-outline"></ion-icon></ion-button>
+
+
+                </ion-buttons> -->
+                <!-- <ion-badge *ngIf="orden.saldo>0" class="ion-text-wrap saldo_pen">
+                  Saldo Pendiente
+                </ion-badge>
+
+                <ion-badge *ngIf="orden.listo!=1" class="ion-text-wrap en_process" color="warning">
+                  <ion-icon name="hourglass-outline"></ion-icon>
+                  En proceso
+                </ion-badge> -->
+              <!-- </ion-col>       -->
+            </ion-row>
+          </ion-text>
+
+          <ion-buttons *ngIf="mobile" class="btn_orden" class="ion-text-wrap" slot="end">
+            <!--
+
+                  <ion-button (click)="presentModal(orden)" color="danger">
+                    <ion-icon name="eye-outline" size="large"></ion-icon>
+                  </ion-button>
+                  <ion-button (click)="enviaMail(orden.nro_ord)" color="tertiary">
+                    <ion-icon name="mail-outline" size="large"></ion-icon>
+                  </ion-button>
+                -->
+            <ion-button *ngIf="orden.saldo<=0.00&&(orden.listo==1||(ativa_progress&&orden.progress>0))" (click)="cargarDatosPaciente(orden.nro_ord)"
+              color="secondary">
+              <ion-icon src="assets/icon/download-pdf.svg" name="print-outline" size="large"></ion-icon>
+            </ion-button>
+            <ion-button *ngIf="tipo_user=='ref'&&formato_pdf_ref&&formato_pdf_ref!=''&&orden.saldo<=0.00&&(orden.listo==1||(ativa_progress&&orden.progress>0))" (click)="cargarDatosPaciente(orden.nro_ord,formato_pdf_ref)"
+              color="secondary">
+              <ion-icon src="assets/icon/download-pdf-ref.svg" name="print-outline" size="large"></ion-icon>
+            </ion-button>
+            <ion-button *ngIf="orden.facturas&&orden.facturas>0" (click)="presentPopoverFacturas(orden)" color="secondary">
+              <ion-icon name="document-text-outline" size="large"></ion-icon>
+            </ion-button>
+               <!--BOTON CHART-->
+               <ion-button *ngIf="orden.count_orders_pac&&orden.count_orders_pac>1" (click)="openChartPac(orden)" style="place-self: center;" fill="outline" color="success"> <ion-icon slot="icon-only" name="analytics-outline"></ion-icon></ion-button>
+            <ion-badge *ngIf="orden.saldo>0" class="ion-text-wrap saldo_pen">Saldo Pendiente
+            </ion-badge>
+            <ion-badge *ngIf="orden.listo!=1" class="ion-text-wrap en_process" color="warning">
+              <ion-icon name="hourglass-outline"></ion-icon>
+              En proceso
+            </ion-badge>
+          </ion-buttons>
+
+        </ion-item>
+<!--
+
+        <ion-item *ngIf="lista_ordenes.length>=300">
+          Se estan mostrando los primeros 300 registros de su búsqueda, por favor ser más específico en el filtro
+        </ion-item>
+-->
+      </ion-list>
+
+      <ion-infinite-scroll threshold="100px" (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+      <ion-button fill="clear" (click)="doInfinite($event)"
+        *ngIf="lista_filtrar.length != lista_ordenes.length && cargando&&!infiniteScroll.disabled&&digitosBusqueda.length==0">
+        <!-- {{ complex.lista_cargar_mas }} -->
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<!-- --------------------------------------------------------------------------------------------------------*----------------------------------------------------------------------------------------------------------------------
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+
+<ion-content>
+  <div class="franja_usr">
+    <ion-icon name="person-circle-outline" *ngIf="tipo_user=='pat'"></ion-icon>
+    <ion-icon src="assets/icon/doctor3.svg" *ngIf="tipo_user=='med'"></ion-icon>
+    <ion-icon name="business" *ngIf="tipo_user=='ref'"></ion-icon>
+    <!-- {{des_usr}} -->
+    Formulario de Ingreso Pacientes
+  </div>
+  <ion-card  style="height: 95%;"   >
+    <ion-card-header>
+
+      <ion-row class="fechas">
+  
+        <ion-col [size]="mobile?'12':'4'">
+          <ion-label position="stacked">Nombres</ion-label>
+          <div *ngIf="tipo_server==1&&tipo_user!='pat'" class="search-input">            
+            <ion-searchbar *ngIf="filtro||!mobile" [placeholder]="'Buscar: nombre' " [(ngModel)]="dato_find"
+              (ionCancel)="cancelFiltroBusqueda($event)" showCancelButton="focus" debounce="2000"
+              (ionInput)="buscaxFiltro()">
+            </ion-searchbar>
+          </div>
+          <small class="info-search" *ngIf="dato_find!=''&&dato_find.length<4">Debe digitar más de 3 caracteres</small>
+        </ion-col>
+
+        <ion-col [size]="mobile?'12':'4'">
+          <ion-label position="stacked">Apellidos</ion-label>
+          <div *ngIf="tipo_server==1&&tipo_user!='pat'" class="search-input">            
+            <ion-searchbar *ngIf="filtro||!mobile" [placeholder]="'Buscar: apellido' " [(ngModel)]="dato_find"
+              (ionCancel)="cancelFiltroBusqueda($event)" showCancelButton="focus" debounce="2000"
+              (ionInput)="buscaxFiltro()">
+            </ion-searchbar>
+          </div>
+          <small class="info-search" *ngIf="dato_find!=''&&dato_find.length<4">Debe digitar más de 3 caracteres</small>
+        </ion-col>
+
+    
+
+        <ion-col [size]="mobile?'12':'4'">
+          <ion-label position="stacked">Email</ion-label>
+          <div *ngIf="tipo_server==1&&tipo_user!='pat'" class="search-input">
+            <ion-searchbar *ngIf="filtro||!mobile" [placeholder]="'Buscar: email' " [(ngModel)]="dato_find"
+              (ionCancel)="cancelFiltroBusqueda($event)" showCancelButton="focus" debounce="2000"
+              (ionInput)="buscaxFiltro()">
+            </ion-searchbar>
+          </div>
+          <small class="info-search" *ngIf="dato_find!=''&&dato_find.length<4">Debe digitar más de 3 caracteres</small>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-item>
+
+        <!-- <ion-card-title *ngIf="!mobile">{{ 'complex.lista_titulo' | translate }}</ion-card-title> -->
+        <ion-card-title *ngIf="!mobile"></ion-card-title>
+
+        <div *ngIf="lista_ordenes.length>=300" class="info_size">
+          Se estan mostrando los primeros 300 registros de su búsqueda, por favor ser más específico en el filtro
+        </div>
+        <div *ngIf="lista_ordenes.length<300" class="info_size"> {{lista_ordenes.length}} registro(s) encontrados</div>
+
+        <ion-buttons slot="end" class="btn_listas">
+          <!--
+
+          <ion-button (click)="presentPopoverFiltro($event)" fill="clear" size="large" class="btn_filtro"
+            color="secondary">
+            {{ 'simple.Filtrar' | translate }}<ion-icon name="funnel-outline"></ion-icon>
+          </ion-button>
+          -->
+
+          <ion-button class="btn_orden" *ngIf="mobile&&tipo_server==1&&tipo_user!='pat'" fill=clear size="large" (click)="abrirFiltro()" [color]="filtro?'danger':'tertiary'">
+           Buscar
+           <ion-icon name="search" *ngIf="!filtro"></ion-icon>
+           <ion-icon name="close-circle-outline" *ngIf="filtro"></ion-icon>
+          </ion-button>
+          <ion-button (click)="presentPopoverOrden($event)" fill="clear" size="large" class="btn_orden"
+            color="secondary">
+            <!-- {{ 'simple.Ordenar' | translate }}  -->
+            <ion-icon name="filter-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+      </ion-item>
+
+      <ion-item *ngIf="mobile" (click)="openModalPeriodo()">
+        <div class="fechas_mob">
+          <small position="stacked">Desde / Hasta</small>
+          <br>
+          <div> {{fecha_desde}} / {{fecha_hasta}}</div>
+        </div>
+
+      </ion-item>
+    </ion-card-header>
+   
+  </ion-card>
+</ion-content>

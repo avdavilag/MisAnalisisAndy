@@ -45,6 +45,12 @@
         <ion-icon name="layers-outline" ></ion-icon>
        <ion-label  *ngIf="!mobile">Envio en bloque</ion-label> </ion-tab-button>
 
+
+       <ion-tab-button (click)="openModalBusquedaPacientes()">
+       <ion-icon name="person-add-outline"></ion-icon>
+       <ion-label  *ngIf="!mobile">Paciente</ion-label> </ion-tab-button>
+
+
        <ion-tab-button (click)="openModalEntrega()">
         <ion-icon name="checkbox-outline" ></ion-icon>
        <ion-label  *ngIf="!mobile">Entrega</ion-label> </ion-tab-button>

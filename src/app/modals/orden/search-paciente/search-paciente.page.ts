@@ -100,15 +100,24 @@ export class SearchPacientePage implements OnInit {
   
     await modal.present();
     modal.onDidDismiss().then(r=>{
+      console.log('r.datar.datar.datar.datar.datar.data: ',r);
+  
+      let cod_pac_search=r.data.data_pac[0].cod_pac;
+      console.log('r.datar.datar.datar.datar.datar.data: ',cod_pac_search);
+      this.queryservice.getPacientesbyCod(cod_pac_search).then((r:any)=>{
+        console.log('Verifica R dentro del query servicesss: ',r.data);
+        this.presentAlertConfirmPac(r.data);
+      });
+     })
+
       
-      if(r.data){
-        // this.orden=r.data.orden
-      }
-    })
   }
  
   async presentAlertConfirmPac(item) {
     console.log('Item: ',item);
+    
+
+
     const alert = await this.alertController.create({
       header: 'Esta seguro de seleccionar a este paciente',
       message: '<small>'+item.nombre_completo+'</small>',
@@ -151,6 +160,13 @@ export class SearchPacientePage implements OnInit {
     });
   
     await modal.present();
+    modal.onDidDismiss().then(r=>{
+      
+      if(r.data){
+      //  this.paciente=r.data.orden
+      console.log('r.datar.datar.datar.datar.datar.data: ',r.data);
+      }
+    })
   
   }
 }
